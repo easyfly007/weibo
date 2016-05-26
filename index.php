@@ -5,8 +5,8 @@ define('BIND_MODULE','Index');
 // define('APP_PATH', "Application/");
 // require('./ThinkPHP/ThinkPHP.php');
 // define('CONF_PATH','./Data/Conf/')
-define('APP_NAME', 'Application');
-define('APP_PATH','./Application/');
+define('APP_NAME', 'Index');
+define('APP_PATH','./Index/');
 // define('COMMON_PATH','./Common/');
 define('APP_DEBUG', true);
 // define('BIND_MODULE','Home');
