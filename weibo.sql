@@ -30,6 +30,10 @@ create table tb_userinfo(
 	foreign key (uid) references tb_user (id)
 );
 
-
+-- 粉丝关系表
+create table tb_follow(
+	follow int not null,  -- 粉丝数目
+	fans int not null,    -- 粉丝用户id
+);
 
 
