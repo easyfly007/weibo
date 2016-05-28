@@ -22,7 +22,8 @@ class LoginController extends Controller {
             $this->error('禁止访问！');
         $code = $_POST['verify'];
         $id = isset($_POST['id'])? $_POST['id']:'';
-	    $verify = new \Think\Verify();
+        $config = array('reset' => false,); // 验证成功后是否重置，这里才是有效的。
+	    $verify = new \Think\Verify($config);
 	    if ($verify->check($code, $id))
             echo "true";
         else
@@ -64,5 +65,43 @@ class LoginController extends Controller {
             echo 'false';
         else
             echo 'true';
+    }
+
+    // 后台注册用户
+    public function runRegister(){
+        if (!IS_POST)
+            $this->error("禁止访问！");
+        // 后台验证
+        $account = I('post.account');
+        $username = I('post.uname');
+        $pwd =  I('post.pwd');
+        $pwd2 = I('post.pwded');
+
+        // 验证码
+        $code = I('post.verify');
+        $verify = new \Think\Verify();
+        if (!$verify->check($code, ''))
+            $this->error("验证码错误！");
+
+        if ($pwd != $pwd2)
+            $this->error("输入的密码不一致！");
+        $pwd = md5($pwd);
+        $data = array(
+            'account' => $account,
+            'password' =>$pwd,
+            'registime' =>time(),
+            'userinfo' =>array(
+                'username' => $username,
+                ),
+            // 'registime' => I('server.REQUEST_TIME'), 
+            );
+        if ($id = D('UserRelation')->insert($data))
+        {
+            session('uid', $id);
+            header("Content-Type:text/html; Charset = UTF-8");
+            redirect(__APP__, 3, "注册成功，正在为您跳转到首页...");
+        }
+        else
+            $this->error("无法注册用户");
     }
 }
