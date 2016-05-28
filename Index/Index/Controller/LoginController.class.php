@@ -3,7 +3,7 @@ namespace Index\Controller;
 use Think\Controller;
 class LoginController extends Controller {
     public function index(){
-    	echo 1;
+        $this->display();
     }
 
     public function register(){
@@ -103,5 +103,9 @@ class LoginController extends Controller {
         }
         else
             $this->error("无法注册用户");
+    }
+
+    public function login(){
+        p($_POST);
     }
 }

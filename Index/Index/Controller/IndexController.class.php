@@ -1,9 +1,9 @@
 <?php
 namespace Index\Controller;
 use Think\Controller;
-class IndexController extends Controller {
+class IndexController extends CommonController {
+	    
     public function index(){
-    	// header("Content-Type:text/html; Charset = unicode");
     	$this->display();
     }
 }

@@ -1,16 +1,16 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html xmlns = "http://www.w3.org/1999/xhtml" xml:lang='en'>
 <header>
 	<META http-equiv= "COntent-Type" content = "text/html; charset=UTF-8">
 	<title>微博登录</title>
-	<css file ="__PUBLIC__/Css/login.css" />
-	<js file = "__PUBLIC__/Js/jquery-2.2.3.min.js" />
-	<js file = "__PUBLIC__/Js/jquery.validate.min.js" />
-	<js file = "__PUBLIC__/Js/login.js" />
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/login.css" />
+	<script type="text/javascript" src="/weibo/Public/Js/jquery-2.2.3.min.js"></script>
+	<script type="text/javascript" src="/weibo/Public/Js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/weibo/Public/Js/login.js"></script>
 	<script type="text/javascript">
-		var checkAccount = "{:U('Login/checkAccount')}";
-		// var checkUname = "{:U('Login/checkUname')}";
-		// var checkVerify = "{:U('Login/checkVerify')}";
+		var checkAccount = "<?php echo U('Login/checkAccount');?>";
+		// var checkUname = "<?php echo U('Login/checkUname');?>";
+		// var checkVerify = "<?php echo U('Login/checkVerify');?>";
 		// checkAccount 变量会在regist.js 里面用到
 	</script>
 
@@ -22,7 +22,7 @@
 	<div id = 'login-form'>
 		<div id = 'login-wrap'>
 			<p>还没有微博账号？<a href=""> 立即注册</a></p>
-			<form action = "{:U('login/login')}" method = "post" name = 'login'>
+			<form action = "<?php echo U('login/login');?>" method = "post" name = 'login'>
 				<fieldset>
 					<legend>用户登录</legend>
 					<p>
