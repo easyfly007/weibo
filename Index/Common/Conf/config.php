@@ -14,4 +14,7 @@ return array(
 
     'DEFAULT_THEME'         =>  'default',
 
+    "ENCRYPTION_KEY"        =>  "myweibo.com", // for encryption key
+    "AUTO_LOGIN_TIME"       =>   time() + 7*24*60*60, // cookie 的信息保存1个星期有效   
+
 );

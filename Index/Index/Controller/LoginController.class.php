@@ -106,6 +106,25 @@ class LoginController extends Controller {
     }
 
     public function login(){
-        p($_POST);
+        if (!IS_POST)
+            $this->error("页面不存在");
+        $account = I('post.account');
+        $pwd = I('post.pwd');
+        $where = array('account'=>$account, "password" =>md5($pwd));
+        $user = M('user')->where($where)->find();
+        if (!$user)
+            $this->error("请输入正确的用户名密码");
+
+        if ($user['locked'])
+            $this->error("用户账号被锁定");
+
+        session('uid', $uid);
+        if (I('post.auto'))
+        {
+            $cookie = $user['account']."|".get_client_ip()."|".time();
+            $cookie = encryption($cookie);
+            setcookie('auto', $cookie, C('AUTO_LOGIN_TIME'), '/'); // 写入到cookie
+        }
+        $this->success("登录成功，正在为您跳转到首页", __APP__);
     }
 }
