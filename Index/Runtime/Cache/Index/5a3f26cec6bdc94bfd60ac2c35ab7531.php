@@ -5,6 +5,12 @@
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/regis.css" />
 	<script type="text/javascript" src="/weibo/Public/Js/jquery-2.2.3.min.js"></script>
 	<script type="text/javascript" src="/weibo/Public/Js/jquery.validate.min.js"></script>
+	<script type="text/javascript">
+		var checkAccount = "<?php echo U('Login/checkAccount');?>";
+		var checkUname = "<?php echo U('Login/checkUname');?>";
+		var checkVerify = "<?php echo U('Login/checkVerify');?>";
+		// checkAccount 变量会在regist.js 里面用到
+	</script>
 	<script type="text/javascript" src="/weibo/Public/Js/regist.js"></script>
 
 	<title>
@@ -36,7 +42,7 @@
 				</p>
 				<p>
 					<label for = 'verify'> 验证码</label>
-					<input type = 'text' name = 'verify' class = 'input' >
+					<input type = 'text' name = 'verify' id = 'verify' class = 'input' >
 					<img src="<?php echo U('verify');?>" width = '150' height = '40' id = 'verify-img' />
 				</p>
 				<p class = 'run'>

@@ -5,6 +5,12 @@
 	<css file = "__PUBLIC__/Css/regis.css" />
 	<js file = "__PUBLIC__/Js/jquery-2.2.3.min.js" />
 	<js file = "__PUBLIC__/Js/jquery.validate.min.js" />
+	<script type="text/javascript">
+		var checkAccount = "{:U('Login/checkAccount')}";
+		var checkUname = "{:U('Login/checkUname')}";
+		var checkVerify = "{:U('Login/checkVerify')}";
+		// checkAccount 变量会在regist.js 里面用到
+	</script>
 	<js file = "__PUBLIC__/Js/regist.js" />
 
 	<title>
@@ -36,7 +42,7 @@
 				</p>
 				<p>
 					<label for = 'verify'> 验证码</label>
-					<input type = 'text' name = 'verify' class = 'input' >
+					<input type = 'text' name = 'verify' id = 'verify' class = 'input' >
 					<img src="{:U('verify')}" width = '150' height = '40' id = 'verify-img' />
 				</p>
 				<p class = 'run'>
