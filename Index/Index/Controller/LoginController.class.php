@@ -118,7 +118,7 @@ class LoginController extends Controller {
         if ($user['locked'])
             $this->error("用户账号被锁定");
 
-        session('uid', $uid);
+        session('uid', $user['id']);
         if (I('post.auto'))
         {
             $cookie = $user['account']."|".get_client_ip()."|".time();

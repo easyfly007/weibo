@@ -5,7 +5,8 @@
 	margin: 0px;
 	font-size: 13px;
 	color: #444;
-	font:12px/1.125 Arial,Helvetica,sans-serif;_font-family:"SimSun";
+	font:12px/1.125 Arial,Helvetica,sans-serif;
+	font-family:"SimSun";
 }
 body{
 	background:url(../images/body_bg.jpg) no-repeat fixed;
