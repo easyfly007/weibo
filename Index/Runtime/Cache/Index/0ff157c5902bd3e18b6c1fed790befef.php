@@ -1,10 +1,13 @@
 <?php if (!defined('THINK_PATH')) exit();?>
-	<title>微博首页</title>
+	<title>用户设置首页</title>
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/nav.css" />
-    <link rel="stylesheet" type="text/css" href="/weibo/Public/Css/index.css" />
     <link rel="stylesheet" type="text/css" href="/weibo/Public/Css/bottom.csxs" />
     <script type="text/javascript" src="/weibo/Public/Js/nav.js"></script>
-    <script type="text/javascript" src="/weibo/Public/Js/index.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/weibo/Public/Css/edit.css" />
+    <script type="text/javascript" src="/weibo/Public/Js/edit.js"></script>
+    <script type="text/javascript" src="/weibo/Public/Js/city.js"></script>
+
 
 </header>
 
@@ -66,7 +69,6 @@
 			</div>
 		</div>
 	</div>
-
 	<div style = 'height:60px; opcity:10'></div>
 	<div class = 'main'>
 		<!-- 左侧边栏 -->
@@ -89,6 +91,59 @@
 		<span id = 'create_group'><a href="">创建新的分组</a></span>
 	</div>
 </div>
+		<div id = 'right'>
+			<ul id = 'sel-edit'>
+				<li class = 'edit-cur'> 基本信息</li>
+				<li>修改密码</li>
+				<li>修改头像</li>
+			</ul>
+			<div class = 'form'>
+				<form action ="<?php echo U('Usersetting/editbasic');?>" method = 'post'>
+					<p>
+						<label for='nickname'><span class = 'red'>*</span>昵称：</label>
+						<input type = 'text' name = 'nickname' class = 'input' value = "<?php echo ($edituser['username']); ?>" class = 'input'>
+					</p>
+					<p>
+						<label for='truename'>真实姓名</label>
+						<input type = 'text' name = 'truename' class = 'input' value = "<?php echo ($edituser['truename']); ?>" >
+					</p>
+					<p>
+						<label for='sex'><span class = 'red'>*</span>性别</label>
+						<?php if($edituser["sex"] == 'm'): ?><input type = 'radio' name = 'sex' value = 'm' checked = 'true' >
+						<?php else: ?>
+							<input type = 'radio' name = 'sex' value = 'm' ><?php endif; ?>
+						 &nbsp;男&nbsp;&nbsp;
+						<?php if($edituser["sex"] == 'f'): ?><input type = 'radio' name = 'sex' value = 'f' checked = 'true' >
+						<?php else: ?>
+							<input type = 'radio' name = 'sex' value = 'f' ><?php endif; ?>
+						 &nbsp;女&nbsp;
+					</p>
+					<p>
+						<label>所在地</label>
+						<select name = 'province'>
+							<option value = ''>请选择</option>
+						</select>
+						&nbsp;&nbsp;
+						<select name = 'city'>
+							<option value =''> 请选择</option>
+						</select>
+					</p>
+					<p>
+						<label>星座</label>
+						<select>
+							<option value = ''>请选择</option>
+						</select>
+					</p>
+					<p>
+						<label for = 'intro' class = 'intro'>一句话介绍自己</label>
+						<textarea name = 'intro'></textarea>
+					</p>
+					<p>
+						<input type = 'submit' value = '保存修改' class = 'edit-sub'>
+					</p>
+				</form>
+			</div>
+		</div>
 	</div>
 
 	<div id = 'bottom'>

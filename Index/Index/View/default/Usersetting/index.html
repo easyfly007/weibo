@@ -1,0 +1,82 @@
+<include file ="Commom:header" />
+	<title>用户设置首页</title>
+	<css file = "__PUBLIC__/Css/nav.css" />
+    <css file = "__PUBLIC__/Css/bottom.csxs" />
+    <js file = '__PUBLIC__/Js/nav.js' />
+
+    <css file = "__PUBLIC__/Css/edit.css" />
+    <js file = '__PUBLIC__/Js/edit.js' />
+    <js file = '__PUBLIC__/Js/city.js' />
+
+
+</header>
+
+<body>
+	<!-- 顶部导航栏 -->
+	<include file = "Common:nav" />
+	<div style = 'height:60px; opcity:10'></div>
+	<div class = 'main'>
+		<!-- 左侧边栏 -->
+		<include file ="Common:left" />
+		<div id = 'right'>
+			<ul id = 'sel-edit'>
+				<li class = 'edit-cur'> 基本信息</li>
+				<li>修改密码</li>
+				<li>修改头像</li>
+			</ul>
+			<div class = 'form'>
+				<form action ="{:U('Usersetting/editbasic')}" method = 'post'>
+					<p>
+						<label for='nickname'><span class = 'red'>*</span>昵称：</label>
+						<input type = 'text' name = 'nickname' class = 'input' value = "{$edituser['username']}" class = 'input'>
+					</p>
+					<p>
+						<label for='truename'>真实姓名</label>
+						<input type = 'text' name = 'truename' class = 'input' value = "{$edituser['truename']}" >
+					</p>
+					<p>
+						<label for='sex'><span class = 'red'>*</span>性别</label>
+						<if condition = "$edituser.sex eq 'm'">
+							<input type = 'radio' name = 'sex' value = 'm' checked = 'true' >
+						<else/>
+							<input type = 'radio' name = 'sex' value = 'm' >
+						</if>
+						 &nbsp;男&nbsp;&nbsp;
+						<if condition = "$edituser.sex eq 'f'">
+							<input type = 'radio' name = 'sex' value = 'f' checked = 'true' >
+						<else/>
+							<input type = 'radio' name = 'sex' value = 'f' >
+						</if>
+						 &nbsp;女&nbsp;
+					</p>
+					<p>
+						<label>所在地</label>
+						<select name = 'province'>
+							<option value = ''>请选择</option>
+						</select>
+						&nbsp;&nbsp;
+						<select name = 'city'>
+							<option value =''> 请选择</option>
+						</select>
+					</p>
+					<p>
+						<label>星座</label>
+						<select>
+							<option value = ''>请选择</option>
+						</select>
+					</p>
+					<p>
+						<label for = 'intro' class = 'intro'>一句话介绍自己</label>
+						<textarea name = 'intro'></textarea>
+					</p>
+					<p>
+						<input type = 'submit' value = '保存修改' class = 'edit-sub'>
+					</p>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<include file = "Common:bottom" />
+</body>
+</html>
