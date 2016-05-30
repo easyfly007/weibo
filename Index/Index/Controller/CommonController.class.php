@@ -24,5 +24,6 @@ class CommonController extends Controller {
 
 		if (!session('uid'))
 			redirect(U('Login/index'));
+		$this->loginuser = M('userinfo')->where(array('uid'=>session('uid')))->find();
 	}
 }

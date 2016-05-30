@@ -1,4 +1,13 @@
-<?php if (!defined('THINK_PATH')) exit();?>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html xmlns = "http://www.w3.org/1999/xhtml" xml:lang='en'>
+<header>
+	<META http-equiv= "Content-Type" content = "text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/nav.css" />
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/bottom.css" />
+	<script type="text/javascript" src="/weibo/Public/Js/jquery-2.2.3.min.js"></script>
+	<script type="text/javascript" src="/weibo/Public/Js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/weibo/Public/Js/nav.js"></script>
+
 	<title>微博首页</title>
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/nav.css" />
     <link rel="stylesheet" type="text/css" href="/weibo/Public/Css/index.css" />
@@ -28,7 +37,7 @@
 					</form>
 				</div>
 				<div class = 'user fleft'> 
-					<a href="">user02</a>
+					<a href=""><?php echo ($loginuser["username"]); ?></a>
 				</div>
 				<ul class = 'top_right fleft'>
 					<li title = '快速发微博' class = 'fast_send'><i class = 'icon icon-write'></i></li>

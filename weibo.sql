@@ -1,4 +1,5 @@
-create database db_weibo default charset utf8;
+create database db_weibo default charset 'utf8' collate 'utf8_general_ci';
+ALTER DATABASE db_weibo DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 use db_weibo;
 
@@ -9,7 +10,7 @@ create table tb_user(
 	registime int(10) not null,
 	logintime int(20) not null,
 	locked tinyint(1) default 0
-);
+) default charset = utf8;
 
 create table tb_userinfo(
 	id int not null primary key auto_increment,

@@ -1,12 +1,25 @@
-<?php if (!defined('THINK_PATH')) exit();?>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html xmlns = "http://www.w3.org/1999/xhtml" xml:lang='en'>
+<header>
+	<META http-equiv= "Content-Type" content = "text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/nav.css" />
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/bottom.css" />
+	<script type="text/javascript" src="/weibo/Public/Js/jquery-2.2.3.min.js"></script>
+	<script type="text/javascript" src="/weibo/Public/Js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/weibo/Public/Js/nav.js"></script>
+
 	<title>用户设置首页</title>
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/nav.css" />
-    <link rel="stylesheet" type="text/css" href="/weibo/Public/Css/bottom.csxs" />
+    <link rel="stylesheet" type="text/css" href="/weibo/Public/Css/bottom.css" />
     <script type="text/javascript" src="/weibo/Public/Js/nav.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/weibo/Public/Css/edit.css" />
-    <script type="text/javascript" src="/weibo/Public/Js/edit.js"></script>
+    <script type="text/javascript" src="/weibo/Public/Js/useredit.js"></script>
     <script type="text/javascript" src="/weibo/Public/Js/city.js"></script>
+    <script type="text/javascript">
+    	// var constellation = $loginuser.constellation;
+    	// alert(constellation);
+    </script>
 
 
 </header>
@@ -31,7 +44,7 @@
 					</form>
 				</div>
 				<div class = 'user fleft'> 
-					<a href="">user02</a>
+					<a href=""><?php echo ($loginuser["username"]); ?></a>
 				</div>
 				<ul class = 'top_right fleft'>
 					<li title = '快速发微博' class = 'fast_send'><i class = 'icon icon-write'></i></li>
@@ -69,7 +82,7 @@
 			</div>
 		</div>
 	</div>
-	<div style = 'height:60px; opcity:10'></div>
+	<div style = "height:60px; opcity:10"></div>
 	<div class = 'main'>
 		<!-- 左侧边栏 -->
 		<div id = 'left' class = 'fleft'>
@@ -101,19 +114,19 @@
 				<form action ="<?php echo U('Usersetting/editbasic');?>" method = 'post'>
 					<p>
 						<label for='nickname'><span class = 'red'>*</span>昵称：</label>
-						<input type = 'text' name = 'nickname' class = 'input' value = "<?php echo ($edituser['username']); ?>" class = 'input'>
+						<input type = 'text' name = 'nickname' class = 'input' value = "<?php echo ($loginuser['username']); ?>" class = 'input'>
 					</p>
 					<p>
 						<label for='truename'>真实姓名</label>
-						<input type = 'text' name = 'truename' class = 'input' value = "<?php echo ($edituser['truename']); ?>" >
+						<input type = 'text' name = 'truename' class = 'input' value = "<?php echo ($loginuser['truename']); ?>" >
 					</p>
 					<p>
 						<label for='sex'><span class = 'red'>*</span>性别</label>
-						<?php if($edituser["sex"] == 'm'): ?><input type = 'radio' name = 'sex' value = 'm' checked = 'true' >
+						<?php if($loginuser["sex"] == 'm'): ?><input type = 'radio' name = 'sex' value = 'm' checked = 'true' >
 						<?php else: ?>
 							<input type = 'radio' name = 'sex' value = 'm' ><?php endif; ?>
 						 &nbsp;男&nbsp;&nbsp;
-						<?php if($edituser["sex"] == 'f'): ?><input type = 'radio' name = 'sex' value = 'f' checked = 'true' >
+						<?php if($loginuser["sex"] == 'f'): ?><input type = 'radio' name = 'sex' value = 'f' checked = 'true' >
 						<?php else: ?>
 							<input type = 'radio' name = 'sex' value = 'f' ><?php endif; ?>
 						 &nbsp;女&nbsp;
@@ -129,14 +142,26 @@
 						</select>
 					</p>
 					<p>
-						<label>星座</label>
-						<select>
+						<label for ='constellation'>星座</label>
+						<select name = 'constellation'>
 							<option value = ''>请选择</option>
+							<option value = "摩羯座">摩羯座</option>
+							<option value = "水瓶座">水瓶座</option>
+							<option value = "双鱼座">双鱼座</option>
+							<option value = "白羊座">白羊座</option>
+							<option value = "金牛座">金牛座</option>
+							<option value = "双子座">双子座</option>
+							<option value = "巨蟹座">巨蟹座</option>
+							<option value = "狮子座">狮子座</option>
+							<option value = "处女座">处女座</option>
+							<option value = "天秤座">天秤座</option>
+							<option value = "天蝎座">天蝎座</option>
+							<option value = "射手座">射手座</option>
 						</select>
 					</p>
 					<p>
 						<label for = 'intro' class = 'intro'>一句话介绍自己</label>
-						<textarea name = 'intro'></textarea>
+						<textarea name = 'intro' value = '<?php echo ($loginuser["intro"]); ?>'></textarea>
 					</p>
 					<p>
 						<input type = 'submit' value = '保存修改' class = 'edit-sub'>

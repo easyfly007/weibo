@@ -12,6 +12,7 @@ class LoginController extends Controller {
 
     // 获取验证码
     public function verify(){
+        ob_end_clean();
     	$Verify = new \Think\Verify();
 		$Verify->entry();
     }

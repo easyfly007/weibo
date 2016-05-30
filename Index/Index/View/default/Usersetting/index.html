@@ -1,12 +1,16 @@
-<include file ="Commom:header" />
+<include file ="Common:header" />
 	<title>用户设置首页</title>
 	<css file = "__PUBLIC__/Css/nav.css" />
-    <css file = "__PUBLIC__/Css/bottom.csxs" />
+    <css file = "__PUBLIC__/Css/bottom.css" />
     <js file = '__PUBLIC__/Js/nav.js' />
 
     <css file = "__PUBLIC__/Css/edit.css" />
-    <js file = '__PUBLIC__/Js/edit.js' />
+    <js file = '__PUBLIC__/Js/useredit.js' />
     <js file = '__PUBLIC__/Js/city.js' />
+    <script type="text/javascript">
+    	// var constellation = $loginuser.constellation;
+    	// alert(constellation);
+    </script>
 
 
 </header>
@@ -14,7 +18,7 @@
 <body>
 	<!-- 顶部导航栏 -->
 	<include file = "Common:nav" />
-	<div style = 'height:60px; opcity:10'></div>
+	<div style = "height:60px; opcity:10"></div>
 	<div class = 'main'>
 		<!-- 左侧边栏 -->
 		<include file ="Common:left" />
@@ -28,21 +32,21 @@
 				<form action ="{:U('Usersetting/editbasic')}" method = 'post'>
 					<p>
 						<label for='nickname'><span class = 'red'>*</span>昵称：</label>
-						<input type = 'text' name = 'nickname' class = 'input' value = "{$edituser['username']}" class = 'input'>
+						<input type = 'text' name = 'nickname' class = 'input' value = "{$loginuser['username']}" class = 'input'>
 					</p>
 					<p>
 						<label for='truename'>真实姓名</label>
-						<input type = 'text' name = 'truename' class = 'input' value = "{$edituser['truename']}" >
+						<input type = 'text' name = 'truename' class = 'input' value = "{$loginuser['truename']}" >
 					</p>
 					<p>
 						<label for='sex'><span class = 'red'>*</span>性别</label>
-						<if condition = "$edituser.sex eq 'm'">
+						<if condition = "$loginuser.sex eq 'm'">
 							<input type = 'radio' name = 'sex' value = 'm' checked = 'true' >
 						<else/>
 							<input type = 'radio' name = 'sex' value = 'm' >
 						</if>
 						 &nbsp;男&nbsp;&nbsp;
-						<if condition = "$edituser.sex eq 'f'">
+						<if condition = "$loginuser.sex eq 'f'">
 							<input type = 'radio' name = 'sex' value = 'f' checked = 'true' >
 						<else/>
 							<input type = 'radio' name = 'sex' value = 'f' >
@@ -60,14 +64,26 @@
 						</select>
 					</p>
 					<p>
-						<label>星座</label>
-						<select>
+						<label for ='constellation'>星座</label>
+						<select name = 'constellation'>
 							<option value = ''>请选择</option>
+							<option value = "摩羯座">摩羯座</option>
+							<option value = "水瓶座">水瓶座</option>
+							<option value = "双鱼座">双鱼座</option>
+							<option value = "白羊座">白羊座</option>
+							<option value = "金牛座">金牛座</option>
+							<option value = "双子座">双子座</option>
+							<option value = "巨蟹座">巨蟹座</option>
+							<option value = "狮子座">狮子座</option>
+							<option value = "处女座">处女座</option>
+							<option value = "天秤座">天秤座</option>
+							<option value = "天蝎座">天蝎座</option>
+							<option value = "射手座">射手座</option>
 						</select>
 					</p>
 					<p>
 						<label for = 'intro' class = 'intro'>一句话介绍自己</label>
-						<textarea name = 'intro'></textarea>
+						<textarea name = 'intro' value = '{$loginuser.intro}'></textarea>
 					</p>
 					<p>
 						<input type = 'submit' value = '保存修改' class = 'edit-sub'>
