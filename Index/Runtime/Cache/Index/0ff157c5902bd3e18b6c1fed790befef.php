@@ -14,11 +14,12 @@
     <script type="text/javascript" src="/weibo/Public/Js/nav.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/weibo/Public/Css/edit.css" />
-    <script type="text/javascript" src="/weibo/Public/Js/useredit.js"></script>
     <script type="text/javascript" src="/weibo/Public/Js/city.js"></script>
+    <script type="text/javascript" src="/weibo/Public/Js/useredit.js"></script>
+
     <script type="text/javascript">
-    	// var constellation = $loginuser.constellation;
-    	// alert(constellation);
+    	var constellation = "<?php echo ($loginuser["constellation"]); ?>";
+    	var location = "<?php echo ($loginuser["location"]); ?>";
     </script>
 
 

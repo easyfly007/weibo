@@ -11,6 +11,7 @@ class UsersettingController extends CommonController {
     	$field = 'uid, username, truename, sex, location, constellation, intro';
     	$this->loginuser = M('userinfo')->where($where)->field($field)->find();//find();
     	// 修改个人设置，默认值为原来设置
+        p($this->loginuser);
     	$this->display();
     }
 

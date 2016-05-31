@@ -1,5 +1,6 @@
 create database db_weibo default charset 'utf8' collate 'utf8_general_ci';
 ALTER DATABASE db_weibo DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE tb_user DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 use db_weibo;
 
@@ -29,7 +30,7 @@ create table tb_userinfo(
 	fans int not null default 0,
 	weibo int not null default 0,
 	foreign key (uid) references tb_user (id)
-);
+) default charset = utf8;
 
 -- 我对关注的人的分组
 -- 不同用户的关注的人的群，哪怕名字相同，在数据库上也是不同的
@@ -38,7 +39,7 @@ create table tb_group(
 	name char(45) not null,
 	uid int not null, -- 用户的 id
 	foreign key(uid) references tb_user(id)
-);
+) default charset = utf8;
 
 -- 粉丝关系表
 -- 粉丝数目
@@ -49,7 +50,7 @@ create table tb_follow(
 	fans int not null,   
 	gid int not null, 
 	foreign key (gid) references tb_group (id)
-);
+) default charset = utf8;
 ALTER TABLE tb_follow ADD INDEX (follow);
 ALTER TABLE tb_follow ADD INDEX (fans);
 
@@ -63,7 +64,9 @@ create table tb_letter(
 	uto int not null,
 	foreign key (ufrom) references tb_user(id),
 	foreign key (uto) references tb_user(id) 
-);
+)default charset = utf8;
+
+
 
 create table tb_weibo(
 	id int not null primary key auto_increment,
@@ -75,7 +78,7 @@ create table tb_weibo(
 	comment int not null default 0, -- 评论
 	uid int not null,
 	foreign key (uid) references tb_user(id)
-);
+)default charset = utf8;
 
 create table tb_picture(
 	id int not null primary key auto_increment,
@@ -84,7 +87,7 @@ create table tb_picture(
 	max varchar(60) not null, 
 	wid int not null, -- 所属微博id
 	foreign key (wid) references tb_weibo (id)
-);
+)default charset = utf8;
 
 -- 注意：注释和--之间必须要有空格
 
@@ -95,7 +98,7 @@ create table tb_comment(
 	uid int not null,
 	wid int not null,
 	foreign key (uid) references tb_user(id)
-);
+)default charset = utf8;
 ALTER TABLE tb_comment ADD INDEX (uid);
 ALTER table tb_comment add index (wid);
 
@@ -106,7 +109,7 @@ create table tb_keep(
 	wid int not null,
 	foreign key (uid) references tb_user(id),
 	foreign key (wid) references tb_weibo(id)
-);
+)default charset = utf8;
 alter table tb_keep add index (uid);
 alter table tb_keep add index (wid);
 
@@ -118,6 +121,6 @@ create table tb_atme(
 	foreign key (wid) references tb_weibo(id),
 	foreign key (uid) references tb_user(id)
 	-- at 了谁，谁at 的可以从 wid 找到，也就是发微博的人
-);
+)default charset = utf8;
 alter table tb_atme add index (uid);
 alter table tb_atme add index (wid);
