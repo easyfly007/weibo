@@ -1,16 +1,21 @@
 <include file ="Common:header" />
 	<title>用户设置首页</title>
+	<css file = "__PUBLIC__/Uploadify/uploadify.css" />
+	<js file = "__PUBLIC__/Uploadify/jquery.uploadify.min.js" />
 	<css file = "__PUBLIC__/Css/nav.css" />
-    <css file = "__PUBLIC__/Css/bottom.css" />
-    <js file = '__PUBLIC__/Js/nav.js' />
+	<css file = "__PUBLIC__/Css/bottom.css" />
 
-    <css file = "__PUBLIC__/Css/edit.css" />
-    <js file = '__PUBLIC__/Js/city.js' />
-    <js file = '__PUBLIC__/Js/useredit.js' />
+	<css file = "__PUBLIC__/Css/edit.css" />
+	<js file = '__PUBLIC__/Js/city.js' />
+	<js file = '__PUBLIC__/Js/useredit.js' />
 
     <script type="text/javascript">
+    // for useredit.js
     	var constellation = "{$loginuser.constellation}";
     	var thelocation = "{$loginuser.location}";
+    	var PUBLIC = "__PUBLIC__";
+    	var uploadUrl = "{:U('Common/uploadFace')}";
+    	var sid = "{:session_id()}";
     </script>
 
 
@@ -26,8 +31,8 @@
 		<div id = 'right'>
 			<ul id = 'sel-edit'>
 				<li class = 'edit-cur'> 基本信息</li>
-				<li>修改密码</li>
 				<li>修改头像</li>
+				<li>修改密码</li>
 			</ul>
 			<div class = 'form'>
 				<form action ="{:U('Usersetting/editbasic')}" method = 'post'>
@@ -89,6 +94,40 @@
 					<p>
 						<input type = 'submit' value = '保存修改' class = 'edit-sub'>
 					</p>
+				</form>
+			</div>
+
+			<div class = 'form hidden'>
+				<form action ="" action = "">
+					<div class = 'edit-face'>
+						<img src="__PUBLIC__/Images/noface.gif" width = '180' height = '180'>
+						<p>
+							<input type = 'file' name = 'face' id = 'face'/>
+						</p>
+						<p>
+							<input type = 'submit' value = '保存修改' class = 'edit-sub' />
+						</p>
+					</div>
+				</form>
+			</div>
+
+			<div class = 'form hidden'>
+				<form action = "" method = "">
+					<p class= 'account' > 登录邮箱：<span>admin@admin.com</span></p>
+					<p>
+						<label for = ""> <span class = "red">*</span> 旧密码</label>
+						<input type = 'password' name = 'oldpwd'>
+					</p>
+					<p>
+						<label for = ""> <span class = 'red'>*</span> 新的密码</label>
+						<input type = 'password' name = 'newpwd'>
+					</p>
+					<p>
+						<label for = ""> <span class = 'red'>*</span> 再输入一遍</label>
+						<input type = 'password' name = 'newpwd'>
+					</p>
+					<p>
+						<input type = 'submit' value ="确认修改" class = 'edit-sub'>
 				</form>
 			</div>
 		</div>

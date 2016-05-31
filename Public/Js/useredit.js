@@ -42,8 +42,23 @@ $(function(){
 		}
 	});
 
-
 	// 星座默认选项
 	$('select[name=constellation]').val(constellation);
+
+	// 头像上传
+	$('#face').uploadify({
+		swf: PUBLIC + '/Uploadify/uploadify.swf', // Uploadify 核心Flash文件
+		uploader: uploadUrl, // php 处理脚本地址
+		width : 120,   				  		// 上传按钮宽度
+		height: 38,     				    // 上传按钮高度
+		buttonImage:  PUBLIC + '/Uploadify/upload_btn.jpg', // 按钮背景图
+		fileTypeDesc: "Image File", //上传图片的类型提示文字
+		fileTypeExts: "*.jpg; *.gif; *.jpeg; *.png", // 允许选择的文件后缀类型
+		// formData: {'session_id': sid},
+		// 上传成功后的回调函数
+		onUploadSuccess: function (file, data, response){
+			alert(data);
+		}
+	});
 
 });

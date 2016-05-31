@@ -26,4 +26,8 @@ class CommonController extends Controller {
 			redirect(U('Login/index'));
 		$this->loginuser = M('userinfo')->where(array('uid'=>session('uid')))->find();
 	}
+
+	public function uploadFace(){
+		echo '111';
+	}
 }
