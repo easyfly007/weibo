@@ -9,17 +9,22 @@
 	<script type="text/javascript" src="/weibo/Public/Js/nav.js"></script>
 
 	<title>用户设置首页</title>
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Uploadify/uploadify.css" />
+	<script type="text/javascript" src="/weibo/Public/Uploadify/jquery.uploadify.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/nav.css" />
-    <link rel="stylesheet" type="text/css" href="/weibo/Public/Css/bottom.css" />
-    <script type="text/javascript" src="/weibo/Public/Js/nav.js"></script>
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/bottom.css" />
 
-    <link rel="stylesheet" type="text/css" href="/weibo/Public/Css/edit.css" />
-    <script type="text/javascript" src="/weibo/Public/Js/city.js"></script>
-    <script type="text/javascript" src="/weibo/Public/Js/useredit.js"></script>
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/edit.css" />
+	<script type="text/javascript" src="/weibo/Public/Js/city.js"></script>
+	<script type="text/javascript" src="/weibo/Public/Js/useredit.js"></script>
 
     <script type="text/javascript">
+    // for useredit.js
     	var constellation = "<?php echo ($loginuser["constellation"]); ?>";
-    	var location = "<?php echo ($loginuser["location"]); ?>";
+    	var thelocation = "<?php echo ($loginuser["location"]); ?>";
+    	var PUBLIC = "/weibo/Public";
+    	var uploadUrl = "<?php echo U('Common/uploadFace');?>";
+    	var sid = "<?php echo session_id();?>";
     </script>
 
 
@@ -40,7 +45,7 @@
 				</ul>
 				<div id = 'search' class = 'fleft'>
 					<form action = '' method = 'get'>
-						<input type = 'text' name = 'keyword' id = 'sech_text' class = 'fleft' value = '搜索微博、找人' />
+						<input type = 'text' name = 'keyword' id = 'sech_text' class = 'fleft' placeholder = '搜索微博、找人' />
 						<input type = 'submit' value = '' id = 'sech_sub' class = 'fleft' /> 
 					</form>
 				</div>
@@ -108,8 +113,8 @@
 		<div id = 'right'>
 			<ul id = 'sel-edit'>
 				<li class = 'edit-cur'> 基本信息</li>
-				<li>修改密码</li>
 				<li>修改头像</li>
+				<li>修改密码</li>
 			</ul>
 			<div class = 'form'>
 				<form action ="<?php echo U('Usersetting/editbasic');?>" method = 'post'>
@@ -167,6 +172,40 @@
 					<p>
 						<input type = 'submit' value = '保存修改' class = 'edit-sub'>
 					</p>
+				</form>
+			</div>
+
+			<div class = 'form hidden'>
+				<form action ="" action = "">
+					<div class = 'edit-face'>
+						<img src="/weibo/Public/Images/noface.gif" width = '180' height = '180'>
+						<p>
+							<input type = 'file' name = 'face' id = 'face'/>
+						</p>
+						<p>
+							<input type = 'submit' value = '保存修改' class = 'edit-sub' />
+						</p>
+					</div>
+				</form>
+			</div>
+
+			<div class = 'form hidden'>
+				<form action = "" method = "">
+					<p class= 'account' > 登录邮箱：<span>admin@admin.com</span></p>
+					<p>
+						<label for = ""> <span class = "red">*</span> 旧密码</label>
+						<input type = 'password' name = 'oldpwd'>
+					</p>
+					<p>
+						<label for = ""> <span class = 'red'>*</span> 新的密码</label>
+						<input type = 'password' name = 'newpwd'>
+					</p>
+					<p>
+						<label for = ""> <span class = 'red'>*</span> 再输入一遍</label>
+						<input type = 'password' name = 'newpwd'>
+					</p>
+					<p>
+						<input type = 'submit' value ="确认修改" class = 'edit-sub'>
 				</form>
 			</div>
 		</div>

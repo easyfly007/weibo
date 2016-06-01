@@ -28,6 +28,35 @@ class CommonController extends Controller {
 	}
 
 	public function uploadFace(){
-		echo '111';
+		if (!IS_POST)
+			$this->error("禁止访问");
+		$upload = new \Think\Upload();// 实例化上传类
+    	$upload->maxSize   =     C('UPLOAD_MAX_SIZE');
+    	//3145728 ;// 设置附件上传大小
+    	
+    	$upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+    	$upload->rootPath  =     C('UPLOAD_ROOT'); // './uploads/'; // 设置附件上传根目录
+    	$upload->savePath  =     C('UPLOAD_FACE'); // 设置附件上传（子）目录
+		$upload->uploadReplace = true;    	
+    	// 上传文件 
+    	$info   =   $upload->upload();
+    	if(!$info) {
+    		// 上传错误提示错误信息
+        	echo "0";
+        	//$this->error($upload->getError());
+    	}else{
+    		// 上传成功
+    	    foreach($info as $file){
+    	    	echo $file['savepath'].$file['savename'];
+    	    	p($file);
+    		}
+    	}
+
+	  	// $image = new \Think\Image(); 
+		// $image->open('./1.jpg');
+		// // 按照原图的比例生成一个最大为150*150的缩略图并保存为thumb.jpg
+		// $image->thumb(150, 150)->save('./thumb.jpg');
+
+
 	}
 }
