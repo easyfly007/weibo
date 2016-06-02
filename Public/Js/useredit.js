@@ -57,7 +57,14 @@ $(function(){
 		// formData: {'session_id': sid},
 		// 上传成功后的回调函数
 		onUploadSuccess: function (file, data, response){
-			alert(data);
+			if (data == 0)
+				alert(0);
+			else
+				alert(1);
+			// alert('the file ' + file.name + "uploaded successfully");
+			// alert('the final file in the server is: ' + data);
+			// eval('var data = ' + data);
+			// alert(1);
 		}
 	});
 

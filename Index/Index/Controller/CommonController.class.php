@@ -41,22 +41,22 @@ class CommonController extends Controller {
     	// 上传文件 
     	$info   =   $upload->upload();
     	if(!$info) {
+    		return 0;
     		// 上传错误提示错误信息
-        	echo "0";
-        	//$this->error($upload->getError());
+        	return $ret = array('status'=>0,);
     	}else{
-    		// 上传成功
+    		return 1;
+    		$ret = '';
     	    foreach($info as $file){
-    	    	echo $file['savepath'].$file['savename'];
-    	    	p($file);
-    		}
+    	    	$ret += $file['savepath'].$file['savename'];
+    	    }	
     	}
+    	echo $ret;
+    	return $ret;
 
 	  	// $image = new \Think\Image(); 
 		// $image->open('./1.jpg');
 		// // 按照原图的比例生成一个最大为150*150的缩略图并保存为thumb.jpg
 		// $image->thumb(150, 150)->save('./thumb.jpg');
-
-
 	}
 }
