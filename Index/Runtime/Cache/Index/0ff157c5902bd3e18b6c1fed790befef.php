@@ -1,6 +1,6 @@
 <?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html xmlns = "http://www.w3.org/1999/xhtml" xml:lang='en' >
-<header>
+<head>
 	<META http-equiv= "Content-Type" content = "text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/nav.css" />
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/bottom.css" />
@@ -25,6 +25,7 @@
     	var PUBLIC = "/weibo/Public";
     	var uploadUrl = "<?php echo U('Common/uploadFace');?>";
     	var sid = "<?php echo session_id();?>";
+    	var ROOT = '/weibo';
     </script>
 
 
@@ -176,13 +177,19 @@
 			</div>
 
 			<div class = 'form hidden'>
-				<form action ="" action = "">
+				<form action ="<?php echo U('Usersetting/editface');?>" method = "post">
 					<div class = 'edit-face'>
-						<img src="/weibo/Public/Images/noface.gif" width = '180' height = '180'>
+						<?php if($loginuser['face180']): ?><img src="$loginuser['face180']" width = '180' height = '180' id = 'face-image'>
+						<?php else: ?>
+							<img src="/weibo/Public/Images/noface.gif" width = '180' height = '180' id = 'face-image'>
+							<img src=""><?php endif; ?>
 						<p>
 							<input type = 'file' name = 'face' id = 'face'/>
 						</p>
 						<p>
+							<input type = 'hidden' name = 'face180' value = '1'>
+							<input type = 'hidden' name = 'face80'  value = '2'>
+							<input type = 'hidden' name = 'face50'  value = '3'>
 							<input type = 'submit' value = '保存修改' class = 'edit-sub' />
 						</p>
 					</div>

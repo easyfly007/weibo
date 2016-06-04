@@ -54,17 +54,21 @@ $(function(){
 		buttonImage:  PUBLIC + '/Uploadify/upload_btn.jpg', // 按钮背景图
 		fileTypeDesc: "Image File", //上传图片的类型提示文字
 		fileTypeExts: "*.jpg; *.gif; *.jpeg; *.png", // 允许选择的文件后缀类型
-		// formData: {'session_id': sid},
 		// 上传成功后的回调函数
+		// data 是 uploader 后台处理中 echo 的内容
 		onUploadSuccess: function (file, data, response){
-			if (data == 0)
-				alert(0);
-			else
-				alert(1);
-			// alert('the file ' + file.name + "uploaded successfully");
-			// alert('the final file in the server is: ' + data);
-			// eval('var data = ' + data);
-			// alert(1);
+			eval('var data=' + data);
+			if (data.status == 1){
+				var facename = data.fullname;
+				var faceurl = ROOT + '/' + data.fullname;
+
+				$('#face-image').attr('src', faceurl);
+				$('input[name=face180]').val(facename);
+				$('input[name=face80]').val(facename);
+				$('input[name=face50]').val(facename);
+			}else{
+				alert(data.msg);
+			}
 		}
 	});
 

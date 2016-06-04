@@ -16,6 +16,7 @@
     	var PUBLIC = "__PUBLIC__";
     	var uploadUrl = "{:U('Common/uploadFace')}";
     	var sid = "{:session_id()}";
+    	var ROOT = '__ROOT__';
     </script>
 
 
@@ -98,13 +99,21 @@
 			</div>
 
 			<div class = 'form hidden'>
-				<form action ="" action = "">
+				<form action ="{:U('Usersetting/editface')}" method = "post">
 					<div class = 'edit-face'>
-						<img src="__PUBLIC__/Images/noface.gif" width = '180' height = '180'>
+						<if condition = "$loginuser['face180']">
+							<img src="__ROOT__/{$loginuser['face180']}" width = '180' height = '180' id = 'face-image'>
+						<else/>
+							<img src="__PUBLIC__/Images/noface.gif" width = '180' height = '180' id = 'face-image'>
+							<img src="">
+						</if>
 						<p>
 							<input type = 'file' name = 'face' id = 'face'/>
 						</p>
 						<p>
+							<input type = 'hidden' name = 'face180' value = '1'>
+							<input type = 'hidden' name = 'face80'  value = '2'>
+							<input type = 'hidden' name = 'face50'  value = '3'>
 							<input type = 'submit' value = '保存修改' class = 'edit-sub' />
 						</p>
 					</div>

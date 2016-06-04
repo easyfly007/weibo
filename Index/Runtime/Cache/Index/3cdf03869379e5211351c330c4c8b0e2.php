@@ -1,6 +1,6 @@
 <?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
-<html xmlns = "http://www.w3.org/1999/xhtml" xml:lang='en'>
-<header>
+<html xmlns = "http://www.w3.org/1999/xhtml" xml:lang='en' >
+<head>
 	<META http-equiv= "Content-Type" content = "text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/nav.css" />
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/bottom.css" />
