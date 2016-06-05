@@ -1,0 +1,95 @@
+<include file ="Common:header" />
+	<!-- <css file = "__PUBLIC__/Css/edit.css" /> -->
+	<css file = "__PUBLIC__/Css/searchuser.css" />
+
+	<title>用户搜索首页</title>
+
+</header>
+
+<body>
+	<!-- 顶部导航栏 -->
+	<include file = "Common:nav" />
+	<div style = "height:60px; opcity:10"></div>
+	<div class = 'main'>
+		<!-- 左侧边栏 -->
+		<include file ="Common:left" />
+		<div id = 'right'>
+			<p id = 'sech-logo'></p>
+			<div id ='sech'>
+				<div>
+					<form action ="{:U('searchuser')}" method = 'get'>
+						<input type ='text' name = 'keyword' id = 'sech-cons' />
+						<input type = 'submit' value = '搜 索' id= 'sech-sub' />
+					</form>
+				</div>
+			</div>
+			<ul>
+				<li><span class = 'cur'>找人</span></li>
+				<li><span>微博</span></li>
+			</ul>
+		</div>
+		<if condition = "isset($searchusers) and ($searchusers)">
+			<div id ='content'>
+				<div class = 'view_line'>
+					<strong>用户</strong>
+					<span>总共搜索到{$count}条结果</span>
+				</div>
+
+				<ul>
+					<foreach name = 'searchusers' item = 'v'>
+						
+						<li>
+							<dl class = 'list-left'>
+								<dt>
+									<if condition = "$v['face80']" >
+										<img src="__ROOT__/{$v['face80']}" width = '80' height = '80'>
+									<else/>
+										<img src="__PUBLIC__/Images/noface.gif" width = '80' height = '80'>
+									</if>
+								</dt>
+								<dd>
+									<a href="">{$v.username|str_replace = $keyword, "<font style ='color:red' >".$keyword."</font>", ###}</a>
+								</dd>
+								<dd>
+									<if condition ="$v['sex'] eq 'f' ">
+										<i class = 'icon icon-girl'></i>&nbsp;
+									<else/>
+										<i class = 'icon icon-boy'></i>&nbsp;
+									</if>
+									<if condition = "$v['location']">
+										<span>{$v.location}</span>
+									<else/>
+										<span>该用户未设置所在地 </span>
+									</if>
+								</dd>
+								<dd>
+									<span>关注 <a href="">{$v.follow}</a></span>
+									<span class = 'bd-l'>粉丝 <a href="">{$v.fans}</a></span>
+									<span class = 'bd-l'>微博 <a href="">{$v.weibo}</a></span>
+								</dd>
+							</dl>
+							<dl class ='list-right'>
+								<if condition = "$v['ifollowyou'] and $v['youfollowme']" >
+									<dt> 互相关注</dt>
+									<dd> 移除</dd>
+								<elseif condition ="$v['ifollowyou']" />
+									<dt> 已关注</dt>
+									<dd> 移除</dd>
+								<else/>
+									<dt><a href=""> 关注</a></dt>
+								</if>
+							</dl>
+						</li>
+					</foreach>
+					<div align = 'center'>{$page}</div>
+
+				</ul>
+			</div>
+		<else/>
+			<p style = 'text-indent: 7em;'>未找到与<strong style = "color:red">{$keyword}</strong>相关的用户</p>
+		</if>
+	</div>
+
+	<include file = "Common:bottom" />
+</body>
+</html>

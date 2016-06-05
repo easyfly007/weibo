@@ -4,13 +4,13 @@
 			<div class = 'top_wrap'>
 				<div class = "logo fleft"></div>
 				<ul class = 'top_left fleft'>
-					<li class='cur_bg'>首页</li>
+					<li class='cur_bg'><a href="__APP__">首页</a></li>
 					<li><a href="">私信</a></li>
 					<li><a href="">评论</a></li>
 					<li><a href="">@我的</a></li>
 				</ul>
 				<div id = 'search' class = 'fleft'>
-					<form action = '' method = 'get'>
+					<form action = "{:U('Search/searchuser')}" method = 'get'>
 						<input type = 'text' name = 'keyword' id = 'sech_text' class = 'fleft' placeholder = '搜索微博、找人' />
 						<input type = 'submit' value = '' id = 'sech_sub' class = 'fleft' /> 
 					</form>

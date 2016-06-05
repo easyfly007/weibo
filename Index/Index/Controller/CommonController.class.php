@@ -18,6 +18,10 @@ class CommonController extends Controller {
 					if (!$user['locked'])
 						$this->error('自动登录账号被锁定');
 					session('uid', $user['account']);
+					$logintime = time();
+					$user['logintime'] = $logintime;
+					if (!M('user')->save($user))
+						$this->error("无法更新登录时间");
 				}
 			}
 		}

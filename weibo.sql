@@ -49,7 +49,9 @@ create table tb_follow(
 	follow int not null,  
 	fans int not null,   
 	gid int not null, 
-	foreign key (gid) references tb_group (id)
+	foreign key (gid) references tb_group (id),
+	foreign key (follow) references tb_user(id),
+	foreign key (fans) references tb_user(id)
 ) default charset = utf8;
 ALTER TABLE tb_follow ADD INDEX (follow);
 ALTER TABLE tb_follow ADD INDEX (fans);

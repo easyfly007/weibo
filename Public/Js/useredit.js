@@ -72,4 +72,55 @@ $(function(){
 		}
 	});
 
+
+
+	// 修改密码，表单验证
+	$('form[name=changepwd]').validate({
+		errorElement: 'span',
+		success: function(label){
+			label.addClass('success');
+		},
+		rules:{
+			oldpwd : {
+				required: true,
+				remote :{
+					url : checkPwd,
+					type: 'post',
+					dataType: 'json',
+					data: {
+						pwd : function (){
+							return $('#oldpwd').val();
+						}
+					}
+				}
+			},
+			newpwd : {
+				required: true,
+				minlength: 6
+			},
+			newpwd2: {
+				required: true,
+				equalTo: '#newpwd'
+			},
+		},
+
+				
+
+		messages : {
+			oldpwd : {
+				required : "请输入原密码",
+				remote: "密码不正确"
+			},
+			newpwd : {
+				required : "请输入新密码",
+				minlength : "密码至少6位长"
+			},
+			newpwd2:{
+				equalTo: "两次输入的密码不一致",
+			}
+		}
+	});
+
+
+
 });

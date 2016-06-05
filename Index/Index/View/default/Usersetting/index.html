@@ -2,8 +2,9 @@
 	<title>用户设置首页</title>
 	<css file = "__PUBLIC__/Uploadify/uploadify.css" />
 	<js file = "__PUBLIC__/Uploadify/jquery.uploadify.min.js" />
-	<css file = "__PUBLIC__/Css/nav.css" />
-	<css file = "__PUBLIC__/Css/bottom.css" />
+	<js file = "__PUBLIC__/Js/jquery.validate.min.js" />
+	<!-- <css file = "__PUBLIC__/Css/nav.css" />
+	<css file = "__PUBLIC__/Css/bottom.css" /> -->
 
 	<css file = "__PUBLIC__/Css/edit.css" />
 	<js file = '__PUBLIC__/Js/city.js' />
@@ -17,6 +18,7 @@
     	var uploadUrl = "{:U('Common/uploadFace')}";
     	var sid = "{:session_id()}";
     	var ROOT = '__ROOT__';
+    	var checkPwd = "{:U('checkPwd')}";
     </script>
 
 
@@ -121,19 +123,19 @@
 			</div>
 
 			<div class = 'form hidden'>
-				<form action = "" method = "">
+				<form action = "{:U('editpwd')}" method = "post" name  = 'changepwd'>
 					<p class= 'account' > 登录邮箱：<span>admin@admin.com</span></p>
 					<p>
 						<label for = ""> <span class = "red">*</span> 旧密码</label>
-						<input type = 'password' name = 'oldpwd'>
+						<input type = 'password' name = 'oldpwd' id = 'oldpwd'>
 					</p>
 					<p>
 						<label for = ""> <span class = 'red'>*</span> 新的密码</label>
-						<input type = 'password' name = 'newpwd'>
+						<input type = 'password' name = 'newpwd' id = 'newpwd'>
 					</p>
 					<p>
 						<label for = ""> <span class = 'red'>*</span> 再输入一遍</label>
-						<input type = 'password' name = 'newpwd'>
+						<input type = 'password' name = 'newpwd2' id = 'newpwd2'>
 					</p>
 					<p>
 						<input type = 'submit' value ="确认修改" class = 'edit-sub'>

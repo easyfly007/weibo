@@ -10,6 +10,7 @@ class IndexController extends CommonController {
     public function logout(){
     	session('uid', null);
     	cookie('auto',null);
-    	$this->display("Index/index");
+    	redirect(U("Index/index"), 3, "成功注销账号...");
+    	// $this->display("Index/index");
     }
 }

@@ -7,12 +7,14 @@
 	<script type="text/javascript" src="/weibo/Public/Js/jquery-2.2.3.min.js"></script>
 	<script type="text/javascript" src="/weibo/Public/Js/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="/weibo/Public/Js/nav.js"></script>
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Js/index.css" />
 
 	<title>用户设置首页</title>
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Uploadify/uploadify.css" />
 	<script type="text/javascript" src="/weibo/Public/Uploadify/jquery.uploadify.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/nav.css" />
-	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/bottom.css" />
+	<script type="text/javascript" src="/weibo/Public/Js/jquery.validate.min.js"></script>
+	<!-- <link rel="stylesheet" type="text/css" href="/weibo/Public/Css/nav.css" />
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/bottom.css" /> -->
 
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/edit.css" />
 	<script type="text/javascript" src="/weibo/Public/Js/city.js"></script>
@@ -26,6 +28,7 @@
     	var uploadUrl = "<?php echo U('Common/uploadFace');?>";
     	var sid = "<?php echo session_id();?>";
     	var ROOT = '/weibo';
+    	var checkPwd = "<?php echo U('checkPwd');?>";
     </script>
 
 
@@ -39,13 +42,13 @@
 			<div class = 'top_wrap'>
 				<div class = "logo fleft"></div>
 				<ul class = 'top_left fleft'>
-					<li class='cur_bg'>首页</li>
+					<li class='cur_bg'><a href="/weibo/index.php">首页</a></li>
 					<li><a href="">私信</a></li>
 					<li><a href="">评论</a></li>
 					<li><a href="">@我的</a></li>
 				</ul>
 				<div id = 'search' class = 'fleft'>
-					<form action = '' method = 'get'>
+					<form action = "<?php echo U('Search/searchuser');?>" method = 'get'>
 						<input type = 'text' name = 'keyword' id = 'sech_text' class = 'fleft' placeholder = '搜索微博、找人' />
 						<input type = 'submit' value = '' id = 'sech_sub' class = 'fleft' /> 
 					</form>
@@ -94,7 +97,7 @@
 		<!-- 左侧边栏 -->
 		<div id = 'left' class = 'fleft'>
 	<ul class = 'left_nav'>
-		<li><a href=""><i class = 'icon icon-home'></i>&nbsp;首页</a></li>
+		<li><a href="/weibo/index.php"><i class = 'icon icon-home'></i>&nbsp;首页</a></li>
 		<li><a href=""><i></i>提到我的</a></li>
 		<li><a href=""><i></i>评论</a></li>
 		<li><a href=""><i></i>私信</a></li>
@@ -179,7 +182,7 @@
 			<div class = 'form hidden'>
 				<form action ="<?php echo U('Usersetting/editface');?>" method = "post">
 					<div class = 'edit-face'>
-						<?php if($loginuser['face180']): ?><img src="$loginuser['face180']" width = '180' height = '180' id = 'face-image'>
+						<?php if($loginuser['face180']): ?><img src="/weibo/<?php echo ($loginuser['face180']); ?>" width = '180' height = '180' id = 'face-image'>
 						<?php else: ?>
 							<img src="/weibo/Public/Images/noface.gif" width = '180' height = '180' id = 'face-image'>
 							<img src=""><?php endif; ?>
@@ -197,19 +200,19 @@
 			</div>
 
 			<div class = 'form hidden'>
-				<form action = "" method = "">
+				<form action = "<?php echo U('editpwd');?>" method = "post" name  = 'changepwd'>
 					<p class= 'account' > 登录邮箱：<span>admin@admin.com</span></p>
 					<p>
 						<label for = ""> <span class = "red">*</span> 旧密码</label>
-						<input type = 'password' name = 'oldpwd'>
+						<input type = 'password' name = 'oldpwd' id = 'oldpwd'>
 					</p>
 					<p>
 						<label for = ""> <span class = 'red'>*</span> 新的密码</label>
-						<input type = 'password' name = 'newpwd'>
+						<input type = 'password' name = 'newpwd' id = 'newpwd'>
 					</p>
 					<p>
 						<label for = ""> <span class = 'red'>*</span> 再输入一遍</label>
-						<input type = 'password' name = 'newpwd'>
+						<input type = 'password' name = 'newpwd2' id = 'newpwd2'>
 					</p>
 					<p>
 						<input type = 'submit' value ="确认修改" class = 'edit-sub'>

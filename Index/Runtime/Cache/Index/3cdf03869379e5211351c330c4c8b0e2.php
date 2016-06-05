@@ -7,6 +7,7 @@
 	<script type="text/javascript" src="/weibo/Public/Js/jquery-2.2.3.min.js"></script>
 	<script type="text/javascript" src="/weibo/Public/Js/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="/weibo/Public/Js/nav.js"></script>
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Js/index.css" />
 
 	<title>微博首页</title>
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/nav.css" />
@@ -25,13 +26,13 @@
 			<div class = 'top_wrap'>
 				<div class = "logo fleft"></div>
 				<ul class = 'top_left fleft'>
-					<li class='cur_bg'>首页</li>
+					<li class='cur_bg'><a href="/weibo/index.php">首页</a></li>
 					<li><a href="">私信</a></li>
 					<li><a href="">评论</a></li>
 					<li><a href="">@我的</a></li>
 				</ul>
 				<div id = 'search' class = 'fleft'>
-					<form action = '' method = 'get'>
+					<form action = "<?php echo U('Search/searchuser');?>" method = 'get'>
 						<input type = 'text' name = 'keyword' id = 'sech_text' class = 'fleft' placeholder = '搜索微博、找人' />
 						<input type = 'submit' value = '' id = 'sech_sub' class = 'fleft' /> 
 					</form>
@@ -81,7 +82,7 @@
 		<!-- 左侧边栏 -->
 		<div id = 'left' class = 'fleft'>
 	<ul class = 'left_nav'>
-		<li><a href=""><i class = 'icon icon-home'></i>&nbsp;首页</a></li>
+		<li><a href="/weibo/index.php"><i class = 'icon icon-home'></i>&nbsp;首页</a></li>
 		<li><a href=""><i></i>提到我的</a></li>
 		<li><a href=""><i></i>评论</a></li>
 		<li><a href=""><i></i>私信</a></li>
