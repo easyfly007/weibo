@@ -14,6 +14,24 @@
 			<li><a href=""><i></i>分组2</a></li>
 			<li><a href=""><i></i>分组2</a></li>
 		</ul>
-		<span id = 'create_group'><a href="">创建新的分组</a></span>
+		<span id = 'create_group'>创建新的分组</span>
+	</div>
+</div>
+
+<!-- 创建新的分组弹出对话框 -->
+<script type="text/javascript">
+	var addGroupUrl = "{:U('Common/addGroup')}";
+</script>
+<div id = 'add-group'>
+	<div class = 'group_head'>
+		<span class = 'group_text fleft'> 创建好友分组</span>
+	</div>
+	<div class = 'group-name'>
+		<span>分组名称</span>
+		<input type = 'text' name = 'name' id= 'gp-name'>
+	</div>
+	<div class = 'gp-btn-wrap'>
+		<span class = 'add-group-sub'>添加</span>
+		<span class = 'group-cancel'>取消</span>
 	</div>
 </div>

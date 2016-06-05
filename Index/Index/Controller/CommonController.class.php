@@ -39,6 +39,24 @@ class CommonController extends Controller {
 		echo json_encode($upload);
 	}
 
+	// 异步调用，添加新的分组，从 left.js 中调用
+	public function addGroup(){
+		if (!IS_AJAX)
+			$this->error("页面不存在");
+		$uid = session('uid');
+		$groupname = I('post.gname');
+		$data = array(
+			'uid'=>$uid,
+			'name'=>$groupname);
+		if (M('group')->add($data))
+			echo json_encode(array('status'=>1, "msg"=>"分组创建成功"));
+		else
+			echo json_encode(array('status'=>0, "msg"=>"分组创建失败"));
+	}
+
+	/**
+	**/
+
 	// 为了公用这些代码，提炼出单独的函数
 	private function _upload($path, $width, $height){
 		$upload = new \Think\Upload();// 实例化上传类
