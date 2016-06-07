@@ -1,6 +1,9 @@
 <include file ="Common:header" />
 	<title>微博首页</title>
+	<css file = "__PUBLIC__/Uploadify/uploadify.css" />
     <css file = "__PUBLIC__/Css/index.css" />
+
+	<js file = "__PUBLIC__/Uploadify/jquery.uploadify.min.js" />
     <js file = '__PUBLIC__/Js/index.js' />
 
 </header>
@@ -13,6 +16,36 @@
 	<div class = 'main'>
 		<!-- 左侧边栏 -->
 		<include file ="Common:left" />
+		<!-- 中部 -->
+		<div id = 'middle' class = 'fleft'>
+			<div class = 'send_wrap'>
+				<div class = 'send_title fleft'></div>
+				<div class = 'send_prompt fright'>
+					<span>你还可以输入<span id = 'send_num'>150</span>个字</span>
+				</div>
+				<div class = 'send_write'>
+					<form action = '' method = '' name = 'weibo'>
+						<textarea sign = 'weibo' name = 'content'></textarea>
+						<div class = 'send_tool'>
+							<ul class = 'fleft'>
+								<li title = '表情'><i class = 'icon icon-phiz phiz' sign = 'weibo' ></i></li>
+								<li title = '图片'>
+									<i class = 'icon icon-picture'></i>
+									<!-- 图片上传框 -->
+									<div id = 'upload_img' class = 'hidden'>
+										<div class = 'upload-btn'>
+											<input type= 'input' name = 'picture'>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</form>
+				</div>
+
+			</div>
+
+		</div>
 	</div>
 
 	<include file = "Common:bottom" />

@@ -85,7 +85,6 @@ $(function(){
 		createBg('follow-bg');
 		drag(flObj, flObj.find('.follow_head'));
 		$('input[name=follow]').val($(this).attr('uid'));
-		// alert($(this).attr('uid'));
 	});
 	// 关闭关注框
 	$('.follow-cancel').click(function(){
@@ -97,16 +96,19 @@ $(function(){
 	$('.add-follow-sub').click(function(){
 		var follow = $('input[name=follow]').val();
 		var group = $('select[name=gid]').val();
-		alert(follow);
-		alert(group);
+		$.post(addFollowUrl, {
+			follow:follow,
+			gid:group
+		}, function(data){
+			if (data.status){
+				$('.add-fl[uid]='+follow+']').removeClass('add-fl').html("&nbsp;已关注");
+				$('#follow').hide();
+				$('#follow-bg').remove();
+			}else{
+				alert(data.msg);
+			}
+
+		}, 'json');
 	});
-
-
-			// <input type ='hidden' name = 'follow' />
-			// <span class = 'add-follow-sub'>关注</span>
-			// <span class = 'follow-cancel'>取消</span>
-
-
-
 });
 

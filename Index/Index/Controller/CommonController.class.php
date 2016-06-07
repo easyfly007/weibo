@@ -54,8 +54,27 @@ class CommonController extends Controller {
 			echo json_encode(array('status'=>0, "msg"=>"分组创建失败"));
 	}
 
-	/**
-	**/
+	public function addFollow(){
+		if (!IS_AJAX)
+			$this->error("页面不存在");
+		$data = array(
+			'follow'=>I('post.follow'),
+			'gid'=>I('post.gid'),
+			'fans'=>session('uid'));
+		if (M('follow')->data($data)->add())
+		{
+			$where = array(
+				'uid'=>session('uid'),);
+			M('userinfo')->where($where)->setInc('follow');
+			$where = array(
+				'uid'=>I('post.follow'),);
+			M('userinfo')->where($where)->setInc('fans');
+			echo json_encode(array('status'=>1, 'msg'=>"添加关注成功！"));
+		}
+		else
+			echo json_encode(array('status'=>0, 'msg'=>"无法添加关注！"));
+	}
+
 
 	// 为了公用这些代码，提炼出单独的函数
 	private function _upload($path, $width, $height){

@@ -62,7 +62,9 @@
 		// 添加默认分组
 		$loginusergroups[]=array('id'=>0,'name'=>"默认分组")
 	?>
-	
+	<script type="text/javascript">
+		var addFollowUrl = "{:U('Common/addFollow')}";
+	</script>
 	<!-- 	加关注弹出框
 		因为很多个页面都要用到，所以放到了这个页面包含在所有的网页中 -->
 	<div id = 'follow'>
@@ -74,7 +76,7 @@
 			<select name = 'gid'>
 				<!-- <option value = '0'>默认分组</option> -->
 				<foreach name = 'loginusergroups' item = 'v' >
-					<option value = "{$v['uid']}">{$v.name}</option>
+					<option value = "{$v['id']}">{$v.name}</option>
 				</foreach>
 			</select>
 		</div>

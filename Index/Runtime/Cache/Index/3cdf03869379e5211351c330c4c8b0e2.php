@@ -80,9 +80,12 @@
 
 
 	<?php
- $where = array('uid'=>session('uid')); $loginusergroups = M('group')->where($where)->select(); ?>
-<!-- 	加关注弹出框
-	因为很多个页面都要用到，所以放到了这个页面包含在所有的网页中 -->
+ $where = array('uid'=>session('uid')); $loginusergroups = M('group')->where($where)->select(); $loginusergroups[]=array('id'=>0,'name'=>"默认分组") ?>
+	<script type="text/javascript">
+		var addFollowUrl = "<?php echo U('Common/addFollow');?>";
+	</script>
+	<!-- 	加关注弹出框
+		因为很多个页面都要用到，所以放到了这个页面包含在所有的网页中 -->
 	<div id = 'follow'>
 		<div class = 'follow_head'>
 			<span class = 'follow_text fleft'>关注好友</span>
@@ -90,11 +93,12 @@
 		<div class = 'sel-group'>
 			<span>好友分组</span>
 			<select name = 'gid'>
-				<option value = '0'>默认分组</option>
-				<?php if(is_array($loginusergroups)): foreach($loginusergroups as $key=>$v): ?><option value = "$v['id']"><?php echo ($v["name"]); ?></option><?php endforeach; endif; ?>
+				<!-- <option value = '0'>默认分组</option> -->
+				<?php if(is_array($loginusergroups)): foreach($loginusergroups as $key=>$v): ?><option value = "<?php echo ($v['id']); ?>"><?php echo ($v["name"]); ?></option><?php endforeach; endif; ?>
 			</select>
 		</div>
 		<div class = 'fl-btn-wrap'>
+			<input type ='hidden' name = 'follow' />
 			<span class = 'add-follow-sub'>关注</span>
 			<span class = 'follow-cancel'>取消</span>
 		</div>
