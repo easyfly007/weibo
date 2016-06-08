@@ -1,61 +1,58 @@
-// /**
-//  * 首页
-//  * @author Carmen
-//  */
-// $(function () {
+$(function () {
+	// 头像上传
+	$('#picture').uploadify({
+		swf: PUBLIC + '/Uploadify/uploadify.swf', // Uploadify 核心Flash文件
+		uploader: uploadUrl, // php 处理脚本地址
+		width : 120,   				  		// 上传按钮宽度
+		height: 38,     				    // 上传按钮高度
+		buttonImage:  PUBLIC + '/Uploadify/upload_btn.jpg', // 按钮背景图
+		fileTypeDesc: "Image File", //上传图片的类型提示文字
+		fileTypeExts: "*.jpg; *.gif; *.jpeg; *.png", // 允许选择的文件后缀类型
+		// 上传成功后的回调函数
+		// data 是 uploader 后台处理中 echo 的内容
+		onUploadSuccess: function (file, data, response){
+			eval('var data=' + data);
+			if (data.status == 1){
+				var picname = data.fullname;
+				var picurl = ROOT + '/' + data.fullname;
+				// 有一个隐藏域来保存图片地址
+				$('input[name=max]').val(picname);
+				$('input[name=medium]').val(picname);
+				$('input[name=mini]').val(picname);
+				$('#upload_img').fadeOut().next().fadeIn().find('img').attr('src', picurl);
+			}else{
+				alert(data.msg);
+			}
+		}
+	});
 
-// 	/**
-// 	 * 上传微博图片
-// 	 */
-// 	$('#picture').uploadify({
-// 		swf : PUBLIC + '/Uploadify/uploadify.swf',	//引入Uploadify核心Flash文件
-// 		uploader : uploadUrl,	//PHP处理脚本地址
-// 		width : 120,	//上传按钮宽度
-// 		height : 30,	//上传按钮高度
-// 		buttonImage : PUBLIC + '/Uploadify/browse-btn.png',	//上传按钮背景图地址
-// 		fileTypeDesc : 'Image File',	//选择文件提示文字
-// 		fileTypeExts : '*.jpeg; *.jpg; *.png; *.gif',	//允许选择的文件类型
-// 		formData : {'session_id' : sid},
-// 		//上传成功后的回调函数
-// 		onUploadSuccess : function (file, data, response) {
-// 			eval('var data = ' + data);
-// 			if (data.status) {
-// 				$('input[name=max]').val(data.path.max);
-// 				$('input[name=medium]').val(data.path.medium);
-// 				$('input[name=mini]').val(data.path.mini);
-
-// 				$('#upload_img').fadeOut().next().fadeIn().find('img').attr('src', ROOT + '/Uploads/Pic/' + data.path.medium);
-// 			} else {
-// 				alert(data.msg);
-// 			}
-// 		}
-// 	});
 	
-// 	/**
-// 	 * 发布转入框效果
-// 	 */
-// 	$('.send_write textarea').focus(function () {
-// 		//获取焦点时改变边框背景
-// 		$('.ta_right').css('backgroundPosition', '0 -50px');
-// 		//转入文字时
-// 		$(this).css('borderColor', '#FFB941').keyup(function () {
-// 			var content = $(this).val();
-// 			//调用check函数取得当前字数
-// 			var lengths = check(content);
-// 			if (lengths[0] > 0) {//当前有输入内容时改变发布按钮背景
-// 				$('.send_btn').css('backgroundPosition', '-133px -50px');
-// 			} else {//内容为空时发布按钮背景归位
-// 				$('.send_btn').css('backgroundPosition', '-50px -50px');
-// 			};
-// 			//最大允许输入140字个
-// 			if (lengths[0] >= 140) {
-// 				$(this).val(content.substring(0, Math.ceil(lengths[1])));
-// 			}
-// 			var num = 140 - Math.ceil(lengths[0]);
-// 			var msg = num < 0 ? 0 : num;
-// 			//当前字数同步到显示提示
-// 			$('#send_num').html(msg);
-// 		});
+	/**
+	 * 发布转入框效果
+	 */
+	$('.send_write textarea').focus(function () {
+		//获取焦点时改变边框背景
+		$('.ta_right').css('backgroundPosition', '0 -50px');
+		//转入文字时
+		$(this).css('borderColor', '#FFB941').keyup(function () {
+			var content = $(this).val();
+			//调用check函数取得当前字数
+			var lengths = check(content);
+			if (lengths[0] > 0) {//当前有输入内容时改变发布按钮背景
+				$('.send_btn').css('backgroundPosition', '-133px -50px');
+			} else {//内容为空时发布按钮背景归位
+				$('.send_btn').css('backgroundPosition', '-50px -50px');
+			};
+			//最大允许输入140字个
+			if (lengths[0] >= 140) {
+				$(this).val(content.substring(0, Math.ceil(lengths[1])));
+			}
+			var num = 140 - Math.ceil(lengths[0]);
+			var msg = num < 0 ? 0 : num;
+			//当前字数同步到显示提示
+			$('#send_num').html(msg);
+		});
+	});
 // 	//失去焦点时边框背景归位
 // 	}).blur(function () {
 // 		$(this).css('borderColor', '#CCCCCC');
@@ -81,11 +78,11 @@
 // 			return false;
 // 		}
 // 	});
-// 	//显示图片上传框
-// 	$('.icon-picture').click(function () {
-// 		$('#phiz').hide();
-// 		$('#upload_img').show();
-// 	});
+	//显示图片上传框
+	$('.icon-picture').click(function () {
+		$('#phiz').hide();
+		$('#upload_img').show();
+	});
 
 
 
@@ -378,29 +375,27 @@
 // 		};
 // 	});
 
-// });
+});
 
 
-
-
-// /**
-//  * 统计字数
-//  * @param  字符串
-//  * @return 数组[当前字数, 最大字数]
-//  */
-// function check (str) {
-// 	var num = [0, 140];
-// 	for (var i=0; i<str.length; i++) {
-// 		//字符串不是中文时
-// 		if (str.charCodeAt(i) >= 0 && str.charCodeAt(i) <= 255){
-// 			num[0] = num[0] + 0.5;//当前字数增加0.5个
-// 			num[1] = num[1] + 0.5;//最大输入字数增加0.5个
-// 		} else {//字符串是中文时
-// 			num[0]++;//当前字数增加1个
-// 		}
-// 	}
-// 	return num;
-// }
+/**
+ * 统计字数
+ * @param  字符串
+ * @return 数组[当前字数, 最大字数]
+ */
+function check (str) {
+	var num = [0, 140];
+	for (var i=0; i<str.length; i++) {
+		//字符串不是中文时
+		if (str.charCodeAt(i) >= 0 && str.charCodeAt(i) <= 255){
+			num[0] = num[0] + 0.5;//当前字数增加0.5个
+			num[1] = num[1] + 0.5;//最大输入字数增加0.5个
+		} else {//字符串是中文时
+			num[0]++;//当前字数增加1个
+		}
+	}
+	return num;
+}
 
 // /**
 //  * 替换微博内容，去除 <a> 链接与表情图片

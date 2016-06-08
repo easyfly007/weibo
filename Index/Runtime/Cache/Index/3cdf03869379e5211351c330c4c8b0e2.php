@@ -14,8 +14,17 @@
 	<script type="text/javascript" src="/weibo/Public/Js/nav.js"></script>
 	<script type="text/javascript" src="/weibo/Public/Js/left.js"></script>
 	<title>微博首页</title>
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Uploadify/uploadify.css" />
     <link rel="stylesheet" type="text/css" href="/weibo/Public/Css/index.css" />
+
+	<script type="text/javascript" src="/weibo/Public/Uploadify/jquery.uploadify.min.js"></script>
     <script type="text/javascript" src="/weibo/Public/Js/index.js"></script>
+    <script type="text/javascript">
+    	var uploadUrl = "<?php echo U('Common/uploadPic');?>";
+    	var PUBLIC = "/weibo/Public";
+    	var ROOT = "/weibo";
+    	var sid = "<?php echo session('uid');?>";
+    </script>
 
 </header>
 
@@ -144,6 +153,66 @@
 		<span class = 'group-cancel'>取消</span>
 	</div>
 </div>
+		<!-- 中部 -->
+		<div id = 'middle' class = 'fleft'>
+			<div class = 'send_wrap'>
+				<div class = 'send_title fleft'></div>
+				<div class = 'send_prompt fright'>
+					<span>你还可以输入<span id = 'send_num'>150</span>个字</span>
+				</div>
+				<div class = 'send_write'>
+					<form action = "<?php echo U('sendweibo');?>" method = 'post' name = 'weibo'>
+						<textarea sign = 'weibo' name = 'content'></textarea>
+						<div class = 'send_tool'>
+							<ul class = 'fleft'>
+								<li title = '表情'>
+									<i class = 'icon icon-phiz phiz' sign = 'weibo' ></i>
+								</li>
+								<li title = '图片'>
+									<i class = 'icon icon-picture'></i>
+									<!-- 图片上传框 -->
+									<div id = 'upload_img' class = 'hidden'>
+										<div class = 'upload-title'>
+											<p>本地上传</p>
+											<span class = 'close'></span>
+										</div>
+										<div class = 'upload-btn'>
+											<input type ='hidden' name = 'max' value = ''>
+											<input type ='hidden' name = 'medium' value = ''>
+											<input type ='hidden' name = 'mini' value = ''>
+											<input type= 'file' name = 'picture' id='picture'>
+										</div>
+									</div>
+									<!-- 图片上传框 -->
+									<div id = 'pic-show' class = 'hidden'>
+										<img src="" alt = '' />
+									</div>
+								</li>
+							</ul>
+							<input type = 'submit' value = '' class = 'send_btn fright' title = '发布微博' />
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<!-- 微博发布框 -->
+			<div class = 'view_line'>
+				<strong>微博</strong>
+			</div>
+
+			<!-- 普通微博样式 -->
+			<div class = 'weibo'>
+				<!-- 头像 -->
+				<div class = 'face'>
+					<a href="">
+						<img src="" width = '50' height = '50'>
+					</a>
+				</div>
+				<div class = 'wb_cons'>
+
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div id = 'bottom'>

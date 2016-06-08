@@ -35,7 +35,18 @@ class CommonController extends Controller {
 	public function uploadFace(){
 		if (!IS_POST)
 			$this->error("禁止访问");
-		$upload = $this->_upload('Face', '180', '180');
+		$path = C('UPLOAD_FACE');
+		$upload = $this->_upload($path, '180', '180');
+		echo json_encode($upload);
+	}
+	
+	// 上传微博图片
+	public function uploadPic(){
+		if (!IS_POST)
+			$this->error("禁止访问");
+		$path = C('UPLOAD_PIC');
+		// 800*800, 380*380, 120*120 大中小三种尺寸
+		$upload = $this->_upload($path, '800,380,120', '800,380,120');
 		echo json_encode($upload);
 	}
 
@@ -82,7 +93,7 @@ class CommonController extends Controller {
     	$upload->maxSize   =     C('UPLOAD_MAX_SIZE');
     	$upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
     	$upload->rootPath  =     C('UPLOAD_ROOT'); // './uploads/'; // 设置附件上传根目录
-    	$upload->savePath  =     C('UPLOAD_FACE'); // 设置附件上传（子）目录
+    	$upload->savePath  =     $path; //C('UPLOAD_FACE'); // 设置附件上传（子）目录
 		$upload->uploadReplace = true;    	
     	// 上传文件 
     	$info   =   $upload->upload();

@@ -6,6 +6,7 @@ return array(
 	'UPLOAD_MAX_SIZE' => 200000000,
 
 	// 文件上传地址
-	'UPLOAD_ROOT' =>'./Uploads/',
-	'UPLOAD_FACE' =>'./face/',
+	'UPLOAD_ROOT' =>'Uploads/',
+	'UPLOAD_FACE' =>'face/',
+	'UPLOAD_PIC'  =>'pic/',
 );
