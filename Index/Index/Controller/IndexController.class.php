@@ -4,12 +4,10 @@ use Think\Controller;
 class IndexController extends CommonController {
 	    
     public function index(){
-        $today = time();
-        time_format($today);
-        die;
+        // $id = I('get.id');
         $db = D('WeiboView');
 
-        // 获取我关注的 用户id列表
+        // 获取我关注的 用户id列表 +我自己的id
         $uid = array(session('uid'),);
         $where = array('fans'=>session('uid'),);
         $result = M('follow')->field('follow')->where($where)->select();
@@ -25,6 +23,7 @@ class IndexController extends CommonController {
         $where = array(
             'uid'=>array('IN', $uid),);
         $this->weibo = $db->getAllWeibo($where);
+        // p($this->weibo);
     	$this->display();
     }
 

@@ -7,7 +7,7 @@ use Think\Model\ViewModel;
 class WeiboViewModel extends ViewModel {
 	protected $viewFields = array(
 		'weibo'=>array(
-			'id', 'content', 'time', 'forward', 
+			'id', 'content', 'time', 'forward', 'original',
 			'keep', 'comment', 'uid', '_type' =>'LEFT' ),
 		'userinfo' => array(
 			'username', 'face50'=>'face',
@@ -21,6 +21,18 @@ class WeiboViewModel extends ViewModel {
 
 	// 查询所有的微博记录
 	public function getAllWeibo($where){
-		return $this->where($where)->select();
+		$result = $this->where($where)->order('time DESC')->select();
+
+		// 为了那些转发的微博找到原微博
+		if ($result){
+			foreach ($result as $key => $value) {
+				if ($v['forward']>0){
+					// $where = array('id'=>$v['forward']);
+					$result[$key]['forward'] = $this->find($v['forward']); 
+				}
+			}
+		}
+		return $result;
+
 	}
 }

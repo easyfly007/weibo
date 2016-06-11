@@ -9,4 +9,9 @@ return array(
 	'UPLOAD_ROOT' =>'Uploads/',
 	'UPLOAD_FACE' =>'face/',
 	'UPLOAD_PIC'  =>'pic/',
+	// URL 路由功能
+	'URL_ROUTER_ON' => true, // 开启路由
+	'URL_ROUTE_RULES' => array(
+		':id\d'=> 'User/index'
+	),
 );

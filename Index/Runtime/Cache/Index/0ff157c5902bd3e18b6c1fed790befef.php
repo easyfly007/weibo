@@ -3,12 +3,16 @@
 <head>
 	<META http-equiv= "Content-Type" content = "text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/nav.css" />
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/left.css" />
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/middle.css" />
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/right.css" />
+	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/letter.css" />
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/bottom.css" />
+
 	<script type="text/javascript" src="/weibo/Public/Js/jquery-2.2.3.min.js"></script>
 	<script type="text/javascript" src="/weibo/Public/Js/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="/weibo/Public/Js/nav.js"></script>
-	<link rel="stylesheet" type="text/css" href="/weibo/Public/Js/index.css" />
-
+	<script type="text/javascript" src="/weibo/Public/Js/left.js"></script>
 	<title>用户设置首页</title>
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Uploadify/uploadify.css" />
 	<script type="text/javascript" src="/weibo/Public/Uploadify/jquery.uploadify.min.js"></script>
@@ -92,6 +96,32 @@
 			</div>
 		</div>
 	</div>
+
+
+	<?php
+ $where = array('uid'=>session('uid')); $loginusergroups = M('group')->where($where)->select(); $loginusergroups[]=array('id'=>0,'name'=>"默认分组") ?>
+	<script type="text/javascript">
+		var addFollowUrl = "<?php echo U('Common/addFollow');?>";
+	</script>
+	<!-- 	加关注弹出框
+		因为很多个页面都要用到，所以放到了这个页面包含在所有的网页中 -->
+	<div id = 'follow'>
+		<div class = 'follow_head'>
+			<span class = 'follow_text fleft'>关注好友</span>
+		</div>
+		<div class = 'sel-group'>
+			<span>好友分组</span>
+			<select name = 'gid'>
+				<!-- <option value = '0'>默认分组</option> -->
+				<?php if(is_array($loginusergroups)): foreach($loginusergroups as $key=>$v): ?><option value = "<?php echo ($v['id']); ?>"><?php echo ($v["name"]); ?></option><?php endforeach; endif; ?>
+			</select>
+		</div>
+		<div class = 'fl-btn-wrap'>
+			<input type ='hidden' name = 'follow' />
+			<span class = 'add-follow-sub'>关注</span>
+			<span class = 'follow-cancel'>取消</span>
+		</div>
+	</div>
 	<div style = "height:60px; opcity:10"></div>
 	<div class = 'main'>
 		<!-- 左侧边栏 -->
@@ -111,7 +141,25 @@
 			<li><a href=""><i></i>分组2</a></li>
 			<li><a href=""><i></i>分组2</a></li>
 		</ul>
-		<span id = 'create_group'><a href="">创建新的分组</a></span>
+		<span id = 'create_group'>创建新的分组</span>
+	</div>
+</div>
+
+<!-- 创建新的分组弹出对话框 -->
+<script type="text/javascript">
+	var addGroupUrl = "<?php echo U('Common/addGroup');?>";
+</script>
+<div id = 'add-group'>
+	<div class = 'group_head'>
+		<span class = 'group_text fleft'> 创建好友分组</span>
+	</div>
+	<div class = 'group-name'>
+		<span>分组名称</span>
+		<input type = 'text' name = 'name' id= 'gp-name'>
+	</div>
+	<div class = 'gp-btn-wrap'>
+		<span class = 'add-group-sub'>添加</span>
+		<span class = 'group-cancel'>取消</span>
 	</div>
 </div>
 		<div id = 'right'>
