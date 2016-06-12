@@ -4,7 +4,7 @@ use Think\Controller;
 class IndexController extends CommonController {
 	    
     public function index(){
-        // $id = I('get.id');
+        // $content = replace_weibo($content);
         $db = D('WeiboView');
 
         // 获取我关注的 用户id列表 +我自己的id
@@ -23,8 +23,7 @@ class IndexController extends CommonController {
         $where = array(
             'uid'=>array('IN', $uid),);
         $this->weibo = $db->getAllWeibo($where);
-        // p($this->weibo);
-    	$this->display();
+        $this->display();
     }
 
     public function logout(){
@@ -41,7 +40,7 @@ class IndexController extends CommonController {
         $data = array(
             'content' =>$content,
             'time'=>time(),
-            'original'=>1,
+            'original'=>0, // 原创微博，该微博的原微博为0，没有原微博
             'uid'=> session('uid'));
         if ($wid = M('weibo')->data($data)->add())
         {
@@ -64,5 +63,40 @@ class IndexController extends CommonController {
         }
         else
             $this->error("微博发送失败，请重试！");
+    }
+
+    // 转发微博
+    public function turn(){
+        if (!IS_POST)
+            $this->error('页面不存在');
+        $data = array(
+            'content'=>I('post.content'),
+            'original'=>I('post.id'),
+            'time'=>time(),
+            'uid'=>session('uid'),
+        );
+        if (M('weibo')->data($data)->add()){
+            M('weibo')->where(array('id'=>I('post.id'),))->setInc('forward');
+            M('userinfo')->where(array('uid'=>session('uid'),))->setInc('weibo');
+
+            // 转发并评论原微博
+            if (I('post.becomment')){
+                $data = array(
+                    'content'=>I('post.content'),
+                    'time'=>time(),
+                    'wid'=>I('post.id'),
+                    'uid'=>session('uid')
+                );
+                if (M('comment')->data($data)->add()){
+                    M('weibo')->where(array('id'=>I('post.id'),))->setInc('comment');
+                    $this->success('转发并评论原微博成功', U('Index/index'));
+                }
+                else
+                    $this->error('转发成功，但是无法评论原微博');
+            }    
+            $this->success('转发微博成功！',U('Index/index'));
+        }else{
+            $this->error('无法转发微博!');
+        }
     }
 }

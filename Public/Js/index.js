@@ -53,11 +53,13 @@ $(function () {
 			$('#send_num').html(msg);
 		});
 	});
-// 	//失去焦点时边框背景归位
-// 	}).blur(function () {
-// 		$(this).css('borderColor', '#CCCCCC');
-// 		$('.ta_right').css('backgroundPosition', '0 -69px');
-// 	});
+
+	//失去焦点时边框背景归位
+	$('.send_write textarea').blur(function () {
+		$(this).css('borderColor', '#CCCCCC');
+		$('.ta_right').css('backgroundPosition', '0 -69px');
+	});
+
 	//内容提交时处理
 	$('form[name=weibo]').submit(function () {
 		var cons = $('textarea', this);
@@ -107,21 +109,16 @@ $(function () {
 
 
 	// 点击转发按钮，进行转发操作
-	$('.turn').click(function(){
-		var orgObj = $(this).parents('.wb_tool').prev();	
-
-	});
-	// /**
-	//  * 转发框处理
-	//  */
+	/**
+	 * 转发框处理
+	 */
 	 $('.turn').click(function () {
 	 	//获取原微内容并添加到转发框
-	 	var orgObj = $(this).parents('.wb_tool').prev();
+	 	var orgObj = $(this).parents('.wb_tool').prev(); // 得到一个 .wb_cons 下面的 dl，微博的输出内容列表
 	 	var author = $.trim(orgObj.find('.author').html());
 	 	var content = orgObj.find('.content p').html();
 	 	var orgid = $(this).attr('orgid') ? $(this).attr('orgid') : 0;
 	 	var cons = '';
-
 	 	//多重转发时，转发框内容处理
 	 	if (orgid) {
 	 		author = orgObj.find('.author a').html();
@@ -131,7 +128,7 @@ $(function () {
 	 	}
 
 	 	$('.turn_main p').html(author + ' : ' + content);
-	 	$('.turn-cname').html(author);
+	 	$('.turn_cname').html(author);
 	 	$('form[name=turn] textarea').val(cons);
 
 	 	//提取原微博ID
@@ -168,9 +165,9 @@ $(function () {
 	drag($('#turn'), $('.turn_text'));  //拖拽转发框
 
 
-// 	/**
-// 	 * 收藏微博
-// 	 */
+	/**
+	 * 收藏微博
+	 */
 	$('.keep').click(function () {
 		var wid = $(this).attr('wid');
 		var keepUp = $(this).next();
@@ -203,38 +200,39 @@ $(function () {
 	 * 评论框处理
 	 */
 	//点击评论时异步提取数据
-	$('.comment').toggle(function () {
-		//异步加载状态DIV
-		var commentLoad = $(this).parents('.wb_tool').next();
-		var commentList = commentLoad.next();
+	$('.comment').click(function(){
 		alert(11);
-		//提取当前评论按钮对应微博的ID号
-		var wid = $(this).attr('wid');
-		//异步提取评论内容
-		$.ajax({
-			url : getComment,
-			data : {wid : wid},
-			dataType : 'html',
-			type : 'post',
-			beforeSend : function () {
-				commentLoad.show();
-			},
-			success : function (data) {
-				if (data != 'false') {
-					commentList.append(data);
-				}
-			},
-			complete : function () {
-				commentLoad.hide();
-				commentList.show().find('textarea').val('').focus();
-			}
-		});
-		alert(22);
-	}, function () {
-		alert(33);
-		$(this).parents('.wb_tool').next().next().hide().find('dl').remove();
-		$('#phiz').hide();
+
 	});
+	// $('.comment').toggle(function () {
+	// 	//异步加载状态DIV
+	// 	var commentLoad = $(this).parents('.wb_tool').next();
+	// 	var commentList = commentLoad.next();
+	// 	//提取当前评论按钮对应微博的ID号
+	// 	var wid = $(this).attr('wid');
+	// 	//异步提取评论内容
+	// 	$.ajax({
+	// 		url : getComment,
+	// 		data : {wid : wid},
+	// 		dataType : 'html',
+	// 		type : 'post',
+	// 		beforeSend : function () {
+	// 			commentLoad.show();
+	// 		},
+	// 		success : function (data) {
+	// 			if (data != 'false') {
+	// 				commentList.append(data);
+	// 			}
+	// 		},
+	// 		complete : function () {
+	// 			commentLoad.hide();
+	// 			commentList.show().find('textarea').val('').focus();
+	// 		}
+	// 	});
+	// }, function () {
+	// 	$(this).parents('.wb_tool').next().next().hide().find('dl').remove();
+	// 	$('#phiz').hide();
+	// });
 	
 	//评论输入框获取焦点时改变边框颜色
 	$('.comment_list textarea').focus(function () {
@@ -250,11 +248,11 @@ $(function () {
 		}
 	});
 	//回复
-	$('.reply a').live('click', function () {
-		var reply = $(this).parent().siblings('a').html();
-		$(this).parents('.comment_list').find('textarea').val('回复@' + reply + ' ：');
-		return false;
-	});
+	// $('.reply a').live('click', function () {
+	// 	var reply = $(this).parent().siblings('a').html();
+	// 	$(this).parents('.comment_list').find('textarea').val('回复@' + reply + ' ：');
+	// 	return false;
+	// });
 	//提交评论
 	$('.comment_btn').click(function () {
 		var commentList = $(this).parents('.comment_list');
@@ -292,32 +290,32 @@ $(function () {
 	/**
 	 * 评论异步分类处理
 	 */
-	$('.comment-page dd').live('click', function () {
-		var commentList = $(this).parents('.comment_list');
-		var commentLoad = commentList.prev();
-		var wid = $(this).attr('wid');
-		var page = $(this).attr('page');
-		//异步提取评论内容
-		$.ajax({
-			url : getComment,
-			data : {wid : wid, page : page},
-			dataType : 'html',
-			type : 'post',
-			beforeSend : function () {
-				commentList.hide().find('dl').remove();
-				commentLoad.show();
-			},
-			success : function (data) {
-				if (data != 'false') {
-					commentList.append(data);
-				}
-			},
-			complete : function () {
-				commentLoad.hide();
-				commentList.show().find('textarea').val('').focus();
-			}
-		});
-	});
+	// $('.comment-page dd').live('click', function () {
+	// 	var commentList = $(this).parents('.comment_list');
+	// 	var commentLoad = commentList.prev();
+	// 	var wid = $(this).attr('wid');
+	// 	var page = $(this).attr('page');
+	// 	//异步提取评论内容
+	// 	$.ajax({
+	// 		url : getComment,
+	// 		data : {wid : wid, page : page},
+	// 		dataType : 'html',
+	// 		type : 'post',
+	// 		beforeSend : function () {
+	// 			commentList.hide().find('dl').remove();
+	// 			commentLoad.show();
+	// 		},
+	// 		success : function (data) {
+	// 			if (data != 'false') {
+	// 				commentList.append(data);
+	// 			}
+	// 		},
+	// 		complete : function () {
+	// 			commentLoad.hide();
+	// 			commentList.show().find('textarea').val('').focus();
+	// 		}
+	// 	});
+	// });
 
 	/**
 	 * 删除微博

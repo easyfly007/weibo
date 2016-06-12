@@ -28,7 +28,8 @@
  * @return [type] 返回带有相应 url 转换的字符串
  */
 	function replace_weibo($content){
-
+		if (!$content)
+			return;
 		// 替换 url TODO: www. 考虑下
 		$pattern = "/http:\/\/([\w.]+[\w\/]*[\w.]*[\w\/]*\??[\w=\&\+\%]*)/is";
 		$content = preg_replace($pattern,
@@ -39,22 +40,31 @@
 		$content = preg_replace($pattern, 
 			'<a href = "'.__APP__.'/User/\\1">\\1</a>', $content);
 
-		// 匹配表情符号
-		$pattern ='/\[\S+\]/is';
-		preg_match_all($pattern, $content, $matches);
-		// 表情包 函数组
+		// // 匹配表情符号
+		// $pattern ='/\[\S+\]/is';
+		// preg_match_all($pattern, $content, $matches);
+		// // 表情包 函数组
+		// $phiz = include "./Public/Data/phiz.php";
+		// if (!empty($matches[1])){
+		// 	foreach ($matches as $key => $value) {
+		// 		$name = array_search($value, $phiz);
+		// 		if ($name){
+		// 			$content = str_replace($matches[0][$key],
+		// 				"<img src = '".__ROOT__."/Public/Images/phiz/".$name.".gif' title = '".$value."' />", 
+		// 				$content);
+		// 		}
+		// 	}
+		// }
+
+		// 不如用preg_replace 的数组替换
 		$phiz = include "./Public/Data/phiz.php";
-		if (!empty($matches[1])){
-			foreach ($matches as $key => $value) {
-				$name = array_search($value, $phiz);
-				if ($name){
-					$content = str_replace($matches[0][$key],
-						"<img src = '".__ROOT__."/Public/Images/phiz/".$name.".gif' title = '".$value."' />", $content);
-				}
-			}
+		$pattern = array();
+		$replacement = array();
+		foreach ($phiz as $key => $value) {
+			$pattern[] = '/\['.$value.'\]/'; //中文
+			$replacement[] = "<img src = '".__ROOT__."/Public/Images/phiz/".$key.".gif' >"; // img
 		}
-
-
+		$content = preg_replace($pattern, $replacement, $content);
 		return $content;
 	}
 

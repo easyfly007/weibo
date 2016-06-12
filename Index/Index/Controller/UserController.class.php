@@ -6,8 +6,7 @@ use Think\Controller;
 class UserController extends Controller {
 		 
 	public function index(){
-		$id = I('get.id');
-		echo $id;		
+		echo "usercontroller index function ";
 	}
 
 	/*
@@ -16,9 +15,10 @@ class UserController extends Controller {
 	并把这个方法的名字传递给参数 $name
 	 */
 	public function _empty($name){
-		redirect ($this->_getUserUrl($name));
+		echo "usercontroller _empty: ".$name."<br/>";
+		$newurl = $this->_getUserUrl($name);
+		redirect($this->_getUserUrl($name));
 		// redirect $this->_getUserUrl($name);
-				// M('userinfo')->where(array())
 	}
 
 	private function _getUserUrl($username){

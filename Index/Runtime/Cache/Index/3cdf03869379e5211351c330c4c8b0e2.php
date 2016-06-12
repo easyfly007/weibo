@@ -202,7 +202,7 @@
 				<strong>微博</strong>
 			</div>
 
-			<?php if(is_array($weibo)): foreach($weibo as $key=>$v): if($v['original']): ?><!-- 普通微博样式 原创微博 -->
+			<?php if(is_array($weibo)): foreach($weibo as $key=>$v): if(!$v['original']): ?><!-- 普通微博样式 原创微博 -->
 					<div class = 'weibo'>
 						<!-- 头像 -->
 						<div class = 'face'>
@@ -214,7 +214,7 @@
 						</div>
 						<div class = 'wb_cons'>
 							<dl>
-								<dt class = 'author'><a href="<?php echo U('/'.$v.uid);?>"><?php echo ($v["username"]); ?></a></dt>
+								<dt class = 'author'><a href="<?php echo U('/'.$v['uid']);?>"><?php echo ($v["username"]); ?></a></dt>
 								<dd class = 'content'>
 									<p><?php echo (replace_weibo($v["content"])); ?></p>
 								</dd>
@@ -314,9 +314,9 @@
 									<img src="/weibo/Public/Images/noface.gif" width='50' height='50'><?php endif; ?>
 							</a>
 						</div>
-						<div class = 'wb_cons'>
+						<div class = 'wb_cons'> <!-- 微博内容 -->
 							<dl>
-								<dt class = 'author'><a href="<?php echo U('/'.$v['uid']);?>"><?php echo ($v["username"]); ?></a></dt>
+								<dt class = 'author'><a href="<?php echo U('User/index', array('id'=>$v['uid']));?>"><?php echo ($v["username"]); ?></a></dt>
 								<dd class = 'content'><p><?php echo (replace_weibo($v["content"])); ?></p></dd>
 
 								<!-- 转发的原微博信息 -->
@@ -360,9 +360,13 @@
 										<div class = 'turn_tool'>
 											<span class = 'send_time'>2013:12:34</span>
 											<ul>
-												<li><a href="">转发(12)</a></li>
+												<li>
+													<a href="">
+														转发(<?php echo ($v["original"]["forward"]); ?>)
+													</a>
+												</li>
 												<li>|</li>
-												<li>评论(12)</li>
+												<li>评论(<?php echo ($v["original"]["comment"]); ?>)</li>
 											</ul>
 										</div>
 									</div>
@@ -372,20 +376,22 @@
 							<!-- 操作 -->
 							<div class = 'wb_tool'>
 								<!-- 发布时间 -->
-								<span class = 'send_time'><?php echo (time_format($v["original"]["time"])); ?></span>
+								<span class = 'send_time'><?php echo (time_format($v["time"])); ?></span>
 								<ul>
 									<!-- 如果是转发的，这个span element 带有id 和orgid -->
-									<li><span class = 'turn' id = "$v['id']" orgid= "$v[original][id]">
-										<if condition ="$v['forward']">
-											转发($v.forward)
-										<?php else: ?>
-											转发<?php endif; ?>
-									</span></li>
+									<li>
+										<span class = 'turn' id = "$v['id']" orgid= "$v['original']['id']">
+											<if condition ="$v['forward']">
+												转发(<?php echo ($v["forward"]); ?>)
+											<?php else: ?>
+												转发<?php endif; ?>
+										</span>
+									</li>
 									<li>|</li>
 									<li><span class ='keep'>收藏</span></li>
 									<li>|</li>
 									<li><span class = 'comment'>
-										<?php if($v['comment']): ?>评论(<?php echo ($v["original"]["comment"]); ?>)
+										<?php if($v['comment']): ?>评论(<?php echo ($v["comment"]); ?>)
 										<?php else: ?>
 											评论<?php endif; ?>
 									</span></li>

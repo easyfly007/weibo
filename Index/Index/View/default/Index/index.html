@@ -72,7 +72,7 @@
 			</div>
 
 			<foreach name = 'weibo' item = 'v'>
-				<if condition = "$v['original']" >
+				<if condition = "!$v['original']" >
 
 
 					<!-- 普通微博样式 原创微博 -->
@@ -89,7 +89,7 @@
 						</div>
 						<div class = 'wb_cons'>
 							<dl>
-								<dt class = 'author'><a href="{:U('/'.$v.uid)}">{$v.username}</a></dt>
+								<dt class = 'author'><a href="{:U('/'.$v['uid'])}">{$v.username}</a></dt>
 								<dd class = 'content'>
 									<p>{$v.content|replace_weibo=###}</p>
 								</dd>
@@ -199,9 +199,9 @@
 								</if>
 							</a>
 						</div>
-						<div class = 'wb_cons'>
+						<div class = 'wb_cons'> <!-- 微博内容 -->
 							<dl>
-								<dt class = 'author'><a href="{:U('/'.$v['uid'])}">{$v.username}</a></dt>
+								<dt class = 'author'><a href="{:U('User/index', array('id'=>$v['uid']))}">{$v.username}</a></dt>
 								<dd class = 'content'><p>{$v.content|replace_weibo}</p></dd>
 
 								<!-- 转发的原微博信息 -->
@@ -242,15 +242,20 @@
 											<if/>
 										</dl>
 
-										<!-- 转发微博操作 -->
+										<!-- 最原始的转发微博操作 -->
 										<div class = 'turn_tool'>
 											<span class = 'send_time'>2013:12:34</span>
 											<ul>
-												<li><a href="">转发(12)</a></li>
+												<li>
+													<a href="">
+														转发({$v.original.forward})
+													</a>
+												</li>
 												<li>|</li>
-												<li>评论(12)</li>
+												<li>评论({$v.original.comment})</li>
 											</ul>
 										</div>
+
 									</div>
 								</dd>
 							</dl>
@@ -258,22 +263,24 @@
 							<!-- 操作 -->
 							<div class = 'wb_tool'>
 								<!-- 发布时间 -->
-								<span class = 'send_time'>{$v.original.time|time_format}</span>
+								<span class = 'send_time'>{$v.time|time_format}</span>
 								<ul>
 									<!-- 如果是转发的，这个span element 带有id 和orgid -->
-									<li><span class = 'turn' id = "$v['id']" orgid= "$v[original][id]">
-										<if condition ="$v['forward']">
-											转发($v.forward)
-										<else/>
-											转发
-										</if>
-									</span></li>
+									<li>
+										<span class = 'turn' id = "$v['id']" orgid= "$v['original']['id']">
+											<if condition ="$v['forward']">
+												转发({$v.forward})
+											<else/>
+												转发
+											</if>
+										</span>
+									</li>
 									<li>|</li>
 									<li><span class ='keep'>收藏</span></li>
 									<li>|</li>
 									<li><span class = 'comment'>
 										<if condition ="$v['comment']">
-											评论({$v.original.comment})
+											评论({$v.comment})
 										<else/>
 											评论
 										</if>

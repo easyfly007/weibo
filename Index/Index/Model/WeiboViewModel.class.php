@@ -26,9 +26,9 @@ class WeiboViewModel extends ViewModel {
 		// 为了那些转发的微博找到原微博
 		if ($result){
 			foreach ($result as $key => $value) {
-				if ($v['forward']>0){
+				if ($value['original']>0){
 					// $where = array('id'=>$v['forward']);
-					$result[$key]['forward'] = $this->find($v['forward']); 
+					$result[$key]['original'] = $this->find($value['original']); 
 				}
 			}
 		}
