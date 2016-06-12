@@ -22,7 +22,14 @@ class IndexController extends CommonController {
         // 获取这些人的微博
         $where = array(
             'uid'=>array('IN', $uid),);
-        $this->weibo = $db->getAllWeibo($where);
+
+        $count = $db->getWeiboCount($where);
+
+        $page = new \Think\Page($count, 20);
+        $limit = $page->firstRow.','.$page->listRows;
+
+        $this->page = $page->show();
+        $this->weibo = $db->getAllWeibo($where, $limit);
         $this->display();
     }
 
@@ -71,12 +78,14 @@ class IndexController extends CommonController {
             $this->error('页面不存在');
         $data = array(
             'content'=>I('post.content'),
-            'original'=>I('post.id'),
+            'original'=>I('post.orgid')?I('post.orgid'):I('post.id'),
             'time'=>time(),
             'uid'=>session('uid'),
         );
         if (M('weibo')->data($data)->add()){
             M('weibo')->where(array('id'=>I('post.id'),))->setInc('forward');
+            if (I('post.orgid'))
+                M('weibo')->where(array('id'=>I('post.orgid')))->setInc('forward');
             M('userinfo')->where(array('uid'=>session('uid'),))->setInc('weibo');
 
             // 转发并评论原微博

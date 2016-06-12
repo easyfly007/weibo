@@ -114,7 +114,8 @@ $(function () {
 	 */
 	 $('.turn').click(function () {
 	 	//获取原微内容并添加到转发框
-	 	var orgObj = $(this).parents('.wb_tool').prev(); // 得到一个 .wb_cons 下面的 dl，微博的输出内容列表
+	 	var orgObj = $(this).parents('.wb_tool').prev(); 
+	 	// 得到一个 .wb_cons 下面的 dl，微博的输出内容列表
 	 	var author = $.trim(orgObj.find('.author').html());
 	 	var content = orgObj.find('.content p').html();
 	 	var orgid = $(this).attr('orgid') ? $(this).attr('orgid') : 0;
@@ -201,7 +202,7 @@ $(function () {
 	 */
 	//点击评论时异步提取数据
 	$('.comment').click(function(){
-		alert(11);
+		alert('comment11');
 
 	});
 	// $('.comment').toggle(function () {
@@ -405,11 +406,11 @@ function check (str) {
 	return num;
 }
 
-// /**
-//  * 替换微博内容，去除 <a> 链接与表情图片
-//  */
-// function replace_weibo (content) {
-// 	content = content.replace(/<img.*?title=['"](.*?)['"].*?\/?>/ig, '[$1]');
-// 	content = content.replace(/<a.*?>(.*?)<\/a>/ig, '$1');
-// 	return content.replace(/<span.*?>\&nbsp;(\/\/)\&nbsp;<\/span>/ig, '$1');
-// }
+/**
+ * 替换微博内容，去除 <a> 链接与表情图片
+ */
+function replace_weibo (content) {
+	content = content.replace(/<img.*?title=['"](.*?)['"].*?\/?>/ig, '[$1]');
+	content = content.replace(/<a.*?>(.*?)<\/a>/ig, '$1');
+	return content.replace(/<span.*?>\&nbsp;(\/\/)\&nbsp;<\/span>/ig, '$1');
+}

@@ -214,7 +214,7 @@
 						</div>
 						<div class = 'wb_cons'>
 							<dl>
-								<dt class = 'author'><a href="<?php echo U('/'.$v['uid']);?>"><?php echo ($v["username"]); ?></a></dt>
+								<dt class = 'author'><a href="<?php echo U('User/index', array('id'=>$v['uid']));?>"><?php echo ($v["username"]); ?></a></dt>
 								<dd class = 'content'>
 									<p><?php echo (replace_weibo($v["content"])); ?></p>
 								</dd>
@@ -317,22 +317,31 @@
 						<div class = 'wb_cons'> <!-- 微博内容 -->
 							<dl>
 								<dt class = 'author'><a href="<?php echo U('User/index', array('id'=>$v['uid']));?>"><?php echo ($v["username"]); ?></a></dt>
-								<dd class = 'content'><p><?php echo (replace_weibo($v["content"])); ?></p></dd>
+								<dd class = 'content'>
+									<p>
+										<?php echo (replace_weibo(str_replace('//',"<span style = 'color:#ccc; font-weight:bold;'>&nbsp;//&nbsp;</span>",$v["content"]))); ?>
+									</p>
+								</dd>
 
 								<!-- 转发的原微博信息 -->
 								<dd>
 									<div class = 'wb_turn'>
 										<dl>
 											<!-- 原作者 -->
-											<dt class = 'turn_name'><a href="<?php echo U('/'.$v['original']['uid']);?>">@<?php echo ($v['original']['username']); ?></a></dt>
+											<dt class = 'turn_name'>
+												<a href="<?php echo U('User/index', array('id'=>$v['original']['uid'],));?>">@<?php echo ($v['original']['username']); ?></a>
+											</dt>
 											<!-- 原微博内容 -->
-											<dd class = 'turn_cons'><p><?php echo (replace_weibo($v['original']['content'])); ?></p></dd>
-											
+											<dd class = 'turn_cons'>
+												<p>
+													<?php echo (replace_weibo($v['original']['content'])); ?>
+												</p>
+											</dd>
 											<?php if($v['original']['mini']): ?><!-- 原微博图片 -->
 												<dd>
 													<div class = 'turn_img'>
 														<!-- 小图 -->
-														<img src="/weibo/$v['original']['mini']" class = 'turn_mini_img'>
+														<img src="/weibo/<?php echo ($v['original']['mini']); ?>" class = 'turn_mini_img'>
 														<div class = 'turn_img_tool hidden'>
 															<ul>
 																<li>
@@ -352,13 +361,13 @@
 															</div>
 														</div>
 													</div>
-												</dd>
-											<if/>
+												</dd><?php endif; ?>											
+
 										</dl>
 
-										<!-- 转发微博操作 -->
+										<!-- 最原始的转发微博操作 -->
 										<div class = 'turn_tool'>
-											<span class = 'send_time'>2013:12:34</span>
+											<span class = 'send_time'><?php echo (time_format($v["original"]["time"])); ?></span>
 											<ul>
 												<li>
 													<a href="">
@@ -366,9 +375,14 @@
 													</a>
 												</li>
 												<li>|</li>
-												<li>评论(<?php echo ($v["original"]["comment"]); ?>)</li>
+												<li>
+													<a href="">
+														评论(<?php echo ($v["original"]["comment"]); ?>)
+													</a>
+												</li>
 											</ul>
 										</div>
+
 									</div>
 								</dd>
 							</dl>
@@ -380,9 +394,8 @@
 								<ul>
 									<!-- 如果是转发的，这个span element 带有id 和orgid -->
 									<li>
-										<span class = 'turn' id = "$v['id']" orgid= "$v['original']['id']">
-											<if condition ="$v['forward']">
-												转发(<?php echo ($v["forward"]); ?>)
+										<span class = 'turn' id = "<?php echo ($v['id']); ?>" orgid= "<?php echo ($v['original']['id']); ?>">
+											<?php if($v['forward']): ?>转发(<?php echo ($v["forward"]); ?>)
 											<?php else: ?>
 												转发<?php endif; ?>
 										</span>
@@ -390,11 +403,13 @@
 									<li>|</li>
 									<li><span class ='keep'>收藏</span></li>
 									<li>|</li>
-									<li><span class = 'comment'>
-										<?php if($v['comment']): ?>评论(<?php echo ($v["comment"]); ?>)
-										<?php else: ?>
-											评论<?php endif; ?>
-									</span></li>
+									<li>
+										<span class = 'comment'>
+											<?php if($v['comment']): ?>评论(<?php echo ($v["comment"]); ?>)
+											<?php else: ?>
+												评论<?php endif; ?>
+										</span>
+									</li>
 								</ul>
 							</div>
 
@@ -418,7 +433,9 @@
 
 						</div>
 					</div><?php endif; endforeach; endif; ?>
+			<div id='page' style="color:red;"><?php echo ($page); ?></div>
 		</div>
+
 	</div>
 
 	<div id = 'bottom'>
@@ -462,6 +479,7 @@
 	</div>
 </div>
 
+
 <!-- 转发输入框 -->
 <div id = 'turn' class = 'hidden'>
 	<div class = 'turn_head'>
@@ -484,7 +502,7 @@
 				</li>
 				<li class = 'turn_btn fright'>
 					<input type = 'hidden' name = 'id' value = '/'>
-					<input type = 'hidden' name = 'orgid' value = ''>
+					<input type = 'hidden' name = 'orgid' value = '' />
 					<input type = 'submit' value = '转发' class = 'turn_btn' />
 				</li>
 			</ul>

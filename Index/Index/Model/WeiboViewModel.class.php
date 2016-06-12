@@ -20,8 +20,8 @@ class WeiboViewModel extends ViewModel {
 	);
 
 	// 查询所有的微博记录
-	public function getAllWeibo($where){
-		$result = $this->where($where)->order('time DESC')->select();
+	public function getAllWeibo($where, $limit){
+		$result = $this->where($where)->limit($limit)->order('time DESC')->select();
 
 		// 为了那些转发的微博找到原微博
 		if ($result){
@@ -33,6 +33,9 @@ class WeiboViewModel extends ViewModel {
 			}
 		}
 		return $result;
+	}
 
+	public function getWeiboCount($where){
+		$count = $this->where($where)->count('*');
 	}
 }
