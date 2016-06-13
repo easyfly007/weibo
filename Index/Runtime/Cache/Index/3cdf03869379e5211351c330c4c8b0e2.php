@@ -23,6 +23,8 @@
     	var uploadUrl = "<?php echo U('Common/uploadPic');?>";
     	var PUBLIC = "/weibo/Public";
     	var ROOT = "/weibo";
+    	var getComment = "<?php echo U('Index/getComment');?>";
+    	var postCommentUrl = "<?php echo U('Index/postComment');?>";
     	var sid = "<?php echo session('uid');?>";
     </script>
 
@@ -202,7 +204,7 @@
 				<strong>微博</strong>
 			</div>
 
-			<?php if(is_array($weibo)): foreach($weibo as $key=>$v): if(!$v['original']): ?><!-- 普通微博样式 原创微博 -->
+			<?php if(is_array($weibo)): foreach($weibo as $k=>$v): if(!$v['original']): ?><!-- 普通微博样式 原创微博 -->
 					<div class = 'weibo'>
 						<!-- 头像 -->
 						<div class = 'face'>
@@ -212,7 +214,8 @@
 									<img src="/weibo/<?php echo ($v["face"]); ?>" width = '50' height = '50'><?php endif; ?>
 							</a>
 						</div>
-						<div class = 'wb_cons'>
+						<!-- 微博内容 -->
+						<div class = 'wb_cons'> 
 							<dl>
 								<dt class = 'author'><a href="<?php echo U('User/index', array('id'=>$v['uid']));?>"><?php echo ($v["username"]); ?></a></dt>
 								<dd class = 'content'>
@@ -261,7 +264,7 @@
 											收藏<?php endif; ?>
 									</span></li>
 									<li>|</li>
-									<li><span class = 'comment' wid="<?php echo ($v["id"]); ?>">
+									<li><span class = 'comment' wid="<?php echo ($v["id"]); ?>" uid="<?php echo ($v["uid"]); ?>">
 										<?php if($v['comment']): ?>评论(<?php echo ($v["comment"]); ?>)
 										<?php else: ?>
 											评论<?php endif; ?>
@@ -274,29 +277,17 @@
 								<img src="/weibo/Public/Images/loading.gif">评论加载中，请稍后...
 							</div>
 							<div class = 'comment_list hidden'>
-								<textarea name = '' sign = 'comment1'></textarea>
+								<textarea name = '' sign = 'comment<?php echo ($k); ?>'></textarea>
 								<ul>
-									<li class = 'phiz fleft'sign = 'comment1'></li>
+									<li class = 'phiz fleft'sign = 'comment<?php echo ($k); ?>'></li>
 									<li class = 'comment_turn fleft'>
 										<label>
 											<input type='checkbox' name = ''>同时转发到我的微博
 										</label>
 									</li>
-									<li class = 'comment_btn fright'>评论</li>
+									<li class = 'comment_btn fright' wid="<?php echo ($v["id"]); ?>">评论</li>
 								</ul>
-								<dl class = 'comment_content'>
-									<dt>
-										<a href="">
-											<img src="/weibo/Public/Images/noface.gif" alt = '' width ='30' height='30'>
-										</a>
-									</dt>
-									<dd>
-										<a href="" class = 'comment_name'>用户000</a>他的评论
-										<div class= 'reply'>
-											<a href=""> 回复</a>
-										</div>
-									</dd>
-								</dl>
+								
 							</div>
 						</div>
 					</div>
@@ -426,7 +417,7 @@
 											<input type='checkbox' name = ''>同时转发到我的微博
 										</label>
 									</li>
-									<li class = 'comment_btn fright'>评论</li>
+									<li class = 'comment_btn fright' wid="<?php echo ($v["id"]); ?>" uid="<?php echo ($v["uid"]); ?>">评论</li>
 								</ul>
 								
 							</div>

@@ -201,39 +201,40 @@ $(function () {
 	 * 评论框处理
 	 */
 	//点击评论时异步提取数据
-	$('.comment').click(function(){
-		alert('comment11');
-
+	$('.comment').click(function () {
+		var commentLoad = $(this).parents('.wb_tool').next();
+		var commentList = commentLoad.next();
+		if(commentList.is(":hidden")) 
+		{
+			//异步加载状态DIV
+			// var commentLoad = $(this).parents('.wb_tool').next();
+			// var commentList = commentLoad.next();
+			//提取当前评论按钮对应微博的ID号
+			var wid = $(this).attr('wid');
+			//异步提取评论内容
+			$.ajax({
+				url : getComment,
+				data : {wid : wid},
+				dataType : 'html',
+				type : 'post',
+				beforeSend : function () {
+					commentLoad.show();
+				},
+				success : function (data) {
+					if (data != 'false') {
+						commentList.append(data);
+					}
+				},
+				complete : function () {
+					commentLoad.hide();
+					commentList.show().find('textarea').val('').focus();
+				}
+			});			
+		}else{
+			$(this).parents('.wb_tool').next().next().hide().find('dl').remove();
+			$('#phiz').hide();			
+		}
 	});
-	// $('.comment').toggle(function () {
-	// 	//异步加载状态DIV
-	// 	var commentLoad = $(this).parents('.wb_tool').next();
-	// 	var commentList = commentLoad.next();
-	// 	//提取当前评论按钮对应微博的ID号
-	// 	var wid = $(this).attr('wid');
-	// 	//异步提取评论内容
-	// 	$.ajax({
-	// 		url : getComment,
-	// 		data : {wid : wid},
-	// 		dataType : 'html',
-	// 		type : 'post',
-	// 		beforeSend : function () {
-	// 			commentLoad.show();
-	// 		},
-	// 		success : function (data) {
-	// 			if (data != 'false') {
-	// 				commentList.append(data);
-	// 			}
-	// 		},
-	// 		complete : function () {
-	// 			commentLoad.hide();
-	// 			commentList.show().find('textarea').val('').focus();
-	// 		}
-	// 	});
-	// }, function () {
-	// 	$(this).parents('.wb_tool').next().next().hide().find('dl').remove();
-	// 	$('#phiz').hide();
-	// });
 	
 	//评论输入框获取焦点时改变边框颜色
 	$('.comment_list textarea').focus(function () {
@@ -271,16 +272,18 @@ $(function () {
 			content : content,
 			wid : $(this).attr('wid'),
 			uid : $(this).attr('uid'),
-			isturn : $(this).prev().find('input:checked').val() ? 1 : 0
+			forward : $(this).prev().find('input:checked').val() ? 1 : 0
 		};
 
-		$.post(commentUrl, cons, function (data) {
+		$.post(postCommentUrl, cons, function (data) {
 			if (data != 'false') {
-				if (cons.isturn) {
+				commentList.append(data);
+				if (cons.forward) {
 					window.location.reload();
 				} else {
-					_textarea.val('');
-					commentList.find('ul').after(data);
+					
+					// _textarea.val('');
+					// commentList.find('ul').after(data);
 				}
 			} else {
 				alert('评论失败，请重试...');
