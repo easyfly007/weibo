@@ -395,7 +395,7 @@
 									<li><span class ='keep'>收藏</span></li>
 									<li>|</li>
 									<li>
-										<span class = 'comment'>
+										<span class = 'comment' wid = '<?php echo ($v["id"]); ?>'>
 											<?php if($v['comment']): ?>评论(<?php echo ($v["comment"]); ?>)
 											<?php else: ?>
 												评论<?php endif; ?>
@@ -405,7 +405,7 @@
 							</div>
 
 							<!-- 回复框 -->
-							<div class= 'comment_load hidden'>
+							<div class= 'comment_load  hidden'>
 								<img src="/weibo/Public/Images/loading.gif">评论加载中，请稍后...
 							</div>
 							<div class = 'comment_list hidden'>

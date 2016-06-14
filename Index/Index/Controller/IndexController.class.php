@@ -72,10 +72,44 @@ class IndexController extends CommonController {
             $this->error("微博发送失败，请重试！");
     }
 
-    // 异步调用获取对某个微博的评论
+
+    // 异步调用获取对某个微博的评论,返回 html
     public function getComment(){
         if (!IS_AJAX)
             $this->error("页面不存在");
+        $wid = I('post.wid');
+        //需要获取用户username, face, comemnt content, time
+        $where = array('wid'=>$wid);
+        $db = D('CommentView');
+        $comments = $db->where($where)->order('time DESC')->select();
+        if ($comments){
+            $str = '';
+            foreach ($comments as $key => $value) {
+                $str .= "<dl class = 'comment_content'>";
+                $str .= "<dt>";
+                $str .= "<a href='".U('User/index', array('id'=>$value['uid'],)) ."'>";
+                if ($value['face'])
+                    $str .= "<img src='".__ROOT__."/".$value['face'];
+                else
+                    $str .= "<img src='".__ROOT__."/Public/Images/noface.gif'";
+                $str .= "' alt = '".$value['username']."' width ='30' height='30'>";
+                $str .= "</a>";
+                $str .= "</dt>";
+                $str .= "<dd>";
+                $str .= "<a href='".U('User/index', array('id'=>$value['uid']))."' class = 'comment_name'>";
+                $str .= $value['username'] ."</a> : ".replace_weibo($value['content']);
+                $str .= "&nbsp;(".time_format($value['time']) .")";
+                $str .= "<div class= 'reply'>";
+                $str .= "<a href=''> 回复</a>";
+                $str .= "</div>";
+                $str .= "</dd>";
+                $str .= "</dl>";
+            }
+            echo $str;            
+        }
+        else
+            echo "false";
+
     }
 
     public function postComment(){
@@ -156,7 +190,7 @@ class IndexController extends CommonController {
         $str .= "</dt>";
         $str .= "<dd>";
         $str .= "<a href='".U('User/index', array('id'=>session('uid')))."' class = 'comment_name'>";
-        $str .= $commentuser['username'] ."</a> : ".I('post.content');
+        $str .= $commentuser['username'] ."</a> : ".replace_weibo(I('post.content'));
         $str .= "&nbsp;(".time_format($data['time']) .")";
         $str .= "<div class= 'reply'>";
         $str .= "<a href=''> 回复</a>";

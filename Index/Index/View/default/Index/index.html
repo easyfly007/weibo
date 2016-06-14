@@ -284,7 +284,7 @@
 									<li><span class ='keep'>收藏</span></li>
 									<li>|</li>
 									<li>
-										<span class = 'comment'>
+										<span class = 'comment' wid = '{$v.id}'>
 											<if condition ="$v['comment']">
 												评论({$v.comment})
 											<else/>
@@ -296,7 +296,7 @@
 							</div>
 
 							<!-- 回复框 -->
-							<div class= 'comment_load hidden'>
+							<div class= 'comment_load  hidden'>
 								<img src="__PUBLIC__/Images/loading.gif">评论加载中，请稍后...
 							</div>
 							<div class = 'comment_list hidden'>

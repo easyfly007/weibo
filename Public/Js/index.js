@@ -207,29 +207,28 @@ $(function () {
 		if(commentList.is(":hidden")) 
 		{
 			//异步加载状态DIV
-			// var commentLoad = $(this).parents('.wb_tool').next();
-			// var commentList = commentLoad.next();
 			//提取当前评论按钮对应微博的ID号
 			var wid = $(this).attr('wid');
 			//异步提取评论内容
 			$.ajax({
-				url : getComment,
-				data : {wid : wid},
-				dataType : 'html',
-				type : 'post',
-				beforeSend : function () {
+				url: getComment,
+				data: {wid: wid},
+				dataType: 'html',
+				type: 'post',
+				beforeSend: function(){// 不管是何种ajax
 					commentLoad.show();
 				},
-				success : function (data) {
-					if (data != 'false') {
+				success: function (data){
+					// 成功调用
+					if (data != 'false')
 						commentList.append(data);
-					}
 				},
-				complete : function () {
+				complete:function (){
+					// 无论ajax 成功与否
 					commentLoad.hide();
 					commentList.show().find('textarea').val('').focus();
 				}
-			});			
+			});
 		}else{
 			$(this).parents('.wb_tool').next().next().hide().find('dl').remove();
 			$('#phiz').hide();			
