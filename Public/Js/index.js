@@ -280,9 +280,8 @@ $(function () {
 				if (cons.forward) {
 					window.location.reload();
 				} else {
-					
-					// _textarea.val('');
-					// commentList.find('ul').after(data);
+					_textarea.val('');
+					commentList.find('ul').after(data);
 				}
 			} else {
 				alert('评论失败，请重试...');
@@ -291,9 +290,43 @@ $(function () {
 	});
 
 	/**
-	 * 评论异步分类处理
+	 * 评论异步分页处理
 	 */
-	// $('.comment-page dd').live('click', function () {
+	$('.comment_list').on('click', '.comment_page dd', function(){
+		alert(11);
+	// });
+	// $('.comment_page dd').on('click',function(){
+
+		var commentList = $(this).parents('.comment_list');
+		var commentLoad = commentList.prev();
+		alert(11);
+		var wid = $(this).attr('wid');
+		var page = $(this).attr('page');
+			//异步提取评论内容
+		$.ajax({
+			url: getComment,
+			data: {wid: wid, page:page},
+			dataType: 'html',
+			type: 'post',
+			beforeSend: function(){// 不管是何种ajax
+				commentList.hide().find('dl').remove();
+				commentLoad.show();
+			},
+			success: function (data){
+				// 成功调用
+				if (data != 'false')
+					commentList.append(data);
+			},
+			complete:function (){
+				// 无论ajax 成功与否
+				commentLoad.hide();
+				commentList.show().find('textarea').val('').focus();
+			}
+		});
+	});
+
+
+	// $('.comment-page dd').on('click', function () {
 	// 	var commentList = $(this).parents('.comment_list');
 	// 	var commentLoad = commentList.prev();
 	// 	var wid = $(this).attr('wid');

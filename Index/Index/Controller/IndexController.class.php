@@ -81,7 +81,18 @@ class IndexController extends CommonController {
         //需要获取用户username, face, comemnt content, time
         $where = array('wid'=>$wid);
         $db = D('CommentView');
-        $comments = $db->where($where)->order('time DESC')->select();
+        $count = $db->where($where)->count('*');
+        $comment_per_page = 5;
+        $total_page = ceil($count / $comment_per_page); // 每页显示5条评论
+        $visit_page = 1;
+        if (I('post.page'))
+            $visit_page = I('post.page');
+
+        // 分页获取评论数目
+        $start = ($visit_page-1)*$comment_per_page;
+        $limit = $start .','.$comment_per_page;
+        $comments = $db->where($where)->limit($limit)->order('time DESC')->select();
+        // 分页实现，每次获取10条，并返回一个 下一页，该下一页的点击会产生一个新的异步调用
         if ($comments){
             $str = '';
             foreach ($comments as $key => $value) {
@@ -105,11 +116,19 @@ class IndexController extends CommonController {
                 $str .= "</dd>";
                 $str .= "</dl>";
             }
+            if ($total_page>1){
+                $str .= "<dl class ='comment_page' >";
+                if($visit_page>1)
+                    $str .= "<dd page = '".($page-1)."' wid = '".$wid."' > 上一页</dd>";
+                if ($visit_page<$total_page)
+                    $str .= "<dd page = '".($page+1)."' wid = '".$wid."' > 下一页</span></dd>";
+                $str .= "</dl>";
+            }
+
             echo $str;            
         }
         else
             echo "false";
-
     }
 
     public function postComment(){
