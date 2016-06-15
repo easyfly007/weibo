@@ -68,11 +68,15 @@
 				</div>
 			</div>
 
+
+
 			<!-- 微博发布框 -->
 			<div class = 'view_line'>
 				<strong>微博</strong>
 			</div>
-
+			<if condition = "!isset($weibo)" >
+			    没有发布的微博
+			</if>
 			<foreach name = 'weibo' key = 'k' item = 'v'>
 				<if condition = "!$v['original']" >
 

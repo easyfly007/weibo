@@ -345,13 +345,13 @@
 	text-align: center;
 	float: right;
 }
-#middle .weibo .comment_list .comment-page {
+#middle .weibo .comment_list .comment_page {
 	width : 448px;
 	height: auto;
 	overflow: hidden;
 	border-bottom: 1px solid #D7EEFB;
 }
-#middle .weibo .comment_list .comment-page dd {
+#middle .weibo .comment_list .comment_page dd {
 	float: left;
 	padding: 5px;
 	margin: 5px 10px;

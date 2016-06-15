@@ -9,10 +9,15 @@
 	<div class = 'group'>
 		<fieldset><legend>分组</legend></fieldset>
 		<ul>
-			<li><a href=""><i></i>微博网友</a></li>
-			<li><a href=""><i></i>分组1</a></li>
-			<li><a href=""><i></i>分组2</a></li>
-			<li><a href=""><i></i>分组2</a></li>
+			<?php
+				$groups = M('group')->where(array('uid'=>session('uid')))->select();
+			?>
+			<li><a href = ''> <i class = 'icon icon-group'></i>&nbsp;全部</a></li>
+			<foreach  name = 'groups' item = 'v'>
+				<li><a href="{:U('Index/index', array('gid'=>$v['id']))}">
+					<i></i>{$v['name']}</a>
+				</li>
+			</foreach>
 		</ul>
 		<span id = 'create_group'>创建新的分组</span>
 	</div>

@@ -129,10 +129,12 @@
 	<div class = 'group'>
 		<fieldset><legend>分组</legend></fieldset>
 		<ul>
-			<li><a href=""><i></i>微博网友</a></li>
-			<li><a href=""><i></i>分组1</a></li>
-			<li><a href=""><i></i>分组2</a></li>
-			<li><a href=""><i></i>分组2</a></li>
+			<?php
+ $groups = M('group')->where(array('uid'=>session('uid')))->select(); ?>
+			<li><a href = ''> <i class = 'icon icon-group'></i>&nbsp;全部</a></li>
+			<?php if(is_array($groups)): foreach($groups as $key=>$v): ?><li><a href="<?php echo U('Index/index', array('gid'=>$v['id']));?>">
+					<i></i><?php echo ($v['name']); ?></a>
+				</li><?php endforeach; endif; ?>
 		</ul>
 		<span id = 'create_group'>创建新的分组</span>
 	</div>
@@ -199,11 +201,13 @@
 				</div>
 			</div>
 
+
+
 			<!-- 微博发布框 -->
 			<div class = 'view_line'>
 				<strong>微博</strong>
 			</div>
-
+			<?php if(!isset($weibo)): ?>没有发布的微博<?php endif; ?>
 			<?php if(is_array($weibo)): foreach($weibo as $k=>$v): if(!$v['original']): ?><!-- 普通微博样式 原创微博 -->
 					<div class = 'weibo'>
 						<!-- 头像 -->

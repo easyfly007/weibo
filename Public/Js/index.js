@@ -293,13 +293,8 @@ $(function () {
 	 * 评论异步分页处理
 	 */
 	$('.comment_list').on('click', '.comment_page dd', function(){
-		alert(11);
-	// });
-	// $('.comment_page dd').on('click',function(){
-
 		var commentList = $(this).parents('.comment_list');
 		var commentLoad = commentList.prev();
-		alert(11);
 		var wid = $(this).attr('wid');
 		var page = $(this).attr('page');
 			//异步提取评论内容

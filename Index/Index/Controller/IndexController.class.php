@@ -8,28 +8,40 @@ class IndexController extends CommonController {
         $db = D('WeiboView');
 
         // 获取我关注的 用户id列表 +我自己的id
-        $uid = array(session('uid'),);
-        $where = array('fans'=>session('uid'),);
-        $result = M('follow')->field('follow')->where($where)->select();
+        $uid_where = array('fans'=>session('uid'),);
+        
+        // 如果分组，则不显示自己，只获取分组用户
+        $uid = array();
+        if (I('get.gid')){
+            $uid_where['gid'] = I('get.gid');
+        }
+        else
+            $uid[] = session('uid');
+
+        $result = M('follow')->field('follow')->where($uid_where)->select();
         
         if ($result){
             foreach ($result as $v){
                 $uid[] = $v['follow'];
             }
         }
+        if(!empty($uid)){
+            // $uid 包含了我自己的应该出现在我的timeline 上面的微博用户
+            // 获取这些人的微博
+            $where = array(
+                'uid'=>array('IN', $uid),);
 
-        // $uid 包含了我自己的应该出现在我的timeline 上面的微博用户
-        // 获取这些人的微博
-        $where = array(
-            'uid'=>array('IN', $uid),);
+            $count = $db->getWeiboCount($where);
 
-        $count = $db->getWeiboCount($where);
+            $page = new \Think\Page($count, 20);
+            $limit = $page->firstRow.','.$page->listRows;
 
-        $page = new \Think\Page($count, 20);
-        $limit = $page->firstRow.','.$page->listRows;
-
-        $this->page = $page->show();
-        $this->weibo = $db->getAllWeibo($where, $limit);
+            $this->page = $page->show();
+            $this->weibo = $db->getAllWeibo($where, $limit);   
+        }else{
+            $this->page = '';
+        }
+        echo $this->weibo;
         $this->display();
     }
 
@@ -82,7 +94,7 @@ class IndexController extends CommonController {
         $where = array('wid'=>$wid);
         $db = D('CommentView');
         $count = $db->where($where)->count('*');
-        $comment_per_page = 5;
+        $comment_per_page = 10;
         $total_page = ceil($count / $comment_per_page); // 每页显示5条评论
         $visit_page = 1;
         if (I('post.page'))
@@ -119,9 +131,9 @@ class IndexController extends CommonController {
             if ($total_page>1){
                 $str .= "<dl class ='comment_page' >";
                 if($visit_page>1)
-                    $str .= "<dd page = '".($page-1)."' wid = '".$wid."' > 上一页</dd>";
+                    $str .= "<dd page = '".($visit_page-1)."' wid = '".$wid."' > 上一页</dd>";
                 if ($visit_page<$total_page)
-                    $str .= "<dd page = '".($page+1)."' wid = '".$wid."' > 下一页</span></dd>";
+                    $str .= "<dd page = '".($visit_page+1)."' wid = '".$wid."' > 下一页</span></dd>";
                 $str .= "</dl>";
             }
 
