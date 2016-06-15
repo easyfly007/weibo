@@ -11,6 +11,7 @@
     	var ROOT = "__ROOT__";
     	var getComment = "{:U('Index/getComment')}";
     	var postCommentUrl = "{:U('Index/postComment')}";
+    	var keepUrl = "{:U('Index/keep')}";
     	var sid = "{:session('uid')}";
     </script>
 
@@ -141,13 +142,16 @@
 										</if>
 									</span></li>
 									<li>|</li>
-									<li><span class = 'keep-wrap'>
-										<if condition = "$v['keep']">
-											收藏({$v.keep})
-										<else/>
-											收藏
-										</if>
-									</span></li>
+									<li class = 'keep-wrap'>
+										<span class = 'keep-wrap' wid = "{$v.id}">
+											<if condition = "$v['keep']">
+												收藏({$v.keep})
+											<else/>
+												收藏
+											</if>
+										</span>
+										<div class = 'keep-up hidden'></div>
+									</li>
 									<li>|</li>
 									<li><span class = 'comment' wid="{$v.id}" uid="{$v.uid}">
 										<if condition ="$v['comment']">
@@ -285,7 +289,10 @@
 										</span>
 									</li>
 									<li>|</li>
-									<li><span class ='keep'>收藏</span></li>
+									<li class = 'keep-wrap'>
+										<span class ='keep' wid = "{$v.id}">收藏</span>
+										<div class = 'keep-up hidden'></div>
+									</li>
 									<li>|</li>
 									<li>
 										<span class = 'comment' wid = '{$v.id}'>

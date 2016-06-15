@@ -267,4 +267,30 @@ class IndexController extends CommonController {
             $this->error('无法转发微博!');
         }
     }
+
+    // 1: 收藏成功,  -1: 已经收藏, 0: 收藏失败
+    public function keep(){
+        if (!IS_AJAX)
+            $this->error('页面不存在');
+        $wid = I('post.wid');
+        if (!$wid){
+            echo 0; exit;
+        }
+        $data = array(
+            'uid'=>session('uid'),
+            'time'=>time(),
+            'wid'=>$wid,
+        );
+        if (M('keep')->where(array('uid'=>session('uid'), 'wid'=>$wid))->find())
+        {
+            // 已经收藏
+            echo -1; exit;
+        }
+        if (M('keep')->data($data)->add()){
+            M('weibo')->where(array('id'=>$wid))->setInc('keep');
+            echo 1;
+        }
+        else
+            echo 0;
+    }
 }

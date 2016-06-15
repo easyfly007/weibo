@@ -12,7 +12,7 @@
 			<?php
 				$groups = M('group')->where(array('uid'=>session('uid')))->select();
 			?>
-			<li><a href = ''> <i class = 'icon icon-group'></i>&nbsp;全部</a></li>
+			<li><a href = "{:U(Index/idnex)}"> <i class = 'icon icon-group'></i>&nbsp;全部</a></li>
 			<foreach  name = 'groups' item = 'v'>
 				<li><a href="{:U('Index/index', array('gid'=>$v['id']))}">
 					<i></i>{$v['name']}</a>

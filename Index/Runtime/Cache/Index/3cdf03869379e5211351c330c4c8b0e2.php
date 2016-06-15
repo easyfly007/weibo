@@ -25,6 +25,7 @@
     	var ROOT = "/weibo";
     	var getComment = "<?php echo U('Index/getComment');?>";
     	var postCommentUrl = "<?php echo U('Index/postComment');?>";
+    	var keepUrl = "<?php echo U('Index/keep');?>";
     	var sid = "<?php echo session('uid');?>";
     </script>
 
@@ -131,7 +132,7 @@
 		<ul>
 			<?php
  $groups = M('group')->where(array('uid'=>session('uid')))->select(); ?>
-			<li><a href = ''> <i class = 'icon icon-group'></i>&nbsp;全部</a></li>
+			<li><a href = "<?php echo U(Index/idnex);?>"> <i class = 'icon icon-group'></i>&nbsp;全部</a></li>
 			<?php if(is_array($groups)): foreach($groups as $key=>$v): ?><li><a href="<?php echo U('Index/index', array('gid'=>$v['id']));?>">
 					<i></i><?php echo ($v['name']); ?></a>
 				</li><?php endforeach; endif; ?>
@@ -262,11 +263,14 @@
 											转发<?php endif; ?>
 									</span></li>
 									<li>|</li>
-									<li><span class = 'keep-wrap'>
-										<?php if($v['keep']): ?>收藏(<?php echo ($v["keep"]); ?>)
-										<?php else: ?>
-											收藏<?php endif; ?>
-									</span></li>
+									<li class = 'keep-wrap'>
+										<span class = 'keep-wrap' wid = "<?php echo ($v["id"]); ?>">
+											<?php if($v['keep']): ?>收藏(<?php echo ($v["keep"]); ?>)
+											<?php else: ?>
+												收藏<?php endif; ?>
+										</span>
+										<div class = 'keep-up hidden'></div>
+									</li>
 									<li>|</li>
 									<li><span class = 'comment' wid="<?php echo ($v["id"]); ?>" uid="<?php echo ($v["uid"]); ?>">
 										<?php if($v['comment']): ?>评论(<?php echo ($v["comment"]); ?>)
@@ -396,7 +400,10 @@
 										</span>
 									</li>
 									<li>|</li>
-									<li><span class ='keep'>收藏</span></li>
+									<li class = 'keep-wrap'>
+										<span class ='keep' wid = "<?php echo ($v["id"]); ?>">收藏</span>
+										<div class = 'keep-up hidden'></div>
+									</li>
 									<li>|</li>
 									<li>
 										<span class = 'comment' wid = '<?php echo ($v["id"]); ?>'>

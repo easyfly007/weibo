@@ -177,6 +177,7 @@ $(function () {
 		$.post(keepUrl, {wid : wid}, function (data) {
 			if (data == 1) {
 				msg = '收藏成功';
+				$(this).html('已收藏');// TODO 不起作用？
 			}
 
 			if (data == -1) {
