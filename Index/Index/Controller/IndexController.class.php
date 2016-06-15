@@ -41,7 +41,6 @@ class IndexController extends CommonController {
         }else{
             $this->page = '';
         }
-        echo $this->weibo;
         $this->display();
     }
 

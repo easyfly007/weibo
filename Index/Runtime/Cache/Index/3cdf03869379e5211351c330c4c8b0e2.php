@@ -437,6 +437,56 @@
 					</div><?php endif; endforeach; endif; ?>
 			<div id='page' style="color:red;"><?php echo ($page); ?></div>
 		</div>
+		<div id = 'right'>
+	<div class = 'edit_tpl'>
+		<a href="" id = 'set_model'></a>
+	</div>
+	<!-- 利用我们在CommonController 里面提供的 loginuser -->
+	<dl class = 'user_face'>
+		<dt>
+			<a href="">
+				<?php if($loginuser['face80']): ?><img src="/weibo/<?php echo ($loginuser['face80']); ?>" width = '80' height = '80'>
+				<?php else: ?>
+					<img src="/weibo/Public/Images/noface.gif" width = '80' height = '80'><?php endif; ?>
+			</a>
+		</dt>
+		<dd><a href=""><?php echo ($loginuser["username"]); ?></a></dd>
+	</dl>
+	<ul class = 'num_list'>
+		<li><a href=""><strong><?php echo ($loginuser["follow"]); ?></strong>关注</a></li>
+		<li><a href=""><strong><?php echo ($loginuser["fans"]); ?></strong>粉丝</a></li>
+		<li class = 'noborder'><a href=""><strong><?php echo ($loginuser["weibo"]); ?></strong>微博</a></li>
+	</ul>
+	<div class= 'maybe'>
+		<fieldset>
+			<legend>可能感兴趣的人</legend>
+			<ul>
+				<li>
+					<dl>
+						<dt>
+							<a href="">
+								<img src="" alt='' widht='30' height = '30'>
+							</a>
+						</dt>
+						<dd><a href="">用户002</a></dd>
+						<dd>共有10个共同好友</dd>
+					</dl>
+					<span class = 'heed_btn'><strong>+</strong>关注</span>
+				</li>
+			</ul>
+		</fieldset>
+	</div>
+
+	<div class = 'post'>
+		<div class= 'post_line'>
+			<span>公告栏</span>
+		</div>
+		<ul>
+			<li><a href="">第一条公告</a></li>
+		</ul>
+	</div>
+</div>
+
 
 	</div>
 
