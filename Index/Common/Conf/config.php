@@ -15,6 +15,13 @@ return array(
     'DEFAULT_THEME'         =>  'default',
 
     "ENCRYPTION_KEY"        =>  "myweibo.com", // for encryption key
-    "AUTO_LOGIN_TIME"       =>   time() + 7*24*60*60, // cookie 的信息保存1个星期有效   
+    "AUTO_LOGIN_TIME"       =>   time() + 7*24*60*60, // cookie 的信息保存1个星期有效  
+
+    // 自定义标签
+    'TAGLIB_LOAD'           => true, //加载自定义标签库
+    // 'APP_AUTOLOAD_PATH'     => '@.TagLib',// 自动加载文件路径
+    // 'TAGLIB_PRE_LOAD'       =>"Index\TagLib\TagLibWbtags",
+    'TAGLIB_BUILD_IN'       =>'Cx,Wbtags', //把自定义标签加入到系统标签库 
+
 
 );

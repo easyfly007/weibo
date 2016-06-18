@@ -439,32 +439,33 @@
 		</div>
 		<!-- 右边侧栏，登陆用户个人信息 -->
 <div id = 'right'>
-	<div class = 'edit_tpl'>
-		<a href="" id = 'set_model'></a>
-	</div>
+	<div class = 'edit_tpl'><a href="" id = 'set_model'></a></div>
+
 	<!-- 利用我们在CommonController 里面提供的 loginuser -->
-	<dl class = 'user_face'>
-		<dt>
-			<a href="">
-				<?php if($loginuser['face80']): ?><img src="/weibo/<?php echo ($loginuser['face80']); ?>" width = '80' height = '80'>
-				<?php else: ?>
-					<img src="/weibo/Public/Images/noface.gif" width = '80' height = '80'><?php endif; ?>
-			</a>
-		</dt>
-		<dd><a href=""><?php echo ($loginuser["username"]); ?></a></dd>
-	</dl>
-	<ul class = 'num_list'>
-		<li><a href=""><strong><?php echo ($loginuser["follow"]); ?></strong>关注</a></li>
-		<li><a href=""><strong><?php echo ($loginuser["fans"]); ?></strong>粉丝</a></li>
-		<li class = 'noborder'><a href=""><strong><?php echo ($loginuser["weibo"]); ?> </strong>微博 </a></li>
-	</ul>
+	<?php $where = array("uid"=>session("uid"));$field = array("username", "face80"=>"face", "follow", "fans", "weibo", "uid");$userinfo = M("userinfo")->where($where)->field($field)->find(); ?><dl class = 'user_face'>
+			<dt>
+				<a href="<?php echo U('User/index', array('uid'=>$userinfo['uid']));?>">
+					<?php if($userinfo['face80']): ?><img src="/weibo/<?php echo ($userinfo['face80']); ?>" width = '80' height = '80'>
+					<?php else: ?>
+						<img src="/weibo/Public/Images/noface.gif" width = '80' height = '80'><?php endif; ?>
+				</a>
+			</dt>
+			<dd><a href=""><?php echo ($userinfo["username"]); ?></a></dd>
+		</dl>
+		<ul class = 'num_list'>
+			<li><a href=""><strong><?php echo ($userinfo["follow"]); ?></strong>关注</a></li>
+			<li><a href=""><strong><?php echo ($userinfo["fans"]); ?></strong>粉丝</a></li>
+			<li class = 'noborder'><a href=""><strong><?php echo ($userinfo["weibo"]); ?> </strong>微博 </a></li>
+		</ul>
+
 	<div class= 'maybe'>
 		<?php
- $db = M('follow'); $where = array('fans'=>session('uid')); $myfollow = $db->where($where)->select(); foreach ($myfollow as $key => $value) { $myfollow[$key] = $value['follow']; } $excludefollow = $myfollow; $excludefollow[] = session('uid'); $where = array( 'fans'=>array('IN', $myfollow), 'follow'=>array('NOT IN', $excludefollow) ); $field = array('follow', 'count(follow)'=>'count'); $cnt = M('follow')->where($where)->field($field)->group('follow')->order('count DESC')->limit(10)->select(); $interest = array(); $field = array('uid', 'face50'=>'face', 'username'); foreach ($cnt as $key => $value) { $where = array('uid'=>$value['follow']); $user = M('userinfo')->where($where)->field($field)->find(); $user['common']=$value['count']; $interest[] = $user; } $sql ="select u.`uid`, u.`username`, u.`face50` as `face`, count(f.`follow`) as `count` from `tb_follow` f left join `tb_userinfo` u on f.`follow` = u.`uid` where f.`fans` in (".implode(',',$myfollow).") and f.`follow` not in (".implode(',',$excludefollow).") group by f.`follow` order by `count` DESC limit 10  "; $result = M('follow')->query($sql); ?>
+ ?>
 		<fieldset>
 			<legend>可能感兴趣的人</legend>
-			<ul>
-				<?php if(is_array($interest)): foreach($interest as $key=>$v): ?><li>
+			<?php $uid = session("uid");$limit = 10;$db = M("follow");$where = array("fans"=>$uid);$myfollow = $db->where($where)->field("follow")->select();foreach ($myfollow as $key => $value):$myfollow[$key] = $value["follow"];endforeach;$excludefollow = $myfollow;$excludefollow[] = $uid; $sql ="select `uid`, `username`, `face50` as `face`, count(f.`follow`) as `common`  from `tb_follow` f left join `tb_userinfo` u  on f.`follow` = u.`uid`  where f.`fans` in (".implode(',',$myfollow).")  and f.`follow` not in (".implode(',',$excludefollow).")  group by f.`follow`  order by `common` DESC limit $limit  "; $interestusers = M("follow")->query($sql); ?><ul>
+				<?php if(is_array($interestusers)): foreach($interestusers as $key=>$v): echo ($v["username"]); ?>
+					<li>
 						<dl>
 							<dt>
 								<a href="<?php echo U('User/index', array('id'=>$v['uid']));?>">

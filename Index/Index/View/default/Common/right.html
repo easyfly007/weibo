@@ -1,67 +1,69 @@
 <!-- 右边侧栏，登陆用户个人信息 -->
 <div id = 'right'>
-	<div class = 'edit_tpl'>
-		<a href="" id = 'set_model'></a>
-	</div>
+	<div class = 'edit_tpl'><a href="" id = 'set_model'></a></div>
+
 	<!-- 利用我们在CommonController 里面提供的 loginuser -->
-	<dl class = 'user_face'>
-		<dt>
-			<a href="">
-				<if condition ="$loginuser['face80']">
-					<img src="__ROOT__/{$loginuser['face80']}" width = '80' height = '80'>
-				<else/>
-					<img src="__PUBLIC__/Images/noface.gif" width = '80' height = '80'>
-				</if>
-			</a>
-		</dt>
-		<dd><a href="">{$loginuser.username}</a></dd>
-	</dl>
-	<ul class = 'num_list'>
-		<li><a href=""><strong>{$loginuser.follow}</strong>关注</a></li>
-		<li><a href=""><strong>{$loginuser.fans}</strong>粉丝</a></li>
-		<li class = 'noborder'><a href=""><strong>{$loginuser.weibo} </strong>微博 </a></li>
-	</ul>
+	<userinfotag uid = 'session("uid")' >
+		<dl class = 'user_face'>
+			<dt>
+				<a href="{:U('User/index', array('uid'=>$userinfo['uid']))}">
+					<if condition ="$userinfo['face80']">
+						<img src="__ROOT__/{$userinfo['face80']}" width = '80' height = '80'>
+					<else/>
+						<img src="__PUBLIC__/Images/noface.gif" width = '80' height = '80'>
+					</if>
+				</a>
+			</dt>
+			<dd><a href="">{$userinfo.username}</a></dd>
+		</dl>
+		<ul class = 'num_list'>
+			<li><a href=""><strong>{$userinfo.follow}</strong>关注</a></li>
+			<li><a href=""><strong>{$userinfo.fans}</strong>粉丝</a></li>
+			<li class = 'noborder'><a href=""><strong>{$userinfo.weibo} </strong>微博 </a></li>
+		</ul>
+	</userinfotag >
+
 	<div class= 'maybe'>
 		<?php
-			// 找到关注的好友，查看他们关注的人，把这些人推荐给我
-			$db = M('follow');
-			$where = array('fans'=>session('uid'));
-			$myfollow = $db->where($where)->select();
-			foreach ($myfollow as $key => $value) {
-				$myfollow[$key] = $value['follow'];
-			}
-			$excludefollow = $myfollow;
-			$excludefollow[] = session('uid');
+			// // 找到关注的好友，查看他们关注的人，把这些人推荐给我
+			// $db = M('follow');
+			// $where = array('fans'=>session('uid'));
+			// $myfollow = $db->where($where)->select();
+			// foreach ($myfollow as $key => $value) {
+			// 	$myfollow[$key] = $value['follow'];
+			// }
+			// $excludefollow = $myfollow;
+			// $excludefollow[] = session('uid');
 
-			// 要查看我关注的人所关注的人中，哪些人我还没有关注的
-			$where = array(
-				'fans'=>array('IN', $myfollow),
-				'follow'=>array('NOT IN', $excludefollow)
-			);
-			// 按照相关数目排序
-			$field = array('follow', 'count(follow)'=>'count');
-			$cnt = M('follow')->where($where)->field($field)->group('follow')->order('count DESC')->limit(10)->select();
+			// // 要查看我关注的人所关注的人中，哪些人我还没有关注的
+			// $where = array(
+			// 	'fans'=>array('IN', $myfollow),
+			// 	'follow'=>array('NOT IN', $excludefollow)
+			// );
+			// // 按照相关数目排序
+			// $field = array('follow', 'count(follow)'=>'count');
+			// $cnt = M('follow')->where($where)->field($field)->group('follow')->order('count DESC')->limit(10)->select();
 
-			$interest = array();
-			//获取用户头像等信息
-			$field = array('uid', 'face50'=>'face', 'username');
-			foreach ($cnt as $key => $value) {
-				$where = array('uid'=>$value['follow']);
-				$user = M('userinfo')->where($where)->field($field)->find();
-				$user['common']=$value['count'];
-				$interest[] = $user;
-			}
+			// $interest = array();
+			// //获取用户头像等信息
+			// $field = array('uid', 'face50'=>'face', 'username');
+			// foreach ($cnt as $key => $value) {
+			// 	$where = array('uid'=>$value['follow']);
+			// 	$user = M('userinfo')->where($where)->field($field)->find();
+			// 	$user['common']=$value['count'];
+			// 	$interest[] = $user;
+			// }
 
-			// 也可以用原生的sql语句来写
-			$sql ="select u.`uid`, u.`username`, u.`face50` as `face`, count(f.`follow`) as `count` from `tb_follow` f left join `tb_userinfo` u on f.`follow` = u.`uid` where f.`fans` in (".implode(',',$myfollow).") and f.`follow` not in (".implode(',',$excludefollow).") group by f.`follow` order by `count` DESC limit 10  ";
-			// echo $sql;
-			$result = M('follow')->query($sql);
-			// p($result);
+			// // 也可以用原生的sql语句来写
+			// $sql ="select u.`uid`, u.`username`, u.`face50` as `face`, count(f.`follow`) as `count` from `tb_follow` f left join `tb_userinfo` u on f.`follow` = u.`uid` where f.`fans` in (".implode(',',$myfollow).") and f.`follow` not in (".implode(',',$excludefollow).") group by f.`follow` order by `count` DESC limit 10  ";
+			// $result = M('follow')->query($sql);
 		?>
 		<fieldset>
 			<legend>可能感兴趣的人</legend>
+			<interesttag uid='session("uid")' limit='10'>
 			<ul>
-				<foreach name = 'interest' item = 'v'>
+				<foreach name = 'interestusers' item = 'v'>
+					{$v.username}
 					<li>
 						<dl>
 							<dt>
@@ -81,6 +83,7 @@
 					</li>
 				</foreach>
 			</ul>
+			</interesttag>
 		</fieldset>
 	</div>
 
