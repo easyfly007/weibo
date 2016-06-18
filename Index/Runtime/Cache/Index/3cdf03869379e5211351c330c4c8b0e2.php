@@ -460,23 +460,23 @@
 	</ul>
 	<div class= 'maybe'>
 		<?php
- $db = M('follow'); $where = array('fans'=>session('uid')); $myfollow = $db->where($where)->select(); foreach ($myfollow as $key => $value) { $myfollow[$key] = $value['follow']; } $excludefollow = $myfollow; $excludefollow[] = session('uid'); $where = array( 'fans'=>array('IN', $myfollow), 'follow'=>array('NOT IN', $excludefollow) ); $field = array('follow', 'count(follow)'=>'count'); $cnt = M('follow')->where($where)->field($field)->group('follow')->order('count DESC')->limit(10)->select(); $interest = array(); $field = array('uid', 'face50'=>'face', 'username'); foreach ($cnt as $key => $value) { $where = array('uid'=>$value['follow']); $user = M('userinfo')->where($where)->field($field)->find(); $user['common']=$value['count']; $interest[] = $user; } p($interest); ?>
+ $db = M('follow'); $where = array('fans'=>session('uid')); $myfollow = $db->where($where)->select(); foreach ($myfollow as $key => $value) { $myfollow[$key] = $value['follow']; } $excludefollow = $myfollow; $excludefollow[] = session('uid'); $where = array( 'fans'=>array('IN', $myfollow), 'follow'=>array('NOT IN', $excludefollow) ); $field = array('follow', 'count(follow)'=>'count'); $cnt = M('follow')->where($where)->field($field)->group('follow')->order('count DESC')->limit(10)->select(); $interest = array(); $field = array('uid', 'face50'=>'face', 'username'); foreach ($cnt as $key => $value) { $where = array('uid'=>$value['follow']); $user = M('userinfo')->where($where)->field($field)->find(); $user['common']=$value['count']; $interest[] = $user; } $sql ="select u.`uid`, u.`username`, u.`face50` as `face`, count(f.`follow`) as `count` from `tb_follow` f left join `tb_userinfo` u on f.`follow` = u.`uid` where f.`fans` in (".implode(',',$myfollow).") and f.`follow` not in (".implode(',',$excludefollow).") group by f.`follow` order by `count` DESC limit 10  "; $result = M('follow')->query($sql); ?>
 		<fieldset>
 			<legend>可能感兴趣的人</legend>
 			<ul>
 				<?php if(is_array($interest)): foreach($interest as $key=>$v): ?><li>
 						<dl>
 							<dt>
-								<a href="">
-									<?php if($v['face']): ?><img src="/weibo/<?php echo ($v["face"]); ?>" alt='' widht='30' height = '30'>
+								<a href="<?php echo U('User/index', array('id'=>$v['uid']));?>">
+									<?php if($v['face']): ?><img src="/weibo/<?php echo ($v["face"]); ?>"  widht='30' height = '30'>
 									<?php else: ?>
-										<img src="/weibo/Public/Images/noface.gif" alt='' widht='30' height = '30'><?php endif; ?>
+										<img src="/weibo/Public/Images/noface.gif"  widht='30' height = '30'><?php endif; ?>
 								</a>
 							</dt>
-							<dd><a href=""><?php echo ($v["username"]); ?></a></dd>
+							<dd><a href="<?php echo U('User/index', array('id'=>$v['uid']));?>"><?php echo ($v["username"]); ?></a></dd>
 							<dd>共有<?php echo ($v["common"]); ?>个共同好友</dd>
 						</dl>
-						<span class = 'heed_btn'><strong>+</strong>关注</span>
+						<span class = 'heed_btn add-fl' uid = "<?php echo ($v['uid']); ?>"><strong>+</strong>关注</span>
 				
 					</li><?php endforeach; endif; ?>
 			</ul>

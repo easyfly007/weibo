@@ -51,6 +51,12 @@
 				$user['common']=$value['count'];
 				$interest[] = $user;
 			}
+
+			// 也可以用原生的sql语句来写
+			$sql ="select u.`uid`, u.`username`, u.`face50` as `face`, count(f.`follow`) as `count` from `tb_follow` f left join `tb_userinfo` u on f.`follow` = u.`uid` where f.`fans` in (".implode(',',$myfollow).") and f.`follow` not in (".implode(',',$excludefollow).") group by f.`follow` order by `count` DESC limit 10  ";
+			// echo $sql;
+			$result = M('follow')->query($sql);
+			// p($result);
 		?>
 		<fieldset>
 			<legend>可能感兴趣的人</legend>
@@ -59,18 +65,18 @@
 					<li>
 						<dl>
 							<dt>
-								<a href="">
+								<a href="{:U('User/index', array('id'=>$v['uid']))}">
 									<if condition = "$v['face']">
-										<img src="__ROOT__/{$v.face}" alt='' widht='30' height = '30'>
+										<img src="__ROOT__/{$v.face}"  widht='30' height = '30'>
 									<else/>
-										<img src="__PUBLIC__/Images/noface.gif" alt='' widht='30' height = '30'>
+										<img src="__PUBLIC__/Images/noface.gif"  widht='30' height = '30'>
 									</if>
 								</a>
 							</dt>
-							<dd><a href="">{$v.username}</a></dd>
+							<dd><a href="{:U('User/index', array('id'=>$v['uid']))}">{$v.username}</a></dd>
 							<dd>共有{$v.common}个共同好友</dd>
 						</dl>
-						<span class = 'heed_btn'><strong>+</strong>关注</span>
+						<span class = 'heed_btn add-fl' uid = "{$v['uid']}"><strong>+</strong>关注</span>
 				
 					</li>
 				</foreach>
