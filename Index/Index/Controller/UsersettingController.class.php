@@ -28,9 +28,11 @@ class UsersettingController extends CommonController {
  			);
         $where = array('uid'=>session('uid'));
  		if (M('userinfo')->where($where)->save($data))
-	 		echo "修改成功";//$this->success("修改成功");
+	 		// echo "修改成功";
+            $this->success("修改成功");
 	 	else
-	 		echo "无法修改";//$this->error("无法修改个人基本信息");
+	 		// echo "无法修改";
+            $this->error("无法修改个人基本信息");
     }
 
     public function editface(){

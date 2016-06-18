@@ -64,7 +64,7 @@
 						</ul>
 					</li>
 					<li class ='selector'><i class = 'icon icon-setup'></i>
-						<ul  >
+						<ul class='hidden' >
 							<li><a href="<?php echo U('Usersetting/Index');?>">账号设置</a></li>
 							<li><a href="">模板设置</a></li>
 							<li><a href="<?php echo U('Index/logout');?>">退出登录</a></li>
@@ -134,7 +134,7 @@
  $groups = M('group')->where(array('uid'=>session('uid')))->select(); ?>
 			<li><a href = "<?php echo U(Index/idnex);?>"> <i class = 'icon icon-group'></i>&nbsp;全部</a></li>
 			<?php if(is_array($groups)): foreach($groups as $key=>$v): ?><li><a href="<?php echo U('Index/index', array('gid'=>$v['id']));?>">
-					<i></i><?php echo ($v['name']); ?></a>
+					<i class = 'icon icon-group'></i>&nbsp;<?php echo ($v['name']); ?></a>
 				</li><?php endforeach; endif; ?>
 		</ul>
 		<span id = 'create_group'>创建新的分组</span>
@@ -437,7 +437,8 @@
 					</div><?php endif; endforeach; endif; ?>
 			<div id='page' style="color:red;"><?php echo ($page); ?></div>
 		</div>
-		<div id = 'right'>
+		<!-- 右边侧栏，登陆用户个人信息 -->
+<div id = 'right'>
 	<div class = 'edit_tpl'>
 		<a href="" id = 'set_model'></a>
 	</div>
@@ -455,24 +456,29 @@
 	<ul class = 'num_list'>
 		<li><a href=""><strong><?php echo ($loginuser["follow"]); ?></strong>关注</a></li>
 		<li><a href=""><strong><?php echo ($loginuser["fans"]); ?></strong>粉丝</a></li>
-		<li class = 'noborder'><a href=""><strong><?php echo ($loginuser["weibo"]); ?></strong>微博</a></li>
+		<li class = 'noborder'><a href=""><strong><?php echo ($loginuser["weibo"]); ?> </strong>微博 </a></li>
 	</ul>
 	<div class= 'maybe'>
+		<?php
+ $db = M('follow'); $where = array('fans'=>session('uid')); $myfollow = $db->where($where)->select(); foreach ($myfollow as $key => $value) { $myfollow[$key] = $value['follow']; } $excludefollow = $myfollow; $excludefollow[] = session('uid'); $where = array( 'fans'=>array('IN', $myfollow), 'follow'=>array('NOT IN', $excludefollow) ); $field = array('follow', 'count(follow)'=>'count'); $cnt = M('follow')->where($where)->field($field)->group('follow')->order('count DESC')->limit(10)->select(); $interest = array(); $field = array('uid', 'face50'=>'face', 'username'); foreach ($cnt as $key => $value) { $where = array('uid'=>$value['follow']); $user = M('userinfo')->where($where)->field($field)->find(); $user['common']=$value['count']; $interest[] = $user; } p($interest); ?>
 		<fieldset>
 			<legend>可能感兴趣的人</legend>
 			<ul>
-				<li>
-					<dl>
-						<dt>
-							<a href="">
-								<img src="" alt='' widht='30' height = '30'>
-							</a>
-						</dt>
-						<dd><a href="">用户002</a></dd>
-						<dd>共有10个共同好友</dd>
-					</dl>
-					<span class = 'heed_btn'><strong>+</strong>关注</span>
-				</li>
+				<?php if(is_array($interest)): foreach($interest as $key=>$v): ?><li>
+						<dl>
+							<dt>
+								<a href="">
+									<?php if($v['face']): ?><img src="/weibo/<?php echo ($v["face"]); ?>" alt='' widht='30' height = '30'>
+									<?php else: ?>
+										<img src="/weibo/Public/Images/noface.gif" alt='' widht='30' height = '30'><?php endif; ?>
+								</a>
+							</dt>
+							<dd><a href=""><?php echo ($v["username"]); ?></a></dd>
+							<dd>共有<?php echo ($v["common"]); ?>个共同好友</dd>
+						</dl>
+						<span class = 'heed_btn'><strong>+</strong>关注</span>
+				
+					</li><?php endforeach; endif; ?>
 			</ul>
 		</fieldset>
 	</div>

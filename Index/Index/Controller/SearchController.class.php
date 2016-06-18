@@ -19,7 +19,7 @@ class SearchController extends CommonController {
     		 'intro', 'follow','face80', 'fan', 'weibo',);
 
     		$count = M('userinfo')->where($where)->count();
-    		$page = new \Think\Page($count, 2);
+    		$page = new \Think\Page($count, 10);
     		$limit = $page->firstRow.','.$page->listRows;
     		$this->page = $page->show();
     		$searchusers = M('userinfo')->where($where)

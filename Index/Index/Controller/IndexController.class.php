@@ -7,6 +7,34 @@ class IndexController extends CommonController {
         // $content = replace_weibo($content);
         $db = D('WeiboView');
 
+            // $db = M('follow');
+            // $where = array('fans'=>session('uid'));
+            // $myfollow = $db->where($where)->select();
+            // foreach ($myfollow as $key => $value) {
+            //     $myfollow[$key] = $value['follow'];
+            // }
+            // p($myfollow);
+            // $excludefollow = $myfollow;
+            // $excludefollow[] = session('uid');
+
+            // // 要查看我关注的人所关注的人中，哪些人我还没有关注的
+            // $where = array(
+            //     'fans'=>array('IN', $myfollow),
+            //     'follow'=>array('NOT IN', $excludefollow)
+            // );
+            // // 按照相关数目排序
+            // $field = array("followcount", "follow", );
+            // $interest = D('FollowView')->where($where)->field($field)->group('follow')->order('followcount DESC')->limit(10)->select();
+            // p($interest);
+            // $field = array('uid', 'face', 'username' );
+            // // $db = D('FollowView');
+            // // $interest = D('FollowView')->where($where)->field($field)->order('follow')->limit(10)->select();
+            // p($interest);
+            // die;
+
+
+
+
         // 获取我关注的 用户id列表 +我自己的id
         $uid_where = array('fans'=>session('uid'),);
         

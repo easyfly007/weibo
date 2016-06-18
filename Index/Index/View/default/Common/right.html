@@ -1,3 +1,4 @@
+<!-- 右边侧栏，登陆用户个人信息 -->
 <div id = 'right'>
 	<div class = 'edit_tpl'>
 		<a href="" id = 'set_model'></a>
@@ -18,24 +19,61 @@
 	<ul class = 'num_list'>
 		<li><a href=""><strong>{$loginuser.follow}</strong>关注</a></li>
 		<li><a href=""><strong>{$loginuser.fans}</strong>粉丝</a></li>
-		<li class = 'noborder'><a href=""><strong>{$loginuser.weibo}</strong>微博</a></li>
+		<li class = 'noborder'><a href=""><strong>{$loginuser.weibo} </strong>微博 </a></li>
 	</ul>
 	<div class= 'maybe'>
+		<?php
+			// 找到关注的好友，查看他们关注的人，把这些人推荐给我
+			$db = M('follow');
+			$where = array('fans'=>session('uid'));
+			$myfollow = $db->where($where)->select();
+			foreach ($myfollow as $key => $value) {
+				$myfollow[$key] = $value['follow'];
+			}
+			$excludefollow = $myfollow;
+			$excludefollow[] = session('uid');
+
+			// 要查看我关注的人所关注的人中，哪些人我还没有关注的
+			$where = array(
+				'fans'=>array('IN', $myfollow),
+				'follow'=>array('NOT IN', $excludefollow)
+			);
+			// 按照相关数目排序
+			$field = array('follow', 'count(follow)'=>'count');
+			$cnt = M('follow')->where($where)->field($field)->group('follow')->order('count DESC')->limit(10)->select();
+
+			$interest = array();
+			//获取用户头像等信息
+			$field = array('uid', 'face50'=>'face', 'username');
+			foreach ($cnt as $key => $value) {
+				$where = array('uid'=>$value['follow']);
+				$user = M('userinfo')->where($where)->field($field)->find();
+				$user['common']=$value['count'];
+				$interest[] = $user;
+			}
+		?>
 		<fieldset>
 			<legend>可能感兴趣的人</legend>
 			<ul>
-				<li>
-					<dl>
-						<dt>
-							<a href="">
-								<img src="" alt='' widht='30' height = '30'>
-							</a>
-						</dt>
-						<dd><a href="">用户002</a></dd>
-						<dd>共有10个共同好友</dd>
-					</dl>
-					<span class = 'heed_btn'><strong>+</strong>关注</span>
-				</li>
+				<foreach name = 'interest' item = 'v'>
+					<li>
+						<dl>
+							<dt>
+								<a href="">
+									<if condition = "$v['face']">
+										<img src="__ROOT__/{$v.face}" alt='' widht='30' height = '30'>
+									<else/>
+										<img src="__PUBLIC__/Images/noface.gif" alt='' widht='30' height = '30'>
+									</if>
+								</a>
+							</dt>
+							<dd><a href="">{$v.username}</a></dd>
+							<dd>共有{$v.common}个共同好友</dd>
+						</dl>
+						<span class = 'heed_btn'><strong>+</strong>关注</span>
+				
+					</li>
+				</foreach>
 			</ul>
 		</fieldset>
 	</div>

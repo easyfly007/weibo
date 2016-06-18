@@ -17,8 +17,6 @@
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Uploadify/uploadify.css" />
 	<script type="text/javascript" src="/weibo/Public/Uploadify/jquery.uploadify.min.js"></script>
 	<script type="text/javascript" src="/weibo/Public/Js/jquery.validate.min.js"></script>
-	<!-- <link rel="stylesheet" type="text/css" href="/weibo/Public/Css/nav.css" />
-	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/bottom.css" /> -->
 
 	<link rel="stylesheet" type="text/css" href="/weibo/Public/Css/edit.css" />
 	<script type="text/javascript" src="/weibo/Public/Js/city.js"></script>
@@ -71,7 +69,7 @@
 						</ul>
 					</li>
 					<li class ='selector'><i class = 'icon icon-setup'></i>
-						<ul  >
+						<ul class='hidden' >
 							<li><a href="<?php echo U('Usersetting/Index');?>">账号设置</a></li>
 							<li><a href="">模板设置</a></li>
 							<li><a href="<?php echo U('Index/logout');?>">退出登录</a></li>
@@ -136,10 +134,12 @@
 	<div class = 'group'>
 		<fieldset><legend>分组</legend></fieldset>
 		<ul>
-			<li><a href=""><i></i>微博网友</a></li>
-			<li><a href=""><i></i>分组1</a></li>
-			<li><a href=""><i></i>分组2</a></li>
-			<li><a href=""><i></i>分组2</a></li>
+			<?php
+ $groups = M('group')->where(array('uid'=>session('uid')))->select(); ?>
+			<li><a href = "<?php echo U(Index/idnex);?>"> <i class = 'icon icon-group'></i>&nbsp;全部</a></li>
+			<?php if(is_array($groups)): foreach($groups as $key=>$v): ?><li><a href="<?php echo U('Index/index', array('gid'=>$v['id']));?>">
+					<i class = 'icon icon-group'></i>&nbsp;<?php echo ($v['name']); ?></a>
+				</li><?php endforeach; endif; ?>
 		</ul>
 		<span id = 'create_group'>创建新的分组</span>
 	</div>
@@ -264,6 +264,7 @@
 					</p>
 					<p>
 						<input type = 'submit' value ="确认修改" class = 'edit-sub'>
+					</p>
 				</form>
 			</div>
 		</div>

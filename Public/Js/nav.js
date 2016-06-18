@@ -101,7 +101,7 @@ $(function(){
 			gid:group
 		}, function(data){
 			if (data.status){
-				$('.add-fl[uid]='+follow+']').removeClass('add-fl').html("&nbsp;已关注");
+				$('.add-fl[uid='+follow+']').removeClass('add-fl').html("&nbsp;已关注");
 				$('#follow').hide();
 				$('#follow-bg').remove();
 			}else{
@@ -110,5 +110,32 @@ $(function(){
 
 		}, 'json');
 	});
-});
 
+	/**
+	 * 头部右侧下拉选项
+	 */
+	$('.selector').hover(function () {
+		var objClass = $('i', this).attr('class');
+		$('i', this).removeClass(objClass).addClass(objClass + '-cur');
+		$(this).css({  //改变背景色
+			'width' : '36px',
+			'backgroundColor' : '#FFFFFF',
+			'borderLeft' : '1px solid #CCCCCC',
+			'borderRight' : '1px solid #CCCCCC'
+		}).find('ul').show();
+	}, function () {
+		var objClass = $('i', this).attr('class');
+		$('i', this).removeClass(objClass).addClass(objClass.replace('-cur', ''));
+		$(this).css({  //还原背景
+			'width' : '38px',
+			'background' : 'none',
+			'border' : 'none'
+		}).find('ul').hide();
+	});
+	$('.selector li').hover(function () {  //下拉项添加效果
+		$(this).css('background', '#DCDCDC');
+	}, function () {
+		$(this).css('background', 'none');
+	});
+
+});
