@@ -221,8 +221,9 @@ $(function () {
 				},
 				success: function (data){
 					// 成功调用
-					if (data != 'false')
+					if (data != 'false'){
 						commentList.append(data);
+					}
 				},
 				complete:function (){
 					// 无论ajax 成功与否

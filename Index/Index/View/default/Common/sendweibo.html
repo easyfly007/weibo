@@ -1,0 +1,40 @@
+			<!-- 发微博 微博发布框 -->
+			<div class = 'send_wrap'>
+				<div class = 'send_title fleft'></div>
+				<div class = 'send_prompt fright'>
+					<span>你还可以输入<span id = 'send_num'>140</span>个字</span>
+				</div>
+				<div class = 'send_write'>
+					<form action = "{:U('Index/sendweibo')}" method = 'post' name = 'weibo'>
+						<textarea sign = 'weibo' name = 'content'></textarea>
+						<div class = 'send_tool'>
+							<ul class = 'fleft'>
+								<li title = '表情'>
+									<i class = 'icon icon-phiz phiz' sign = 'weibo' ></i>
+								</li>
+								<li title = '图片'>
+									<i class = 'icon icon-picture'></i>
+									<!-- 图片上传框 -->
+									<div id = 'upload_img' class = 'hidden'>
+										<div class = 'upload-title'>
+											<p>本地上传</p>
+											<span class = 'close'></span>
+										</div>
+										<div class = 'upload-btn'>
+											<input type ='hidden' name = 'max' value = ''>
+											<input type ='hidden' name = 'medium' value = ''>
+											<input type ='hidden' name = 'mini' value = ''>
+											<input type= 'file' name = 'picture' id='picture'>
+										</div>
+									</div>
+									<!-- 图片上传框 -->
+									<div id = 'pic-show' class = 'hidden'>
+										<img src="" alt = '' />
+									</div>
+								</li>
+							</ul>
+							<input type = 'submit' value = '' class = 'send_btn fright' title = '发布微博' />
+						</div>
+					</form>
+				</div>
+			</div>

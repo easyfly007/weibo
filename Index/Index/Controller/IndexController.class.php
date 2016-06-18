@@ -29,11 +29,6 @@ class IndexController extends CommonController {
             // $field = array('uid', 'face', 'username' );
             // // $db = D('FollowView');
             // // $interest = D('FollowView')->where($where)->field($field)->order('follow')->limit(10)->select();
-            // p($interest);
-            // die;
-
-
-
 
         // 获取我关注的 用户id列表 +我自己的id
         $uid_where = array('fans'=>session('uid'),);
@@ -163,11 +158,10 @@ class IndexController extends CommonController {
                     $str .= "<dd page = '".($visit_page+1)."' wid = '".$wid."' > 下一页</span></dd>";
                 $str .= "</dl>";
             }
-
             echo $str;            
         }
         else
-            echo "false";
+            echo 'false';
     }
 
     public function postComment(){
@@ -289,7 +283,7 @@ class IndexController extends CommonController {
                 else
                     $this->error('转发成功，但是无法评论原微博');
             }    
-            $this->success('转发微博成功！',U('Index/index'));
+            $this->success('转发微博成功！', $_SERVER['HTTP_REFERER']);// U('Index/index'));
         }else{
             $this->error('无法转发微博!');
         }

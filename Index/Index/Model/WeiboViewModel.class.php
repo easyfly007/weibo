@@ -36,6 +36,7 @@ class WeiboViewModel extends ViewModel {
 	}
 
 	public function getWeiboCount($where){
-		$count = $this->where($where)->count('*');
+		$count = $this->where($where)->count();
+		return $count;
 	}
 }

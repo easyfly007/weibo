@@ -1,0 +1,137 @@
+<include file ="Common:header" />
+	<title>微博首页</title>
+	<css file = "__PUBLIC__/Uploadify/uploadify.css" />
+    <css file = "__PUBLIC__/Css/index.css" />
+    <css file = "__PUBLIC__/Css/userindex.css" />
+
+	<js file = "__PUBLIC__/Uploadify/jquery.uploadify.min.js" />
+    <js file = '__PUBLIC__/Js/index.js' />
+    <script type="text/javascript">
+    	var PUBLIC = '__PUBLIC__';
+    	var uploadUrl = "{:U('Common/uploadPic')}";
+    	var sid = "{:session_id()}";
+    	var ROOT = "__ROOT__";
+       	var getComment = "{:U('Index/getComment')}";
+    	var postCommentUrl = "{:U('Index/postComment')}";
+    	var keepUrl = "{:U('Index/keep')}";
+    </script>
+
+</header>
+
+<body>
+	<!-- 顶部导航栏 -->
+	<include file = "Common:nav" />
+	<div style = 'height:40px; opcity:10'></div>
+	<div id = 'userinfo'>
+		<div class = 'info-list'>
+			<div class = 'info-face'>
+				<p>
+					<if condition ="$userinfo['face']">
+						<img src="__ROOT__/{$userinfo['face']}" width = '180' height = '180' alt= "{$userinfo.username}">
+					<else/>
+						<img src="__PUBLIC__/Images/noface.gif" width = '180' height = '180' alt= "{$userinfo.username}">
+					</if>
+				</p>
+				<ul>
+					<li>
+						<a href="{:U('User/follow')}"><strong>{$userinfo.follow}</strong><br/>关注</a>
+					</li>
+					<li>
+						<a href=""><strong>{$userinfo.fans}</strong><br/>粉丝</a>
+					</li>
+					<li>
+						<a href=""><strong>{$userinfo.weibo}</strong><br/>微博</a>
+					</li>
+				</ul>
+			</div>
+
+			<ul class = 'uinfo'>
+				<li class = 'uname full'>{$userinfo.username}</li>
+				<li class = 'uintro full'>{$userinfo.intro}</li>
+				<li class = 'ulist full'>
+					<ul>
+						<li>
+							<if condition = "$userinfo['sex'] eq 'm' ">
+								<i class = 'icon icon-boy'></i>
+							<else/>
+								<i class = 'icon icon-girl'></i>
+							</if>
+							
+						</li>
+						<li>{$userinfo.location}</li>
+						<li class = 'nobr'>{$userinfo.constelation}</li>
+					</ul>
+				</li>
+				<if condition = "session('uid') eq $userinfo['uid']">
+				<li class = 'uedit full'>
+					<a href="{:U('Usersetting/index')}">修改个人资料</a>
+				</li>
+				</if>
+			</ul>
+		</div>
+	</div>
+
+
+	<div class = 'main'>
+		<div id = 'middle' class = 'fleft'>
+			<!-- 微博发布框 -->
+			<if condition="session('uid') eq $userinfo['uid']">
+				<include file ="Common:sendweibo" />
+			</if>
+			
+			<!-- 微博显示列表 -->
+			<include file = "Common:listweibo" />
+		</div>
+
+		<!-- 右侧 输出 该用户关注和关注该用户的人的头像 -->
+		<div id ='right'>
+			<dl>
+				<dt>
+					我的关注(<strong>{$userinfo.follow}</strong>)
+					<if condition ="$userinfo['follow'] gt 8" >
+						<a href="">更多 > > </a>
+					</if>
+				</dt>
+				<foreach name = 'follow' item = 'v'>
+				<dd>
+					<a href="">
+						<if condition ="$v['face']">
+							<img src="__ROOT__/{$v['face']}" alt='' widht = '50' height = '50'>
+						<else/>
+							<img src="__PUBLIC__/Images/noface.gif" alt='' widht = '50' height = '50'>
+						</if>
+					</a>
+					<p><a href="{:U('User/index', array('id'=>$v['uid']))}">{$v.username}</a></p>
+				</dd>
+				</foreach>
+			</dl>
+
+			<dl>
+				<dt>
+					我的粉丝(<strong>{$userinfo.fans}</strong>)
+					<if condition = "$userinfo['fans'] gt 8" >
+						<a href="">更多 > > </a>
+					</if>
+				</dt>
+				<foreach name = 'fans' item = 'v'>
+				<dd>
+					<a href="">
+						<if condition ="$v['face']">
+							<img src="__ROOT__/{$v['face']}" alt='' widht = '50' height = '50'>
+						<else/>
+							<img src="__PUBLIC__/Images/noface.gif" alt='' widht = '50' height = '50'>
+						</if>
+					</a>
+					<p><a href="{:U('User/index', array('id'=>$v['uid']))}">{$v.username}</a></p>
+				</dd>
+				</foreach>
+			</dl>
+
+		</div>
+
+
+	</div>
+
+	<include file = "Common:bottom" />
+</body>
+</html>

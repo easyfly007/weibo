@@ -1,36 +1,3 @@
-<include file ="Common:header" />
-	<title>微博首页</title>
-	<css file = "__PUBLIC__/Uploadify/uploadify.css" />
-    <css file = "__PUBLIC__/Css/index.css" />
-
-	<js file = "__PUBLIC__/Uploadify/jquery.uploadify.min.js" />
-    <js file = '__PUBLIC__/Js/index.js' />
-    <script type="text/javascript">
-    	var uploadUrl = "{:U('Common/uploadPic')}";
-    	var PUBLIC = "__PUBLIC__";
-    	var ROOT = "__ROOT__";
-    	var getComment = "{:U('Index/getComment')}";
-    	var postCommentUrl = "{:U('Index/postComment')}";
-    	var keepUrl = "{:U('Index/keep')}";
-    	var sid = "{:session('uid')}";
-    </script>
-
-</header>
-
-<body>
-	<!-- 顶部导航栏 -->
-	<include file = "Common:nav" />
-
-	<div style = 'height:60px; opcity:10'></div>
-	<div class = 'main'>
-		<!-- 左侧边栏 -->
-		<include file ="Common:left" />
-		<!-- 中部 -->
-		<div id = 'middle' class = 'fleft'>
-			
-			<!-- 发微博 微博发布框 -->
-			<include file ="Common:sendweibo" />
-
 			<!-- 微博展示列表 -->
 			<div class = 'view_line'>
 				<strong>微博</strong>
@@ -104,7 +71,7 @@
 									</span></li>
 									<li>|</li>
 									<li class = 'keep-wrap'>
-										<span class = 'keep-wrap' wid = "{$v.id}">
+										<span class = 'keep' wid = "{$v.id}">
 											<if condition = "$v['keep']">
 												收藏({$v.keep})
 											<else/>
@@ -290,11 +257,3 @@
 				</if>
 			</foreach>
 			<div id='page' style="color:red;">{$page}</div>
-		</div>
-		<include file = 'Common:right' />
-
-	</div>
-
-	<include file = "Common:bottom" />
-</body>
-</html>
