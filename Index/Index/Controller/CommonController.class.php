@@ -86,6 +86,31 @@ class CommonController extends Controller {
 			echo json_encode(array('status'=>0, 'msg'=>"无法添加关注！"));
 	}
 
+	//异步调用移除关注关系
+	public function delFollow(){
+		if (!IS_AJAX)
+			$this->error('页面不存在');
+		$uid = I('post.uid');
+		$type = I('post.type');
+		if ($type == 'follow'){
+			$where = array('follow'=>$uid, 'fans'=>session('uid'));
+			if (M('follow')->where($where)->delete()){
+				M('userinfo')->where(array('uid'=>session('uid')))->setDec('follow');
+				M('userinfo')->where(array('uid'=>$uid))->setDec('fans');
+				echo 1;
+			}else
+				echo 0;
+		}else{
+			$where = array('follow'=>session('uid'), 'fans'=>$uid);
+			if (M('follow')->where($where)->delete()){
+				M('userinfo')->where(array('uid'=>$uid))->setDec('follow');
+				M('userinfo')->where(array('uid'=>session('uid')))->setDec('fans');
+				echo 1;
+			}else
+				echo 0;
+		}
+	}
+
 
 	// 为了公用这些代码，提炼出单独的函数
 	private function _upload($path, $width, $height){

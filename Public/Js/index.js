@@ -403,6 +403,7 @@ $(function () {
             }
   		}
   	}
+
   	//关闭表情框
 	$('.close').hover(function () {
 		$(this).css('backgroundPosition', '-100px -200px');
@@ -414,6 +415,33 @@ $(function () {
 		if ($('#turn').css('display') == 'none') {
 			$('#opacity_bg').remove();
 		};
+	});
+
+	// 移除关注
+	$('.del-follow').click(function(){
+		var uid = $(this).attr('uid');
+		var type = $(this).attr('type');
+		var obj = $(this).parents('li');
+		alert(uid);
+		alert(obj);
+		var isDel = confirm('确认移除？');
+		if (isDel){
+			var data = {
+				uid: uid,
+				type: type };
+			$.post(delFollowUrl, data, function(data){
+				if (data){
+					// 删除粉丝或者关注关系成功
+					alert('移除成功');
+					obj.slideUp('slow', function () {
+						obj.remove();
+					});
+				}else{
+					alert('移除失败，请重试');
+				}
+			}, 'json');
+		}
+
 	});
 
 });

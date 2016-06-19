@@ -1,11 +1,11 @@
 <include file ="Common:header" />
 	<title>微博首页</title>
-	<css file = "__PUBLIC__/Uploadify/uploadify.css" />
-    <css file = "__PUBLIC__/Css/index.css" />
+	<!-- <css file = "__PUBLIC__/Uploadify/uploadify.css" /> -->
+    <!-- <css file = "__PUBLIC__/Css/index.css" /> -->
     <css file = "__PUBLIC__/Css/followlist.css" />
 
-	<js file = "__PUBLIC__/Uploadify/jquery.uploadify.min.js" />
-    <js file = '__PUBLIC__/Js/index.js' />
+	<!-- <js file = "__PUBLIC__/Uploadify/jquery.uploadify.min.js" /> -->
+    <!-- <js file = '__PUBLIC__/Js/index.js' /> -->
     <script type="text/javascript">
     	var PUBLIC = '__PUBLIC__';
     	var uploadUrl = "{:U('Common/uploadPic')}";
@@ -67,9 +67,11 @@
 					</dl>
 					<dl class ='list-right'>
 						<if condition ="in_array($v['uid'], $loginuserfollow) and in_array($v['uid'], $loginuserfans)" >
-							<dt>互相关注</dt><dd>移除</dd>
+							<dt>互相关注</dt>
+							<dd class ="del-follow" uid = '{$v["uid"]}' type = '{$type}'>移除</dd>
 						<elseif condition ="in_array($v['uid'], $loginuserfollow)" />
-							<dt>已关注</dt><dd>移除</dd>
+							<dt>已关注</dt>
+							<dd class = "del-follow" uid = '{$v["uid"]}' type = '{$type}'>移除</dd>
 						<else/>
 							<dt class = 'add-fl' uid = "{$v['uid']}">+&nbsp;关注</dt>
 						</if>
