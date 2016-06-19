@@ -62,6 +62,11 @@
 								<span class='send_time'>{$v.time|time_format}</span>
 
 								<ul>
+									<if condition ="session('uid') eq $v['uid']">
+										<li class ='del-li hidden'><span class = 'del-weibo' wid='{$v.id}'>删除</span></li>
+									
+										<li class ='del-li hidden' >|</li>
+									</if>
 									<li><span class = 'turn' id ="{$v['id']}"> 
 										<if condition = "$v['forward']">
 											转发({$v.forward})
@@ -207,6 +212,10 @@
 								<span class = 'send_time'>{$v.time|time_format}</span>
 								<ul>
 									<!-- 如果是转发的，这个span element 带有id 和orgid -->
+									<if condition ="session('uid') eq $v['uid'] ">
+										<li class ='del-li hidden'><span class ='del-weibo' wid='{$v.id}'>删除</span></li>
+										<li class ='del-li hidden'>|</li>
+									</if>
 									<li>
 										<span class = 'turn' id = "{$v['id']}" orgid= "{$v['original']['id']}">
 											<if condition ="$v['forward']">

@@ -365,7 +365,7 @@ $(function () {
 		var obj = $(this).parents('.weibo');
 
 		if (isDel) {
-			$.post(delWeibo, {wid : wid}, function (data) {
+			$.post(delWeiboUrl, {wid : wid}, function (data) {
 				if (data) {
 					obj.slideUp('slow', function () {
 						obj.remove();

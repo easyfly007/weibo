@@ -7,8 +7,8 @@
 		<dl class = 'user_face'>
 			<dt>
 				<a href="{:U('User/index', array('uid'=>$userinfo['uid']))}">
-					<if condition ="$userinfo['face80']">
-						<img src="__ROOT__/{$userinfo['face80']}" width = '80' height = '80'>
+					<if condition ="$userinfo['face']">
+						<img src="__ROOT__/{$userinfo['face']}" width = '80' height = '80'>
 					<else/>
 						<img src="__PUBLIC__/Images/noface.gif" width = '80' height = '80'>
 					</if>

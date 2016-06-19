@@ -28,7 +28,11 @@ class WeiboViewModel extends ViewModel {
 			foreach ($result as $key => $value) {
 				if ($value['original']>0){
 					// $where = array('id'=>$v['forward']);
-					$result[$key]['original'] = $this->find($value['original']); 
+					
+					$original = $this->find($value['original']);
+					if (!$original)
+						$original = -1;
+					$result[$key]['original'] = $original;
 				}
 			}
 		}

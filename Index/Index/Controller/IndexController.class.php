@@ -314,4 +314,43 @@ class IndexController extends CommonController {
         else
             echo 0;
     }
+
+    public function delWeibo(){
+
+        if (!IS_AJAX)
+            $this->error('页面不存在');
+        $wid = I('post.wid');
+        // 先用一个变量保存所有相关的weibo信息
+        $weibo = M('weibo')->where(array('id'=>$wid))->find();
+
+        // 删除 收藏这条微博的相关信息
+        $data = M('keep')->where(array('wid'=>$wid))->select();
+        foreach ($data as $v) {
+            M('userinfo')->where(array('uid'=>$v['uid'],))->setDec('keep');
+        }
+        M('keep')->where('wid='.$wid)->delete();
+        
+        //删除转发微博的原微博信息,将转发微博的original 设置为-1
+        $forwards = M('weibo')->where(array('original'=>$wid))->select();
+        $data['original'] = -1;
+        M('weibo')->where('original = '.$wid)->save($data);
+        
+        // 删除图片
+        $imgs = M('picture')->where(array('wid'=>$wid))->select();
+        foreach ($imgs as $value) {
+            M('picture')->delete($value['id']);
+            @unlink('./'.$value['mini']);
+            @unlink('./'.$value['medium']);
+            @unlink('./'.$value['max']);
+        }
+        
+        // 删除微博        
+        if (M('weibo')->where(array('id'=>$wid))->delete()){
+            M('userinfo')->where(array('uid'=>$weibo['uid']))->setDec('weibo');
+            echo 1;
+        }else{
+             echo 0;
+        }
+
+    }
 }
