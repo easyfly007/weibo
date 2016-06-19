@@ -108,6 +108,27 @@ class UserController extends CommonController {
 
         $this->display();
 	}
+
+	// 显示我的收藏列表
+	public function keeplist(){
+		// $this->display();
+		$keep = M('keep')->where(array('uid'=>session('uid')))
+			->field(array('wid'))->select();
+		foreach ($keep as $key => $value) {
+			$keep[$key] = $value['wid'];
+		}
+		$where = array(
+			'id'=>array('IN', $keep));
+		$db = D('WeiboView');
+        $count = $db->getWeiboCount($where);
+        $page = new \Think\Page($count, 20);
+        $limit = $page->firstRow.','.$page->listRows;
+
+        $this->page = $page->show();
+        $weibo = $db->getAllWeibo($where, $limit);
+        $this->weibo = $weibo;
+		$this->display();
+	}
 	
 	private function _getUserUrl($username){
 		$username = htmlspecialchars($username);

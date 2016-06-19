@@ -6,7 +6,7 @@
 	<css file = "__PUBLIC__/Css/nav.css" />
 	<css file = "__PUBLIC__/Css/left.css" />
 	<css file = "__PUBLIC__/Css/middle.css" />
-	<css file = "__PUBLIC__/Css/right.css" />
+	<!-- <css file = "__PUBLIC__/Css/right.css" /> -->
 	<css file = "__PUBLIC__/Css/letter.css" />
 	<css file = "__PUBLIC__/Css/bottom.css" />
 
@@ -15,3 +15,14 @@
 	<js file = "__PUBLIC__/Uploadify/jquery.uploadify.min.js" />
 	<js file = '__PUBLIC__/Js/nav.js' />
 	<js file = '__PUBLIC__/Js/left.js' />
+
+	<script type="text/javascript">
+    	var PUBLIC = '__PUBLIC__';
+    	var uploadUrl = "{:U('Common/uploadPic')}";
+    	var sid = "{:session_id()}";
+    	var ROOT = "__ROOT__";
+       	var getComment = "{:U('Index/getComment')}";
+    	var postCommentUrl = "{:U('Index/postComment')}";
+    	var keepUrl = "{:U('Index/keep')}";
+    	var delWeiboUrl = "{:U('Index/delWeibo')}";
+    </script>

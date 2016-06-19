@@ -1,0 +1,28 @@
+<include file ="Common:header" />
+    <title>{$user.username}的收藏</title>
+    <css file = "__PUBLIC__/Css/followlist.css" />
+    <css file = "__PUBLIC__/Css/index.css" />
+    <js file = "__PUBLIC__/Js/weibolist.js" />
+
+</header>
+
+<body>
+    <!-- 顶部导航栏 -->
+    <include file = "Common:nav" />
+    <div style = 'height:40px; opcity:10'></div>
+    <div class ='main'>
+        <include file = "Common:left" />
+        <div id = 'middle' class = 'fleft'>
+        <!-- <div id = 'right'> -->
+            <div class = 'view_line'> <strong>收藏</strong></div>
+            <!-- 微博展示列表 -->
+            <include file ="Common:listweibo" />    
+            <div><span class = 'page'>{$page}</span></div>
+        <!-- </div> -->
+        </div>
+    </div>
+
+
+    <include file = "Common:bottom" />
+</body>
+</html>
