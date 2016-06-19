@@ -35,13 +35,13 @@
 				</p>
 				<ul>
 					<li>
-						<a href="{:U('User/follow')}"><strong>{$userinfo.follow}</strong><br/>关注</a>
+						<a href="{:U('User/followlist', array('type'=>1, 'uid'=>$userinfo['uid']))}"><strong>{$userinfo.follow}</strong><br/>关注</a>
 					</li>
 					<li>
-						<a href=""><strong>{$userinfo.fans}</strong><br/>粉丝</a>
+						<a href="{:U('User/followlist', array('type'=>0, 'uid'=>$userinfo['uid']))}"><strong>{$userinfo.fans}</strong><br/>粉丝</a>
 					</li>
 					<li>
-						<a href=""><strong>{$userinfo.weibo}</strong><br/>微博</a>
+						<a href="{:U('User/weibolist', array('uid'=>$userinfo['uid']))}"><strong>{$userinfo.weibo}</strong><br/>微博</a>
 					</li>
 				</ul>
 			</div>

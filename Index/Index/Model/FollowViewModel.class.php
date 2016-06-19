@@ -9,7 +9,7 @@ class FollowViewModel extends ViewModel {
 		'follow'=>array(
 			'follow', 'fans', ),
 		'userinfo' => array(
-			'username', 'face50'=>'face', 'uid',
+			'username', 'face50'=>'face', 'uid','weibo',
 			'_on'=>'follow.follow =userinfo.uid',),
 	);
 

@@ -3,6 +3,7 @@
 	<div class = 'edit_tpl'><a href="" id = 'set_model'></a></div>
 
 	<!-- 利用我们在CommonController 里面提供的 loginuser -->
+	<!-- 或者利用用户自定义标签 -->
 	<userinfotag uid = 'session("uid")' >
 		<dl class = 'user_face'>
 			<dt>
@@ -17,8 +18,8 @@
 			<dd><a href="">{$userinfo.username}</a></dd>
 		</dl>
 		<ul class = 'num_list'>
-			<li><a href=""><strong>{$userinfo.follow}</strong>关注</a></li>
-			<li><a href=""><strong>{$userinfo.fans}</strong>粉丝</a></li>
+			<li><a href="{:U('User/followlist', array('uid'=>$userinfo['uid'], 'type'=>1))}"><strong>{$userinfo.follow}</strong>关注</a></li>
+			<li><a href="{:U('User/followlist', array('uid'=>$userinfo['uid'], 'type'=>0))}"><strong>{$userinfo.fans}</strong>粉丝</a></li>
 			<li class = 'noborder'><a href=""><strong>{$userinfo.weibo} </strong>微博 </a></li>
 		</ul>
 	</userinfotag >

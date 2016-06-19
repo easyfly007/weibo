@@ -10,7 +10,7 @@ class FansViewModel extends ViewModel {
 			'follow', 'fans', 
 			 '_type' =>'LEFT' ),
 		'userinfo' => array(
-			'username', 'face50'=>'face', 'uid',
+			'username', 'face50'=>'face', 'uid','weibo',
 			'_on'=>'follow.fans =userinfo.uid',),
 	);
 

@@ -1,0 +1,87 @@
+<include file ="Common:header" />
+	<title>微博首页</title>
+	<css file = "__PUBLIC__/Uploadify/uploadify.css" />
+    <css file = "__PUBLIC__/Css/index.css" />
+    <css file = "__PUBLIC__/Css/followlist.css" />
+
+	<js file = "__PUBLIC__/Uploadify/jquery.uploadify.min.js" />
+    <js file = '__PUBLIC__/Js/index.js' />
+    <script type="text/javascript">
+    	var PUBLIC = '__PUBLIC__';
+    	var uploadUrl = "{:U('Common/uploadPic')}";
+    	var sid = "{:session_id()}";
+    	var ROOT = "__ROOT__";
+       	var getComment = "{:U('Index/getComment')}";
+    	var postCommentUrl = "{:U('Index/postComment')}";
+    	var keepUrl = "{:U('Index/keep')}";
+    	var delWeiboUrl = "{:U('Index/delWeibo')}";
+    </script>
+
+</header>
+
+<body>
+	<!-- 顶部导航栏 -->
+	<include file = "Common:nav" />
+	<div style = 'height:40px; opcity:10'></div>
+	<div class ='main'>
+		<include file = "Common:left" />
+
+		<div id = 'right'>
+			<if condition ="$type eq 'fans' ">
+				<p class = 'total'>
+					已经有 {$listcount} 个人关注了
+					<a href="{:U('User/index', array('uid'=>$user['uid']))}">{$user.username}</a>
+				</p>
+			<else/>
+				<p class = 'total'>
+					<a href="{:U('User/index', array('uid'=>$user['uid']))}">{$user.username}</a>
+					关注了{$listcount}个人</p>
+			</if>
+			<ul>
+				<foreach name = 'followlist' item = 'v'>
+				<li>
+					<dl class = 'list-left'>
+						<dt>
+							<if condition ="$v['face']">
+								<img src="__ROOT__/{$v['face']}" width ='50' height = '50'>
+							<else/>
+								<img src="__PUBLIC__/Images/noface.gif" width ='50' height = '50'>
+							</if>
+						</dt>
+						<dd>
+							<a href="{:U('User/index', array('uid'=>$v['uid']))}">{$v.username}</a>
+						</dd>
+						<dd>
+							<if condition = "$v['sex'] eq 'm'">
+								<i class = 'icon icon-boy'></i>&nbsp;
+							<else/>
+								<i class = 'icon icon-boy'></i>&nbsp;
+							</if>
+							<span>{$v.location}</span>
+						</dd>
+						<dd>
+							<span>关注 <a href="{:U('user/followlist', array('type'=>1, 'uid'=>$v['uid']))}">{$v.follow}</a></span>
+							<span class ='bd-l'>粉丝<a href="{:U('User/followlist', array('type'=>0, 'uid'=>$v['uid']))}">{$v.fans}</a></span>
+							<span class ='bd-l'>微博<a href="{:U('User/weibolist', array('uid'=>$v['uid']))}">{$v.weibo}</a></span>
+						</dd>
+					</dl>
+					<dl class ='list-right'>
+						<if condition ="in_array($v['uid'], $loginuserfollow) and in_array($v['uid'], $loginuserfans)" >
+							<dt>互相关注</dt><dd>移除</dd>
+						<elseif condition ="in_array($v['uid'], $loginuserfollow)" />
+							<dt>已关注</dt><dd>移除</dd>
+						<else/>
+							<dt class = 'add-fl' uid = "{$v['uid']}">+&nbsp;关注</dt>
+						</if>
+					</dl>
+				</li>
+			</foreach>
+			</ul>
+			<div><span class = 'page'>{$page}</span></div>
+		</div>
+	</div>
+
+
+	<include file = "Common:bottom" />
+</body>
+</html>

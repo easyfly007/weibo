@@ -6,7 +6,7 @@ use Think\Controller;
 class UserController extends CommonController {
 		 
 	public function index(){
-		$uid = I('get.id');
+		$uid = I('get.uid');
 
 		// 用户个人信息
 		$field = array('uid', 'face180'=>'face', 'username', 'truename', 'sex', 'location', 
@@ -50,7 +50,6 @@ class UserController extends CommonController {
        		S('fans_'.$uid, $fans, 3600);
         }
         $this->fans = $fans;
-
 		$this->display();
 	}
 
@@ -66,6 +65,50 @@ class UserController extends CommonController {
 		// redirect $this->_getUserUrl($name);
 	}
 
+	// 显示用户的关注或者粉丝
+	public function followlist(){
+		$uid = I('get.uid');
+		$type = I('get.type'); // 1 关注列表， 0 粉丝列表
+		$this->user = M('userinfo')->where(array('uid'=>$uid))->field('username')->find();
+		if ($type ==1){
+			// 关注列表
+			$this->type = 'follow';
+			$where = array('fans'=>$uid);
+			$db = D('FollowView');
+			
+		}else{
+			// 粉丝列表
+			$this->type = 'fans';
+			$where = array('follow'=>$uid);
+			$db = D('FansView');
+		}
+		$count = $db->where($where)->count();
+		$page = new \Think\Page($count, 20);
+		$limit = $page->firstRow.','.$page->listRows;
+		$users = $db->where($where)->limit($limit)->select();
+		$this->followlist = $users;
+        $this->page = $page->show();
+        $this->listcount = $count;
+
+       // 登陆用户
+        $where = array('fans'=>session('uid'));
+        $loginuserfollow = M('follow')->where($where)->select();
+        foreach ($loginuserfollow as $key => $value) {
+        	$loginuserfollow[$key] = $value['follow']; 
+        }
+
+        $where = array('follow'=>session('uid'));
+        $loginuserfans = M('follow')->where($where)->select();
+        foreach ($loginuserfans as $key => $value) {
+        	$loginuserfans[$key] = $value['fans'];
+        }
+
+        $this->loginuserfans = $loginuserfans;
+        $this->loginuserfollow = $loginuserfollow;
+
+        $this->display();
+	}
+	
 	private function _getUserUrl($username){
 		$username = htmlspecialchars($username);
 		$uid = M('userinfo')->where(array('username'=>$username))->getField('uid');
@@ -74,4 +117,7 @@ class UserController extends CommonController {
 		else
 			return U('User/index', array('id'=>$uid));
 	}
+
+
+
 }
