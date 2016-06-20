@@ -221,8 +221,14 @@ $(function () {
 				},
 				success: function (data){
 					// 成功调用
-					if (data != 'false'){
-						commentList.append(data);
+					alert(data.length);
+					var realdata = data.replace("\u00EF\u00BB\u00BF","");
+					// var realdata = data.replace("\uEF\uBB\uBF","");
+					alert(realdata.length);
+					if (realdata == 'false'){
+						commentList.append('haha');
+					}else{
+						commentList.append(realdata);
 					}
 				},
 				complete:function (){
