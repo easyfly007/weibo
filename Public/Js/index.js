@@ -197,6 +197,25 @@ $(function () {
 		
 	});
 
+	// 取消收藏
+	$(".cancel-keep").click(function() {
+		var isConfirm = confirm('确定不在收藏这条微博？');
+		if (!isConfirm)
+			return;
+		var wid = $(this).attr('wid');
+		var keepUp = $(this).next();
+		var msg = '';
+		var obj = $(this).parent('.weibo');
+		$.post(cancelUrl, {wid:wid}, function(data){
+			if (data ==1){
+				obj.slideUp('slow', function(){
+					obj.remove();
+				})
+			}else // 取消收藏失败
+				alert("无法取消收藏");
+		}, 'json');
+	});
+
 
 	/**
 	 * 评论框处理

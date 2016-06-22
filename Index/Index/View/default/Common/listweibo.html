@@ -70,13 +70,17 @@
 									</span></li>
 									<li>|</li>
 									<li class = 'keep-wrap'>
-										<span class = 'keep' wid = "{$v.id}">
-											<if condition = "$v['keep']">
-												收藏({$v.keep})
-											<else/>
-												收藏
-											</if>
-										</span>
+										<if condition = "isset($v['kept'])">
+											<span class = 'cancel-keep' wid="{$v.id} ">取消收藏</span>
+										<else/>
+											<span class = 'keep' wid = "{$v.id}">
+												<if condition = "$v['keep']">
+													收藏({$v.keep})
+												<else/>
+													收藏
+												</if>
+											</span>
+										</if>
 										<div class = 'keep-up hidden'></div>
 									</li>
 									<li>|</li>
@@ -225,7 +229,18 @@
 									</li>
 									<li>|</li>
 									<li class = 'keep-wrap'>
-										<span class ='keep' wid = "{$v.id}">收藏</span>
+										<if condition = "isset($v['kept'])">
+											<span class = 'cancel-keep' wid = "{$v.id}">取消收藏</span>
+										<else/>
+
+											<span class = 'keep' wid = "{$v.id}">
+												<if condition = "$v['keep']">
+													收藏({$v.keep})
+												<else/>
+													收藏
+												</if>
+											</span>
+										</if>
 										<div class = 'keep-up hidden'></div>
 									</li>
 									<li>|</li>

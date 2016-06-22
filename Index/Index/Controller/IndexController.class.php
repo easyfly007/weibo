@@ -315,6 +315,26 @@ class IndexController extends CommonController {
             echo 0;
     }
 
+
+    // 取消收藏, 1, 取消成功， 0 取消失败
+    public function cancel(){
+        if (!IS_AJAX)
+            $this->error('页面不存在');
+        $wid = I('post.wid');
+        $uid = session('uid');
+        $where = array(
+            'wid'=>$wid,
+            'uid'=>$uid, );
+        if (M('keep')->where($where)->delete()){
+            M('userinfo')->where($where)->setDec('keep');
+            M('weibo')->where(array('id'=>$wid))->setDec('keep');
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+
+
     public function delWeibo(){
 
         if (!IS_AJAX)

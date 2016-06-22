@@ -126,6 +126,9 @@ class UserController extends CommonController {
 
         $this->page = $page->show();
         $weibo = $db->getAllWeibo($where, $limit);
+        foreach ($weibo as $key => $value) {
+        	$weibo[$key]['kept'] = 1;
+        }
         $this->weibo = $weibo;
 		$this->display();
 	}
