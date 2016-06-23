@@ -1,0 +1,75 @@
+<include file ="Common:header" />
+	<title>我的私信</title>
+
+	<css file = "__PUBLIC__/Css/right.css" />
+    <css file = "__PUBLIC__/Css/index.css" />
+    <css file = "__PUBLIC__/Css/letter.css" />
+
+    <js file = "__PUBLIC__/Js/letter.js" />
+</header>
+
+<body>
+	<!-- 顶部导航栏 -->
+	<include file = "Common:nav" />
+
+	<div style = 'height:60px; opcity:10'></div>
+	<div class = 'main'>
+		<!-- 左侧边栏 -->
+		<include file ="Common:left" />
+		<!-- 中部 -->
+		<div id = 'middle' class = 'fleft'>
+			<p class = 'title'>
+				我的私信 (共<span>{$count} </span>条) 
+				<span class = 'send'> 写新的私信</span>
+			</p>
+			<foreach name = "letters" item = "v">
+				<dl>
+					<dt>
+						<a href="{:U('user/index', array('uid'=>$v['ufrom']))}">
+							<if condition = "$v['face']">
+								<img src="__ROOT__/{$v['face']}" width = '50' height='50'>
+							<else/>
+								<img src="__PUBLIC__/Images/noface.gif" width = '50' height='50'>
+							</if>
+						</a>
+					</dt>
+					<dd>
+						<a href="{:U('User/index', array('uid'=>$v['uid']))}">{$v.username}</a>
+						<span>{$v.content}</span>
+					</dd>
+					<dd class = 'tright'>
+						<span class = 'send_time'> {$v.time|time_format}</span>
+						<span class = 'del-letter' lid = "{$v.lid}">删除</span>
+						<span class = 'l-reply'>回复</span>
+					</dd>
+				</dl>
+			</foreach>
+			<div><span class= 'page'>{$page}</span></div>
+		</div>
+		<include file = 'Common:right' />
+	</div>
+
+	<!-- 弹出私信框 -->
+	<div id = 'letter'>
+		<form action = "{:U('User/lettersend')}" method = 'post'>
+			<div class = 'letter_head'>
+				<span class = 'letter_text fleft'>发送私信</span>
+			</div>
+	        <div class='send-user'>
+    	        发送给：<input type="text" name='name'/>
+        	</div>
+
+			<div class = 'send-cons'>
+				内容：<textarea name = 'content'></textarea>
+			</div>
+			<div class = 'lt-btn-wrap'>
+				<input type = 'submit' value = '发送' class = 'send-lt-sub'>
+				<span class = 'letter-cancel'> 取消</span>
+			</div>
+		</form>
+	</div>
+
+	<include file = "Common:bottom" />
+</body>
+
+</html>

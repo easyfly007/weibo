@@ -371,6 +371,23 @@ class IndexController extends CommonController {
         }else{
              echo 0;
         }
+    }
 
+
+    // 删除私信
+    public function delLetter(){
+        if (!IS_AJAX)
+            $this->error('页面不存在');
+        $lid = I('post.lid');
+        $letter = M('letter')->find($lid);
+
+        // 只能删除发送给自己的私信
+        $where = array('id'=>$lid, $uto=>session('uid'));
+        if(M('letter')->where($where)->find()){
+            if (M('letter')->delete($lid)){
+                echo 1; exit;
+            }
+        }
+        echo 0;
     }
 }

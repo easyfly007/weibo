@@ -59,7 +59,7 @@ ALTER TABLE tb_follow ADD INDEX (fans);
 
 
 create table tb_letter(
-	id int not null primary key,
+	id int not null primary key auto_increment,
 	ufrom int not null,
 	content varchar(255) not null default '',
 	time int(10) not null, -- 发送时间

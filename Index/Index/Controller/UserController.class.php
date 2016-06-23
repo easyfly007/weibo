@@ -132,7 +132,52 @@ class UserController extends CommonController {
         $this->weibo = $weibo;
 		$this->display();
 	}
-	
+
+
+	// 显示私信列表
+	public function letterlist(){
+		// 我收到的私信
+		$letters = D('LetterView')->select();
+		$where = array(
+			'uto'=>session('uid'));
+		$count = D('LetterView')->where($where)->count();
+        $page = new \Think\Page($count, 20);
+        $limit = $page->firstRow.','.$page->listRows;
+        $this->page = $page->show();
+
+		$letters = D('LetterView')->where($where)->limit($limit)
+			->order('time DESC')->select();
+		$this->count = $count;
+		$this->letters = $letters;
+
+		$this->display();
+	}
+
+	// 发送私信
+	public function lettersend(){
+		if (!IS_POST)
+			$this->error("页面不存在");
+		$name = I('post.name');
+		$content = I('post.content');
+
+		$where = array('username'=>$name);
+		$uid = M('userinfo')->where($where)->getField('uid');
+		if (!$uid){
+			$this->error(" 用户不存在！");
+		}
+
+		$data = array(
+			'ufrom'=>session('uid'),
+			'uto'=>$uid,
+			'content'=>$content,
+			'time'=>time());
+		if ($lid = M('letter')->data($data)->add())
+			$this->success('私信已经发送！', U('User/letterlist'));
+		else
+			$this->error("发送失败，请重试");
+	}
+
+
 	private function _getUserUrl($username){
 		$username = htmlspecialchars($username);
 		$uid = M('userinfo')->where(array('username'=>$username))->getField('uid');
