@@ -1,7 +1,9 @@
 <include file ="Common:header" />
 	<!-- <css file = "__PUBLIC__/Css/edit.css" /> -->
-	<css file = "__PUBLIC__/Css/searchuser.css" />
+	<!-- <css file = "__PUBLIC__/Css/searchuser.css" /> -->
+	<css file = "__PUBLIC__/Theme/{$style}/Css/sech_user.css" />
 	<js  file = "__PUBLIC__/Js/index.js" />
+	<js file = "__PUBLIC__/Js/search.js" />
 
 	<title>用户搜索首页</title>
 
@@ -18,16 +20,17 @@
 			<p id = 'sech-logo'></p>
 			<div id ='sech'>
 				<div>
-					<form action ="{:U('searchuser')}" method = 'get'>
+					<form action ="{:U('searchuser')}" method = 'get' name = 'search'>
 						<input type ='text' name = 'keyword' id = 'sech-cons' />
 						<input type = 'submit' value = '搜 索' id= 'sech-sub' />
 					</form>
 				</div>
+				<ul>
+					<li><span class = 'cur sech-type' url = "{:U('Search/searchuser')}">找人</span></li>
+					<li><span class = 'sech-type' url = "{:U('Search/searchweibo')}">微博</span></li>
+				</ul>
+
 			</div>
-			<ul>
-				<li><span class = 'cur'>找人</span></li>
-				<li><span>微博</span></li>
-			</ul>
 		</div>
 		<if condition = "isset($searchusers) and ($searchusers)">
 			<div id ='content'>

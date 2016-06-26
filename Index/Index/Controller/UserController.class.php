@@ -193,6 +193,23 @@ class UserController extends CommonController {
 	}
 
 
+	// 找到所有的at 我的微博
+	public function atmelist(){
+		$where = array('uid'=>session('uid'));
+		$atme = M('atme')->where($where)->select();
+		foreach ($atme as $key => $value) {
+			$atme[$key] = $value['wid'];
+		}
+		$count = count($atme);
+		$where = array('id'=>array('IN', $atme));
+		$page = new \Think\Page($count, 10);
+        $limit = $page->firstRow.','.$page->listRows;
+        $this->page = $page->show();
+        $this->weibo = D('WeiboView')->getAllWeibo($where, $limit); 
+        $this->display();
+	}
+
+
 	private function _getUserUrl($username){
 		$username = htmlspecialchars($username);
 		$uid = M('userinfo')->where(array('username'=>$username))->getField('uid');

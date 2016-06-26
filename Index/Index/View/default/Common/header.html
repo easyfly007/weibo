@@ -2,13 +2,18 @@
 <html xmlns = "http://www.w3.org/1999/xhtml" xml:lang='en' >
 <head>
 	<META http-equiv= "Content-Type" content = "text/html; charset=UTF-8">
+	<php>
+		$where = array('uid'=>session('uid'),);
+		$style = M('userinfo')->where($where)->getField('style');
+		echo $style; 
+	</php>	
 	<css file = "__PUBLIC__/Uploadify/uploadify.css" />
-	<css file = "__PUBLIC__/Css/nav.css" />
-	<css file = "__PUBLIC__/Css/left.css" />
-	<css file = "__PUBLIC__/Css/middle.css" />
+	<css file = "__PUBLIC__/Theme/{$style}/Css/nav.css" />
+	<css file = "__PUBLIC__/Theme/{$style}/Css/left.css" />
+	<css file = "__PUBLIC__/Theme/{$style}/Css/middle.css" />
 	<!-- <css file = "__PUBLIC__/Css/right.css" /> -->
-	<css file = "__PUBLIC__/Css/letter.css" />
-	<css file = "__PUBLIC__/Css/bottom.css" />
+	<css file = "__PUBLIC__/Theme/{$style}/Css/letter.css" />
+	<css file = "__PUBLIC__/Theme/{$style}/Css/bottom.css" />
 
 	<js file = "__PUBLIC__/Js/jquery-2.2.3.min.js" />
 	<js file = "__PUBLIC__/Js/jquery.validate.min.js" />

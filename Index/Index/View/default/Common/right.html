@@ -79,8 +79,9 @@
 							<dd><a href="{:U('User/index', array('id'=>$v['uid']))}">{$v.username}</a></dd>
 							<dd>共有{$v.common}个共同好友</dd>
 						</dl>
-						<span class = 'heed_btn add-fl' uid = "{$v['uid']}"><strong>+</strong>关注</span>
-				
+						<span class = 'heed_btn add-fl' uid = "{$v['uid']}">
+							<strong>+</strong>关注
+						</span>
 					</li>
 				</foreach>
 			</ul>

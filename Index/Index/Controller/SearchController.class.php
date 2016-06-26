@@ -36,6 +36,33 @@ class SearchController extends CommonController {
     	$this->display();
     }
 
+
+    // 查找微博
+    public function searchweibo(){
+        $keyword = I('get.keyword');
+        if ($keyword){
+            // 利用%检索数据库的多有微博
+            $where = array(
+                'content'=>array('LIKE', '%'.$keyword.'%'),);
+            $db = D('WeiboView');
+            $count = $db->where($where)->count();
+            $page = new \Think\Page($count, 10);
+            $limit = $page->firstRow.','.$page->listRows;
+            $this->page = $page->show();
+            $this->weibo = $db->getAllWeibo($where, $limit);
+            // $weibo = $db->where($where)->limit($limit)->select();
+            // $this->weibo = $weibo;
+            $this->keyword = $keyword;
+            $this->count = $count;
+        }
+        else{
+            $this->weibo= null;
+            $this->page = null;
+            $this->keyword = null;
+        }
+        $this->display();
+    }
+
     	/// 用来判断 user 和  登录用户的关注关系
     	/// 0 表示互相没有关注
     	/// 1 表示已经关注，但是对方没有关注你

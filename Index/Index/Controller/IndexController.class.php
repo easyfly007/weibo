@@ -87,6 +87,7 @@ class IndexController extends CommonController {
         {
             $where = array('uid'=>session('uid'),);
             M('userinfo')->where($where)->setInc('weibo');
+            $this->_atmehandle($content, $wid); // 处理 @ 
             if (!empty(I('post.medium')))
             {
                 $img = array(
@@ -368,7 +369,8 @@ class IndexController extends CommonController {
         if (M('weibo')->where(array('id'=>$wid))->delete()){
             M('userinfo')->where(array('uid'=>$weibo['uid']))->setDec('weibo');
             // 删除微博的评论么？
-            M('comment')->where(array('wid')=>$weibo['id']->delete());
+            $where = array('wid'=>$weibo['id']);
+            M('comment')->where($where)->delete();
             echo 1;
         }else{
              echo 0;
@@ -410,5 +412,27 @@ class IndexController extends CommonController {
             }
         }
         echo 0;
+    }
+
+    // 传入微博正文，进行at 操作
+    private function _atmehandle($content, $wid){
+        $pattern = '/@(\S+?)\s/is';
+        preg_match_all($pattern, $content,  $matches);
+        $atids = array();
+        if ($matches[1]){
+            foreach ($matches[1] as $key => $value) {
+                $uid = M('userinfo')->where(array('username'=>$value))->getField('id');
+                if ($uid && array_search($uid, $atids)=== false){
+                    $data = array(
+                        'uid'=>$uid,
+                        'wid'=>$wid,
+                        'time'=>time());
+                    if (!M('atme')->data($data)->add())
+                        return false;
+                    $atids[] = $uid;
+                }
+            }
+        }
+        return true;
     }
 }
