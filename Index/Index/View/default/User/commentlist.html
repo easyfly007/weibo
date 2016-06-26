@@ -1,0 +1,54 @@
+<include file ="Common:header" />
+	<title>我的评论</title>
+    <css file = "__PUBLIC__/Css/commentlist.css" />
+    <js file = "__PUBLIC__/Js/index.js" />
+	<js file = "__PUBLIC__/Js/commentlist.js" />
+</header>
+
+<body>
+	<!-- 顶部导航栏 -->
+	<include file = "Common:nav" />
+	<div style = 'height:40px; opcity:10'></div>
+	<div class ='main'>
+		<include file = "Common:left" />
+		<div id = 'middle' class = 'fleft'>
+			<p class = 'title'> 我发出的评论 (共 {$commentcount} 条)</p>
+			<foreach name = "comments" item = 'v'>
+				<dl>
+					<dt>
+						<a href="{:U('user/index', array('uid'=>$v['uid']))}">
+							<if condition = "$v['face']">
+								<img src="__ROOT__/{$v['face']}" width = '50' height = '50'>
+							<else/>
+								<img src="__PUBLIC__/Images/noface.gif" width = '50' height = '50'>
+							</if>
+						</a>
+					</dt>
+					<dd>
+						<a href="{:U('User/index', array('uid'=>$v['uid']))}">{$v.username}</a>
+						<span>{$v.content|replace_weibo}</span>
+					</dd>
+					<dd class = 'tright'>
+						<span class = 'del-comment' cid ="{$v['id']}">删除</span>
+						<span class = 'c-reply' cid = "{$v['id']}"> 回复 </span>
+					</dd>
+					<!-- 回复框 -->
+					<dd class = 'comment_list hidden'>
+						<textarea name = '' sign = 'comment2'></textarea>
+						<ul>
+							<li class = 'phiz fleft' sign = 'comment2'></li>
+							<li class = 'comment_btn fright' wid = "{$v['wid']}"> 回复</li>
+						</ul>
+					</dd>
+				</dl>
+			</foreach>
+			<div class = 'page'>{$page}</div>
+		</div>
+		
+		<include file = "Common:right" />
+	</div>
+
+
+	<include file = "Common:bottom" />
+</body>
+</html>

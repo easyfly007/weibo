@@ -153,6 +153,7 @@ class UserController extends CommonController {
 		$this->display();
 	}
 
+
 	// 发送私信
 	public function lettersend(){
 		if (!IS_POST)
@@ -175,6 +176,20 @@ class UserController extends CommonController {
 			$this->success('私信已经发送！', U('User/letterlist'));
 		else
 			$this->error("发送失败，请重试");
+	}
+
+	// 获取我写的评论，而不是写给我的评论
+	public function commentlist(){
+		$where = array('uid'=>session('uid'));
+		$commentcount = D('CommentView')->where($where)->count(); 
+		$page = new \Think\Page($commentcount, 20);
+		$limit = $page->firstRow.','.$page->listRows;
+
+		$comments = D('CommentView')->where($where)->limit($limit)->order('time DESC')->select();
+		$this->comments = $comments;
+		$this->page = $page->show();
+		$this->commentcount = $commentcount;
+		$this->display();
 	}
 
 

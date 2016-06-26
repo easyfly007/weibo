@@ -335,8 +335,8 @@ class IndexController extends CommonController {
     }
 
 
-    public function delWeibo(){
 
+    public function delWeibo(){
         if (!IS_AJAX)
             $this->error('页面不存在');
         $wid = I('post.wid');
@@ -367,6 +367,8 @@ class IndexController extends CommonController {
         // 删除微博        
         if (M('weibo')->where(array('id'=>$wid))->delete()){
             M('userinfo')->where(array('uid'=>$weibo['uid']))->setDec('weibo');
+            // 删除微博的评论么？
+            M('comment')->where(array('wid')=>$weibo['id']->delete());
             echo 1;
         }else{
              echo 0;
@@ -385,6 +387,25 @@ class IndexController extends CommonController {
         $where = array('id'=>$lid, $uto=>session('uid'));
         if(M('letter')->where($where)->find()){
             if (M('letter')->delete($lid)){
+                echo 1; exit;
+            }
+        }
+        echo 0;
+    }
+
+    // 删除评论
+    public function delComment(){
+        if (!IS_AJAX)
+            $this->error('页面不存在');
+        $cid = I('post.cid');
+        $comment = M('comment')->find($cid);
+        $wid = $comment['wid'];
+
+        // 只能删除自己发出的评论
+        $where = array('id'=>$cid, 'uid'=>session('uid'));
+        if (M('comment')->where($where)->find()){
+            if (M('comment')->delete($cid)){
+                M('weibo')->where(array('id'=>$wid))->setDec('comment');
                 echo 1; exit;
             }
         }
