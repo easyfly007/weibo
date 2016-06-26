@@ -1,0 +1,121 @@
+
+
+/**中部**/
+#middle{
+	width:560px;
+	padding:20px 20px;
+	height:auto;
+	overflow: hidden;
+	background: #FAFAFA;
+}
+#middle .title {
+	width: 560px;
+	height: 28px;
+	line-height: 28px;
+	border-bottom: 2px solid #EB192D;
+	text-indent: 10px;
+	font-size: 14px;
+	font-weight: bold;
+}
+#middle .title .send {
+	display: inline-block;
+	width: 80px;
+	height: 20px;
+	line-height: 20px;
+	border: 1px solid #FF9B00;
+	background: #F9AB00;
+	color: #fff;
+	text-align: center;
+	text-indent: 0;
+	font-weight: bold;
+	cursor: pointer;
+	border-radius: 4px;
+}
+#middle dl {
+	width: 520px;
+	padding: 20px;
+	height: auto;
+	overflow: hidden;
+	border-bottom: 1px solid #E6E6E6;
+}
+#middle dt {
+	width: 50px;
+	height: 80px;
+	float: left;
+}
+#middle dd {
+	width: 450px;
+	height: auto;
+	overflow: hidden;
+	line-height: 20px;
+	float: left;
+	padding-left: 20px;
+}
+#middle .tright{
+	text-align: right;
+	margin-top: 20px;
+}
+#middle .tright span {
+	cursor: pointer;
+	color: #A2CCEA;
+}
+#middle .tright .send_time {
+	float: left;
+}
+
+#middle dl .comment_list{
+	width:448px;
+	height:auto;
+	border:1px solid #D7EEFB;
+	border-radius: 3px;
+	padding:10px 20px;
+	float: right;
+	margin-top: 10px;
+}
+#middle dl .comment_list textarea{
+	width:438px;
+	height: 18px;
+    line-height: 18px;
+    padding: 5px 4px;
+    overflow: hidden;
+    resize:none;
+	border:1px solid #ccc;
+    box-shadow: 1px 1px 1px 0 #EAEAEA inset;
+    border-radius: 3px;
+    word-wrap: break-word;
+}
+#middle dl .comment_list ul{
+	width:448px;
+	height:10px;
+	padding:10px 0;
+}
+#middle dl .comment_list .phiz{
+	width:15px;
+	height:15px;
+	background:url(../Images/icon.png) no-repeat -250px 0px;
+	margin-top:3px;
+	cursor: pointer;
+	margin-right: 10px;
+}
+#middle dl .comment_list .comment_turn{
+	width:160px;
+	height:22px;
+	line-height:22px;
+}
+#middle dl .comment_list .comment_turn input{
+	width:22px;
+	height:22px;
+	vertical-align: middle;
+}
+#middle dl .comment_list .comment_btn{
+	width:50px;
+	height:20px;
+	line-height: 20px;
+	text-align: center;;
+	background: #F9AB00;
+	color:#fff;
+	border:1px solid #FF9B00;
+	border-radius: 3px;
+	cursor: pointer;
+}
+

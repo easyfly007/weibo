@@ -161,7 +161,24 @@ $(function(){
 	// 选中模板风格
 	$('#model ul li').click(function(){
 		$(this).addClass('theme-cur').siblings().removeClass('theme-cur');
-		alert($(this).attr('theme'));
+	});
+
+	// 保存模板设置
+	$('#model .model_save').click(function(){
+		var style = $('.theme-cur').attr('theme');
+		if (!style){
+			alert('请选择一种模板风格');
+		}else{
+			$.post(editStyleUrl,{
+				style: style,
+			}, function(data){
+				if (data){
+					window.location.reload();// 重新加载样式
+				}else{
+					alert('无法设置微博模板样式');
+				}
+			}, 'json');
+		}
 	});
 
 });

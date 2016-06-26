@@ -111,6 +111,20 @@ class CommonController extends Controller {
 		}
 	}
 
+	// 修改微博模板样式
+	public function editStyle(){
+		if (!IS_AJAX)
+			$this->error('页面不存在');
+		$style = I('post.style');
+		// 修改自己的样式
+		$where = array('uid'=>session('uid'));
+		$data = array('style'=>$style);
+		if (M('userinfo')->where($where)->save($data)){
+			echo 1;
+		}else{
+			echo 0;
+		}
+	}
 
 	// 为了公用这些代码，提炼出单独的函数
 	private function _upload($path, $width, $height){
