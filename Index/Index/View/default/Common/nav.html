@@ -36,7 +36,7 @@
 					<li class ='selector'><i class = 'icon icon-setup'></i>
 						<ul class='hidden' >
 							<li><a href="{:U('Usersetting/Index')}">账号设置</a></li>
-							<li><a href="">模板设置</a></li>
+							<li><a href="" class='set-mode'>模板设置</a></li>
 							<li><a href="{:U('Index/logout')}">退出登录</a></li>
 						</ul>
 					</li>
@@ -89,5 +89,25 @@
 			<input type ='hidden' name = 'follow' />
 			<span class = 'add-follow-sub'>关注</span>
 			<span class = 'follow-cancel'>取消</span>
+		</div>
+	</div>
+
+
+
+	<!-- 自定义模板 -->
+	<div id = 'model' class = 'hidden'>
+		<div class = 'model_head'>
+			<span class = 'model_text'>个性化设置</span>
+			<span class = 'close fright'></span>
+		</div>
+		<ul>
+			<li style ='background:url(__PUBLIC__/Images/default.jpg) no-repeat;' theme = 'default' class = 'theme-cur'></li>
+			<li style ='background:url(__PUBLIC__/Images/style2.jpg) no-repeat;' theme = 'style2'></li>
+			<li style ='background:url(__PUBLIC__/Images/style3.jpg) no-repeat;' theme = 'style3'></li>
+			<li style ='background:url(__PUBLIC__/Images/style4.jpg) no-repeat;' theme = 'style4'></li>
+		</ul>
+		<div class = 'model_operat'>
+			<span class = 'model_save'>保存</span>
+			<span class = 'model_cancel'>取消</span>
 		</div>
 	</div>

@@ -5,7 +5,6 @@
 	<php>
 		$where = array('uid'=>session('uid'),);
 		$style = M('userinfo')->where($where)->getField('style');
-		echo $style; 
 	</php>	
 	<css file = "__PUBLIC__/Uploadify/uploadify.css" />
 	<css file = "__PUBLIC__/Theme/{$style}/Css/nav.css" />

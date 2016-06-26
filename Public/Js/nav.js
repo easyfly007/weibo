@@ -138,4 +138,30 @@ $(function(){
 		$(this).css('background', 'none');
 	});
 
+	// 自定义模板匡
+	$('.set-mode').click(function(){
+		createBg('opcity_bg');
+		// 定位模板框居中
+		var modeLeft = ($(window).width() - $('#model').width()) / 2;
+		var modeTop = $(document).scrollTop() + ($(window).height() - $('#model').height()) /2;
+		$('#model').css({
+			'left': modeLeft,
+			'top': modeTop
+		}).fadeIn();
+		return false;
+	});
+
+	// 点击取消模板设置
+	$('.model_cancel').click(function(){
+		$('#model').hide();
+		$('#opcity_bg').remove();
+	});
+	drag($('#model'), $('model_text'));
+
+	// 选中模板风格
+	$('#model ul li').click(function(){
+		$(this).addClass('theme-cur').siblings().removeClass('theme-cur');
+		alert($(this).attr('theme'));
+	});
+
 });
