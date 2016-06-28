@@ -8,6 +8,7 @@ class CommonController extends Controller {
 		if (cookie('auto') && !session('uid'))
 		{
 			$cookie = encryption(explode('|', $cookie), 1);
+
 			// cookie[0] = uid, cookie[1] = ip, cookie[2] = expire_time
 			if ($cookie[1] == get_client_ip() && time() <= $cookie[2])
 			{
@@ -30,6 +31,7 @@ class CommonController extends Controller {
 			redirect(U('Login/index'));
 		$this->loginuser = M('userinfo')->where(array('uid'=>session('uid')))->find();
 	}
+
 
 	// 上传头像照，并生成3中不同规格的缩略图 
 	public function uploadFace(){

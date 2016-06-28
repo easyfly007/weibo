@@ -24,8 +24,11 @@ return array(
     'TAGLIB_BUILD_IN'       =>'Cx,Wbtags', //把自定义标签加入到系统标签库 
 
     // 缓存设置
-    'DATA_CACHE_SUBDIR' => true, //开启以hash形式生成缓存目录
-    'DATA_PATH_LEVEL'   => 2, // 目录层次
+    // 'DATA_CACHE_SUBDIR' => true, //开启以hash形式生成缓存目录
+    // 'DATA_PATH_LEVEL'   => 2, // 目录层次
+    'DATA_CACHE_TYPE'   => 'Memcache',
+    'MEMCACHE_HOST'     => '127.0.0.1',
+    'MEMCACHE_PORT'     => 11211,
 
 
 );
