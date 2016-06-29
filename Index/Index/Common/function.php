@@ -75,8 +75,9 @@
 /*
  * 往内存写入推送消息
  * $type = 1评论， 2私信，3@用户
+ * flush: 是否清零
  */
-	function set_msg($uid, $type){
+	function set_msg($uid, $type, $flush=false){
 		$name = '';
 		if ($type ==1){
 			$name = 'comment';
@@ -86,13 +87,20 @@
 			$name = 'atme';
 		}
 
+		if ($flush){
+			$data = S('usermsg'.$uid);
+			$data[$name]['total']=0;
+			$data[$name]['status']=0;
+			S('usermsg'.$uid, $data, 0);
+			return;
+		}
+
 		// total 是 推送的消息的数目
 		// status 是等待推送
 		if (S('usermsg'.$uid)){
 			$data = S('usermsg'.$uid);
 			$data[$name]['total']++;
 			$data[$name]['status'] = 1;
-			S('usermsg'.$uid, $data, 0); //缓存数据永久有效
 		}else{
 			$data = array(
 				'comment'=>array('total'=>0, 'status'=>0,),
@@ -101,6 +109,7 @@
 			$data[$name]['total']++;
 			$data[$name]['status']=1;
 		}
+		S('usermsg'.$uid, $data, 0); //缓存数据永久有效
 	}
 
 ?>

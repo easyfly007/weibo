@@ -181,4 +181,54 @@ $(function(){
 		}
 	});
 
+	// 消息推送回调函数
+	get_msg(getMsgUrl);
+
 });
+
+
+
+// 效果函数
+
+function get_msg(url){
+	$.getJSON(url, function(data) {
+		// alert(data.status);
+		if (data.status){
+			news({
+				'total' : data.total,
+				'type': data.type
+			});
+		}
+	});
+	setTimeout(function(){
+		get_msg(url)
+	}, 5000);
+}
+// 推送消息闪动的样式
+var flags = false;
+function news(json){
+	if (json.type == 1){
+		$('#news ul .news_comment').show().find('a').html(json.total + '条新评论');
+	}else if (json.type ==2){
+		$('#news ul .news_letter').show().find('a').html(json.total + '条私信');
+	}else if (json.type ==3){
+		$('#news ul .news_atme').show().find('a').html(json.total + '条 @ 提到我');
+	}
+
+	var obj =$('#news');
+	var icon = obj.find('i');
+	obj.show().find('li').hover(function(){
+		//下拉添加效果
+		$(this).css('background', '#DCDCDC');
+	},function(){
+		$(this).css('background', 'none');
+	}).click(function(){
+		clearInterval(newsGlint);
+	});
+	if(flags){
+		flags = false;
+		var newsGlint = setInterval(function(){
+			icon.toggleClass('icon-news');
+		}, 500);
+	}
+}

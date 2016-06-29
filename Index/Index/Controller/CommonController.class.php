@@ -128,6 +128,46 @@ class CommonController extends Controller {
 		}
 	}
 
+	// 异步轮询检查数据
+	public function getMsg(){
+		if (!IS_AJAX)
+			$this->error('页面不存在');
+		$uid = session('uid');
+		$msg = S('usermsg'.$uid);
+		if ($msg){
+			if ($msg['comment']['status']){
+				$msg['comment']['status']=0;
+				S('usermsg'.$uid, $msg, 0);
+				echo json_encode(array(
+					'status'=>1,
+					'total'=>$msg['comment']['total'],
+					'type'=>1));
+				exit();
+			}
+			if ($msg['letter']['status']){
+				$msg['letter']['status']=0;
+				S('usermsg'.$uid, $msg, 0);
+				echo json_encode(array(
+					'status'=>1,
+					'total'=>$msg['letter']['total'],
+					'type'=>2));
+				exit();
+			}
+			if ($msg['atme']['status']){
+				$msg['atme']['status']=0;
+				S('usermsg'.$uid, $msg, 0);
+				echo json_encode(array(
+					'status'=>1,
+					'total'=>$msg['atme']['total'],
+					'type'=>3));
+				exit();
+			}
+
+		}
+		echo json_encode(array('status'=>0));
+	}
+
+
 	// 为了公用这些代码，提炼出单独的函数
 	private function _upload($path, $width, $height){
 		$upload = new \Think\Upload();// 实例化上传类

@@ -204,6 +204,7 @@ class IndexController extends CommonController {
         if (!M('comment')->data($data)->add()){
             echo "fail"; die;
         }
+
         $where = array('id'=>$data['wid']);
         M('weibo')->where($where)->setInc('comment');
 
@@ -251,6 +252,7 @@ class IndexController extends CommonController {
         $str .= "</dd>";
         $str .= "</dl>";
         echo $str;
+        set_msg($weibo['uid'],1);
     }
 
     // 转发微博
@@ -427,6 +429,9 @@ class IndexController extends CommonController {
                         'uid'=>$uid,
                         'wid'=>$wid,
                         'time'=>time());
+                    // 写入消息推送
+                    set_msg($uid, 3);
+
                     if (!M('atme')->data($data)->add())
                         return false;
                     $atids[] = $uid;

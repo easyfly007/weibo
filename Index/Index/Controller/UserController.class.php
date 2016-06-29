@@ -136,6 +136,7 @@ class UserController extends CommonController {
 
 	// 显示私信列表
 	public function letterlist(){
+		set_msg(session('uid'), 2, true);
 		// 我收到的私信
 		$letters = D('LetterView')->select();
 		$where = array(
@@ -172,6 +173,9 @@ class UserController extends CommonController {
 			'uto'=>$uid,
 			'content'=>$content,
 			'time'=>time());
+		
+		set_msg($uid, 2);
+
 		if ($lid = M('letter')->data($data)->add())
 			$this->success('私信已经发送！', U('User/letterlist'));
 		else
@@ -180,6 +184,8 @@ class UserController extends CommonController {
 
 	// 获取我写的评论，而不是写给我的评论
 	public function commentlist(){
+		set_msg(session('uid'), 2,true);
+
 		$where = array('uid'=>session('uid'));
 		$commentcount = D('CommentView')->where($where)->count(); 
 		$page = new \Think\Page($commentcount, 20);
@@ -195,6 +201,7 @@ class UserController extends CommonController {
 
 	// 找到所有的at 我的微博
 	public function atmelist(){
+		set_msg(session('uid'),3, true);
 		$where = array('uid'=>session('uid'));
 		$atme = M('atme')->where($where)->select();
 		foreach ($atme as $key => $value) {
