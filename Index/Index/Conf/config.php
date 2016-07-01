@@ -1,7 +1,7 @@
 <?php
 return array(
 	//'配置项'=>'配置值'
-
+    'DEFAULT_THEME'         =>  'default',
 	// 图片上传大小（个人头像等）
 	'UPLOAD_MAX_SIZE' => 200000000,
 

@@ -6,6 +6,29 @@ use Think\Controller;
  */
 class LoginController extends Controller {
     public function index(){
-        $this->show('<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "微软雅黑"; color: #333;font-size:24px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px } a,a:hover{color:blue;}</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>欢迎使用 <b>ThinkPHP</b>！</p><br/>版本 V{$Think.version}</div><script type="text/javascript" src="http://ad.topthink.com/Public/static/client.js"></script><thinkad id="ad_55e75dfae343f5a1"></thinkad><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>','utf-8');
+    	echo "admin login";
+    	$this->display();
     }
+
+    // 获取验证码
+    public function verify(){
+        ob_end_clean();
+    	$Verify = new \Think\Verify();
+		$Verify->entry();
+    }
+
+    // 检测输入的验证码是否正确，$code为用户输入的验证码字符串
+	public function checkVerify(){
+        if (!IS_AJAX)
+            $this->error('禁止访问！');
+        $code = $_POST['verify'];
+        $id = isset($_POST['id'])? $_POST['id']:'';
+        $config = array('reset' => false,); // 验证成功后是否重置，这里才是有效的。
+	    $verify = new \Think\Verify($config);
+	    if ($verify->check($code, $id))
+            echo "true";
+        else
+            echo "false";
+	}
+
 }

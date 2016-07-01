@@ -12,7 +12,7 @@ return array(
     'DB_FIELDS_CACHE'       =>  true,        // 启用字段缓存
     'DB_CHARSET'            =>  'utf8',      // 数据库编码默认采用utf8
 
-    'DEFAULT_THEME'         =>  'default',
+
 
     "ENCRYPTION_KEY"        =>  "myweibo.com", // for encryption key
     "AUTO_LOGIN_TIME"       =>   time() + 7*24*60*60, // cookie 的信息保存1个星期有效  
