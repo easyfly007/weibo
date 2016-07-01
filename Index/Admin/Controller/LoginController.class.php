@@ -6,8 +6,44 @@ use Think\Controller;
  */
 class LoginController extends Controller {
     public function index(){
-    	echo "admin login";
     	$this->display();
+    }
+
+    // 提交登陆表单处理
+    public function login(){
+    	if (!IS_POST)
+    		$this->error('页面不存在');
+    	$code = I('post.verify');
+    	$config = array('reset'=>false,);
+    	$verify = new \Think\Verify($config);
+    	if (!$verify->check($code, ''))
+    		$this->error('验证码不正确');
+
+   //  	if (!(I('post.submit')===''))
+			// return false;
+		$username = I('post.uname');
+		$password = md5(I('post.pwd'));
+		$where = array('username'=>$username, 'password'=>$password);
+
+		$admin = M('admin')->where($where)->find();
+		if (!$admin)
+			$this->error("请输入正确的管理员用户名和密码");
+		if ($admin['locked'])
+			$this->error("账号被锁定");
+
+		$data = array(
+			'id'=>$admin['id'],
+			'logintime'=>time(),
+			'loginip'=>get_client_ip());
+		M('admin')->save($data);
+
+		session('uid', $admin['id']);
+		session('username', $admin['username']);
+		session('logintime', date('Y-m-d H:i',$admin['logintime']));
+		session('now', date('Y-m-d H:i', time()));
+		session('loginip', $admin['loginip']);
+
+		$this->success('正在登陆', __APP__);
     }
 
     // 获取验证码
