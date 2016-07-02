@@ -44,16 +44,18 @@ $(function () {
             clickOn = true;
             navMoveOut($(this));
         }
-    }).toggle(function () {
-        clickOn = true;
-        $(this).next().slideDown('200');
-        $(this).find('.pos').removeClass('down').addClass('up');
-    }, function () {
-        clickOn = false;
-        $(this).next().slideUp('200');
-        $(this).find('.pos').removeClass('up').addClass('down');
-        if (!moveOn) {
-            navMoveOut($(this));
+    }).click(function () {
+        if (clickOn== false){
+            clickOn = true;
+            $(this).next().slideDown('200');
+            $(this).find('.pos').removeClass('down').addClass('up');
+        }else{
+            clickOn = false;
+            $(this).next().slideUp('200');
+            $(this).find('.pos').removeClass('up').addClass('down');
+            if (!moveOn) {
+                navMoveOut($(this));
+            }
         }
     });
 
