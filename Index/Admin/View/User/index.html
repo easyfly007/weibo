@@ -51,9 +51,9 @@
 				</td>
 				<td>
 					<if condition = "$v['locked']">
-						<a href="{:U('User/unlock', array('uid'=>$v['id']))}" class ='add'>解锁</a>
+						<a href="{:U('User/unlock', array('uid'=>$v['id']))}" class ='add lock'>解锁</a>
 					<else/>
-						<a href="{:U('User/lock', array('uid'=>$v['id']))}" class = 'add'>锁定</a>
+						<a href="{:U('User/lock', array('uid'=>$v['id']))}" class = 'add lock'>锁定</a>
 					</if>
 				</td>
 			</tr>

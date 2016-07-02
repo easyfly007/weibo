@@ -21,10 +21,41 @@ class UserController extends CommonController {
     }
 
     public function unlock(){
-        p($_GET);
+        $id = I('get.uid');
+        $data = array(
+            'id'=>I('get.uid'),
+            'locked'=>0);
+        if (M('user')->save($data))
+            $this->success('锁定用户成功', U('User/index'));
+        else
+            $this->error('锁定用户失败');
     }
 
+
     public function lock(){
-        p($_GET);
+        $id = I('get.uid');
+        $data = array(
+            'id'=>I('get.uid'),
+            'locked'=>1);
+        if (M('user')->save($data))
+            $this->success('解锁用户成功', I('server.http_referer'));
+        else
+            $this->error('解锁用户失败');
+    }
+
+    // 查找微博用户
+    public function search(){
+        $users = false;
+        if (I('get.search')){
+            if (I('get.type') ==0){
+                $where = array('username'=>array('LIKE', '%'.I('get.search').'%'));
+            }else{
+                $where = array('id'=>I('get.search'));
+            }
+            $users = D('UserView')->where($where)->select();
+        }
+        $this->users = $users;
+        $this->display();
+
     }
 }

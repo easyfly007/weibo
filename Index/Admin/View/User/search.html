@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<META http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+	<title>微博用户列表</title>
+	<css file = "__PUBLIC__/Css/common.css" />
+	<js file = "__PUBLIC__/Js/jquery-2.2.3.min.js" />
+	<js file = "__PUBLIC__/Js/common.js" />
+</head>
+
+<body>
+	<div class = 'status'>
+		<span>微博用户搜索</span>
+	</div>
+	<div style='width:600px;text-align:center; margin:20px auto'>
+		<form action = '__SELF__' method = 'get'>
+			搜索方式：
+			<select name = 'type'>
+				<option value = '1'>用户ID</option>
+				<option value = '0'>用户名称</option>
+			</select>
+			<input type = 'text' name = 'search'>
+			<input type ='submit' value ='搜索' class = 'see' >
+		</form>
+	</div>
+	
+
+
+	<table class = 'table'>
+		<if condition = "!$users">
+			<tr>
+				<td align = 'center'>没有搜索到相关用户</td>
+			</tr>
+		<else/>
+			<tr>
+				<th>ID</th>
+				<th>用户昵称</th>
+				<th>用户头像</th>
+				<th>关注信息</th>
+				<th>注册时间</th>
+				<th>账号状态</th>
+				<th>操作</th>
+			</tr>
+
+			<foreach name = 'users' item = 'v'>
+				<tr>
+					<td width='50' align = 'center'>{$v.id}</td>
+					<td>{$v.username}</td>
+					<td widht ='80' align = 'center'>
+						<if condition = "$v['face']" >
+							<img src="__ROOT__/{$v['face']}" width = '50' height = '50'>
+						<else/>
+							<img src="{$v['face']}" width = '50' height = '50'>
+						</if>
+					</td>
+					<td align = 'center'>
+						<ul>
+							<li>关注: {$v.follow}</li>
+							<li>粉丝: {$v.fans}</li>
+							<li>微博: {$v.weibo}</li>
+
+						</ul>
+					</td>
+					<td>{$v.resigtime|date='Y-m-d',###}</td>
+					<td width = '60' align = 'center'>
+						<if condition = "$v['locked']">
+							已经被锁定
+						<else/>
+							正常
+						</if>
+					</td>
+					<td>
+						<if condition = "$v['locked']">
+							<a href="{:U('User/unlock', array('uid'=>$v['id']))}" class ='add lock'>解锁</a>
+						<else/>
+							<a href="{:U('User/lock', array('uid'=>$v['id']))}" class = 'add lock'>锁定</a>
+						</if>
+					</td>
+				</tr>
+			</foreach>
+			<tr>
+				<td align = 'center' colspan = '7'>{$page}</td>
+			</tr>
+		</if>
+	</table>
+
+
+</body>
+</html>
