@@ -16,7 +16,7 @@
 		<div class = 'menu'>
 			<ul>
 				<li class = 'first first_cur'>
-					<a href=""><span>首页</span></a>
+					<a href="{:U('Index/copy')}"><span>首页</span></a>
 				</li>
 				<li class = 'next'>
 					<a href=""><span>用户管理</span></a>
@@ -29,7 +29,7 @@
 				</li>
 			</ul>
 			<div id ='user'>
-				<span class = 'user_state'>当前管理员:[<span>admin</span>]</span>
+				<span class = 'user_state'>当前管理员:[<span>{:session('username')}</span>]</span>
 				<a href="{:U('Index/logout')}" target = '_self' id = 'login_out'></a>
 			</div>
 		</div>
