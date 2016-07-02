@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<META http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+	<title>微博管理员列表</title>
+	<css file = "__PUBLIC__/Css/common.css" />
+	<js file = "__PUBLIC__/Js/jquery-2.2.3.min.js" />
+	<js file = "__PUBLIC__/Js/common.js" />
+</head>
+
+<body>
+	<div class = 'status'>
+		<span>微博管理员列表</span>
+	</div>
+	<table class = 'table'>
+		<tr>
+			<th>ID</th>
+			<th>用户昵称</th>
+			<th>级别</th>
+			<th>上次登录时间</th>
+			<th>上次登录IP</th>
+			<th>账号状态</th>
+			<if condition = "!session('admin')" >
+				<th>操作</th>
+			</if>
+		</tr>
+		<foreach name = 'admins' item = 'v'>
+			<tr>
+				<td width='50' align = 'center'>{$v.id}</td>
+				<td>{$v.username}</td>
+				<if condition = "$v['admin']" >
+					<td>普通管理员</td>
+				<else/>
+					<td>超级管理员</td>
+				</if>
+				<td>{$v.logintime|date='Y-m-d',###}</td>
+				<td>{$v.loginip}</td>
+				<td width = '60' align = 'center'>
+					<if condition = "$v['locked']">
+						已经被锁定
+					<else/>
+						正常
+					</if>
+				</td>
+				<if condition = "!session('admin')" >
+					<td>
+						<if condition ="$v['admin']" >
+							<if condition = "$v['locked']">
+								<a href="{:U('Admin/unlock', array('id'=>$v['id']))}" class ='add lock'>解锁</a>
+							<else />
+								<a href="{:U('Admin/lock', array('id'=>$v['id']))}" class = 'add lock'>锁定</a>
+							</if>
+							<a href="{:U('Admin/delete', array('id'=>$v['id']))}" class = 'add lock'>删除</a>
+
+
+						</if>
+					</td>
+				<else/>
+
+				</if>
+			</tr>
+		</foreach>
+	</table>
+
+
+</body>
+</html>

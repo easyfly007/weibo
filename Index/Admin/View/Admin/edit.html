@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<META http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+	<title>修改微博管理员账号密码</title>
+	<css file = "__PUBLIC__/Css/common.css" />
+	<js file = "__PUBLIC__/Js/jquery-2.2.3.min.js" />
+	<js file = "__PUBLIC__/Js/common.js" />
+</head>
+
+<body>
+	<div class = 'status'>
+		<span>修改密码</span>
+	</div>
+	<form method = 'post' action = "{:U('Admin/editting')}">
+		<table class = 'table'>
+			<tr>
+				<td>旧密码：</td>
+				<td><input type = 'password' name ='oldpwd'></td>
+			</tr>
+			<tr>
+				<td>新密码：</td>
+				<td><input type = 'password' name ='newpwd'></td>
+			</tr>
+			<tr>
+				<td>确认新密码：</td>
+				<td><input type = 'password' name = 'newpwd2' ></td>
+			</tr>
+			
+			<tr>
+				<td colspan = '2'><input type= 'submit' vlaue = '确定' class='big-btn'></td>
+			</tr>
+		</table>
+	</form>
+	
+
+
+</body>
+</html>
