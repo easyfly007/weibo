@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<META http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+	<title>微博检索</title>
+	<css file = "__PUBLIC__/Css/common.css" />
+	<js file = "__PUBLIC__/Js/jquery-2.2.3.min.js" />
+	<js file = "__PUBLIC__/Js/common.js" />
+</head>
+
+<body>
+	<div class = 'status'>
+		<span>微博搜索</span>
+	</div>
+	<div style='width:600px;text-align:center; margin:20px auto'>
+		<form action = '__SELF__' method = 'get'>
+			搜索关键字：
+			<input type = 'text' name = 'search'>
+			<input type ='submit' value ='' class = 'see' >
+		</form>
+	</div>
+	
+
+	<table class = 'table'>
+		<if condition = "!$weibos">
+			<tr>
+				<td align = 'center'>没有搜索到相关微博</td>
+			</tr>
+		<else/>
+			<tr>
+				<th>微博ID</th>
+				<th>用户名称</th>
+				<th>发布时间</th>
+				<th>微博内容</th>
+				<th>微博类型</th>
+				<th>统计信息</th>
+				<th>操作</th>
+			</tr>
+
+			<foreach name = 'weibos' item = 'v'>
+				<tr>
+					<td width='50' align = 'center'>{$v.wid}</td>
+					<td>{$v.username}</td>
+					<td>{$v.time|date='Y-m-d',###}</td>
+					<td>{$v.content}</td>
+					<td widht ='80' align = 'center'>
+						<if condition = "$v['original']" >
+							转发的微博
+						<elseif condition = "$v['pic']" />
+							<a href="__ROOT__/{$v['pic']}">查看图片</a>
+						</if>
+					</td>
+					<td align = 'center'>
+						<ul>
+							<li>转发: {$v.forward}</li>
+							<li>评论: {$v.comment}</li>
+							<li>收藏: {$v.keep}</li>
+						</ul>
+					</td>
+					<td>
+						<a href="{:U('Weibo/del', array('id'=>$v['wid']))}" class ='add lock'>删除</a>
+					</td>
+				</tr>
+			</foreach>
+			<tr>
+				<td align = 'center' colspan = '7'>{$page}</td>
+			</tr>
+		</if>
+	</table>
+
+
+</body>
+</html>

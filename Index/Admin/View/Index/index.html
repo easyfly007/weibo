@@ -49,16 +49,16 @@
 			<div class='nav_u'><span class = 'pos down'>微博管理</span></div>
 		</div>
 		<ul class ='option'>
-			<li><a href="{:U('Weibo/index')}">原创微博</a></li>
-			<li><a href="{:U('Weibo/index')}">转发微博</a></li>
+			<li><a href="{:U('Weibo/index', array('org'=>1))}">原创微博</a></li>
+			<li><a href="{:U('Weibo/index', array('org'=>0))}">转发微博</a></li>
 			<li><a href="{:U('Weibo/search')}">微博检索</a></li>
 		</ul>
 		<div class = 'nav'>
 			<div class='nav_u'><span class = 'pos down'>评论管理</span></div>
 		</div>
 		<ul class ='option'>
-			<li><a href="">评论列表</a></li>
-			<li><a href="">评论检索</a></li>
+			<li><a href="{:U('Comment/index')}">评论列表</a></li>
+			<li><a href="{:U('Comment/search')}">评论检索</a></li>
 		</ul>
 		<div class = 'nav'>
 			<div class='nav_u'><span class = 'pos down'>系统设置</span></div>

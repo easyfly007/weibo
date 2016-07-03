@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<META http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+	<title>评论检索</title>
+	<css file = "__PUBLIC__/Css/common.css" />
+	<js file = "__PUBLIC__/Js/jquery-2.2.3.min.js" />
+	<js file = "__PUBLIC__/Js/common.js" />
+</head>
+
+<body>
+	<div class = 'status'>
+		<span>评论搜索</span>
+	</div>
+	<div style='width:600px;text-align:center; margin:20px auto'>
+		<form action = '__SELF__' method = 'get'>
+			搜索关键字：
+			<input type = 'text' name = 'search'>
+			<input type ='submit' value ='' class = 'see' >
+		</form>
+	</div>
+	
+
+	<table class = 'table'>
+		<if condition = "!$comments">
+			<tr>
+				<td align = 'center'>没有搜索到相关微博</td>
+			</tr>
+		<else/>
+			<tr>
+				<th>ID</th>
+				<th>评论用户</th>
+				<th>评论内容</th>
+				<th>发布时间</th>
+				<th>操作</th>
+			</tr>
+			<foreach name = 'comments' item = 'v'>
+				<tr>
+					<td width='50' align = 'center'>{$v.cid}</td>
+					<td>{$v.username}</td>
+					<td>{$v.content}</td>
+					<td>{$v.time|date='Y-m-d H:i',###}</td>
+					<td><a href="{:U('Comment/del', array('cid'=>$v['cid']))}" class = 'del'></a></td>
+				</tr>
+			</foreach>
+		</if>
+	</table>
+
+
+</body>
+</html>
