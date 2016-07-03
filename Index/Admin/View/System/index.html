@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<META http-equiv='Content-Type' content='text/html; charset=UTF-8' />
-	<title>过滤词列表</title>
+	<title>系统设置</title>
 	<css file = "__PUBLIC__/Css/common.css" />
 	<js file = "__PUBLIC__/Js/jquery-2.2.3.min.js" />
 	<js file = "__PUBLIC__/Js/common.js" />
@@ -10,31 +10,37 @@
 
 <body>
 	<div class = 'status'>
-		<span>过滤词列表</span> |
-		<span>添加新的过滤词</span>
+		<span>网站配置</span>
 	</div>
-
-	<table class = 'table'>
-		<tr>
-			<th>ID</th>
-			<th>评论用户</th>
-			<th>评论内容</th>
-			<th>发布时间</th>
-			<th>操作</th>
-		</tr>
-		<foreach name = 'comments' item = 'v'>
+	<span>测试用，不起作用</span>
+	<form action="{:U('System/index')}" method='post'>
+		<table class="table">
 			<tr>
-				<td width='50' align = 'center'>{$v.cid}</td>
-				<td>{$v.username}</td>
-				<td>{$v.content}</td>
-				<td>{$v.time|date='Y-m-d H:i',###}</td>
-				<td><a href="{:U('Comment/del', array('cid'=>$v['cid']))}" class = 'del'></a></td>
+				<td width='45%' align='right'>网站名称：</td>
+				<td>
+					<input type="text" name='webname' value='{$config.webanem}'/>
+				</td>
 			</tr>
-		</foreach>
-		<tr>
-			<td colspan = '7' align = 'center'>{$page}</td>
-		</tr>
-	</table>
+			<tr>
+				<td align='right'>版权信息：</td>
+				<td>
+					<input type="text" name='copy' class='input-long' value='{$config.copy}'/>
+				</td>
+			</tr>
+			<tr>
+				<td align='right'>是否开启注册：</td>
+				<td height='30'>
+					<input type="radio" name='regis_on' value='1' class='radio' <if condition='$config["REGIS_ON"]'>checked='checked'</if>/>&nbsp;开启&nbsp;&nbsp;
+					<input type="radio" name='regis_on' value='0' class='radio'<if condition='!$config["REGIS_ON"]'>checked='checked'</if>/>&nbsp;暂停
+				</td>
+			</tr>
+			<tr>
+				<td colspan='2'>
+					<input type="submit" value='保存修改' class='big-btn'/>
+				</td>
+			</tr>
+		</table>
+	</form>
 
 </body>
 </html>

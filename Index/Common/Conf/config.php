@@ -31,5 +31,7 @@ return array(
     'MEMCACHE_PORT'     => 11211,
     'LOAD_EXT_CONFIG'   => 'system',
 
+    'REGIST_ON'         => true,
+
 
 );

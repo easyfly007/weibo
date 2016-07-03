@@ -7,29 +7,22 @@ use Think\Controller;
 class SystemController extends Controller {
     // 显示所有系统设置
     public function index(){
-        // 列出所有的评论
-        $db = D('CommentView');
-        $count = $db->count();
-        $page  = new \Think\Page($count,25);
-        $show  = $page->show();// 分页显示输出
-        $limit = $page->firstRow.','.$page->listRows;
-        // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
-        $this->comments = $db->where($where)->limit($limit)->select();
-        $this->page = $page->show();
-    	$this->display();
+        // 列出所有的系统设置
+        $config = array();
+        $config['regist_on']= C('REGIST_ON');
+        $config['copy'] = C('COPY');
+        $config['webname'] = C('WEBNAME');
+        $this->config = $config;
+        $this->display();
     }
 
     // 设置关键词过滤
     public function filter(){
-        $comments = false;
-        if (I('get.search')){
-            $where = array('content'=>array('LIKE', '%'.I('get.search').'%'));
-            $comments = D('CommentView')->where($where)->select();
-        }
-        $this->comments = $comments;
+        $this->filters = M('filter')->select();
         $this->display();
     }
 
+    // 添加或者修改过滤词
     public function add(){
         $word = I('post.word');
         $replacement = I('post.replacement');

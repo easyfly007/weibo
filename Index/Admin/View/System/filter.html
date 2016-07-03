@@ -24,6 +24,7 @@
 		</tr>
 		<foreach name = 'filters' item = 'v'>
 			<tr>
+				<td>{$v.id}</td>
 				<td width='50' align = 'center'>{$v.word}</td>
 				<td>{$v.replacement}</td>
 				<td><a href="{:U('System/del', array('id'=>$v['id']))}" class = 'del'></a></td>

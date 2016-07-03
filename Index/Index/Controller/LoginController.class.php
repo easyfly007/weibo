@@ -7,6 +7,8 @@ class LoginController extends Controller {
     }
 
     public function register(){
+        if (!C('REGIST_ON'))
+            $this->error('网站停止注册，请登陆!');
     	$this->display();
     }
 
@@ -72,6 +74,9 @@ class LoginController extends Controller {
     public function runRegister(){
         if (!IS_POST)
             $this->error("禁止访问！");
+        if (C('REGIST_ON') == false)
+            $this->error('目前不开放注册');
+
         // 后台验证
         $account = I('post.account');
         $username = I('post.uname');
