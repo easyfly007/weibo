@@ -67,13 +67,13 @@
 		$content = preg_replace($pattern, $replacement, $content);
 
 
-		$filters = C('FILTER');
+		$filters = M('filter')->select();
 		$pattern = array();
 		$replacement = array();
 		// 将一些特定词汇进行过滤，显示为***
 		foreach ($filters as $key => $value) {
-			$pattern[] = '/'.$value.'/';
-			$replacement[] = '***';
+			$pattern[] = '/'.$value['word'].'/';
+			$replacement[] = $value['replacement'];
 		}
 		$content = preg_replace($pattern, $replacement, $content);
 
