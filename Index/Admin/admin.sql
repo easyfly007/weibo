@@ -14,6 +14,12 @@ create table tb_admin(
 ) default charset = utf8;
 -- 最开始的超级管理员 grantedby 0
 
+create table tb_filter(
+	id int not null primary key auto_increment,
+	word char(20) not null,
+	replacement char(20) not null
+) default charset = utf8;
+
 insert into tb_admin (username, password, admin) values('admin', md5('admin'), 0);
 	
 

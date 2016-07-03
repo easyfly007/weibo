@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<META http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+	<title>添加过滤词汇</title>
+	<css file = "__PUBLIC__/Css/common.css" />
+	<js file = "__PUBLIC__/Js/jquery-2.2.3.min.js" />
+	<js file = "__PUBLIC__/Js/common.js" />
+</head>
+
+<body>
+	<div class = 'status'>
+		<span>添加新的过滤词</span>
+	</div>
+
+	<form method = 'post' action = "{:U('System/add')}">
+		<table class = 'table'>
+			<tr>
+				<td>过滤词：</td>
+				<td><input type = 'text' name ='word'></td>
+			</tr>
+			<tr>
+				<td>替换为：</td>
+				<td><input type = 'text' name ='replacement', value = '***'></td>
+			</tr>
+			<tr>
+				<td colspan = '2'><input type= 'submit' vlaue = '添加' class='big-btn'></td>
+			</tr>
+		</table>
+	</form>
+	
+
+
+	<table class = 'table'>
+		<tr>
+			<th>ID</th>
+			<th>敏感词</th>
+			<th>替换词</th>
+			<th>操作</th>
+		</tr>
+		<foreach name = 'filters' item = 'v'>
+			<tr>
+				<td>{$v.id}</td>
+				<td width='50' align = 'center'>{$v.word}</td>
+				<td>{$v.replacement}</td>
+				<td><a href="{:U('System/del', array('id'=>$v['id']))}" class = 'del'></a></td>
+			</tr>
+		</foreach>
+	</table>
+
+</body>
+</html>

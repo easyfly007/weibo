@@ -65,6 +65,18 @@
 			$replacement[] = "<img src = '".__ROOT__."/Public/Images/phiz/".$key.".gif' >"; // img
 		}
 		$content = preg_replace($pattern, $replacement, $content);
+
+
+		$filters = C('FILTER');
+		$pattern = array();
+		$replacement = array();
+		// 将一些特定词汇进行过滤，显示为***
+		foreach ($filters as $key => $value) {
+			$pattern[] = '/'.$value.'/';
+			$replacement[] = '***';
+		}
+		$content = preg_replace($pattern, $replacement, $content);
+
 		return $content;
 	}
 

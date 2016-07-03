@@ -1,0 +1,35 @@
+&nbsp;<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<META http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+	<title>设置过滤词汇</title>
+	<css file = "__PUBLIC__/Css/common.css" />
+	<js file = "__PUBLIC__/Js/jquery-2.2.3.min.js" />
+	<js file = "__PUBLIC__/Js/common.js" />
+</head>
+
+<body>
+	<div class = 'status'>
+		<span>过滤词列表</span>
+		&nbsp;&nbsp;
+		<span><a href="{:U('System/add')}">添加新的过滤词</a></span>
+	</div>
+
+	<table class = 'table'>
+		<tr>
+			<th>ID</th>
+			<th>敏感词</th>
+			<th>替换词</th>
+			<th>操作</th>
+		</tr>
+		<foreach name = 'filters' item = 'v'>
+			<tr>
+				<td width='50' align = 'center'>{$v.word}</td>
+				<td>{$v.replacement}</td>
+				<td><a href="{:U('System/del', array('id'=>$v['id']))}" class = 'del'></a></td>
+			</tr>
+		</foreach>
+	</table>
+
+</body>
+</html>
