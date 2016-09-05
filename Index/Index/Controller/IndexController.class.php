@@ -77,6 +77,7 @@ class IndexController extends CommonController {
     public function sendweibo(){
         if (!IS_POST)
             $this->error("页面不存在");
+        p($_POST);die;
         $content = I('post.content');
         $data = array(
             'content' =>$content,
